@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function App() {
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   let keyOff;
   const gain = audioCtx.createGain();
   const activeOscillators = {};
+
+  const [waveshape, setWaveshape] = useState('sine');
+
   const keyboardFrequencyMap = {
     '65': 261.625565300598634, //A - C
     '87': 277.182630976872096, //W - C#
@@ -36,7 +39,7 @@ export default function App() {
       keyboardFrequencyMap[key],
       audioCtx.currentTime
     );
-    osc.type = 'square';
+    osc.type = waveshape;
     activeOscillators[key] = osc;
     activeOscillators[key].connect(gain);
     activeOscillators[key].start();
@@ -118,5 +121,46 @@ export default function App() {
   window.addEventListener('keydown', keyDown, false);
   window.addEventListener('keyup', keyUp, false);
 
-  return <h1>Hello World</h1>;
+  const handleWaveshape = ({ target }) => {
+    console.log(target.value);
+    setWaveshape(target.value);
+  };
+
+  return (
+    <>
+      <input
+        type="radio"
+        value="square"
+        name="waveshapes"
+        id="square"
+        onClick={() => handleWaveshape(event)}
+      />
+      <label>square</label>
+      <input
+        type="radio"
+        value="sine"
+        name="waveshapes"
+        id="sine"
+        onClick={() => handleWaveshape(event)}
+      />
+      <label>sine</label>
+      <input
+        type="radio"
+        value="triangle"
+        name="waveshapes"
+        id="triangle"
+        onClick={() => handleWaveshape(event)}
+      />
+      <label>triangle</label>
+      <input
+        type="radio"
+        value="sawtooth"
+        name="waveshapes"
+        id="sawtooth"
+        onClick={() => handleWaveshape(event)}
+      />
+      <label>sawtooth</label>
+      <h1>Hello World</h1>
+    </>
+  );
 }
