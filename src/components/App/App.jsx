@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './app.css';
 
 export default function App() {
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -45,9 +46,9 @@ export default function App() {
     activeOscillators[key].start();
   }
 
-  window.addEventListener('keydown', function (e) {
+  window.addEventListener('keydown', function(e) {
     let x = e.keyCode;
-    if (
+    if(
       x === 65 ||
       x === 87 ||
       x === 83 ||
@@ -75,9 +76,9 @@ export default function App() {
     }
   });
 
-  window.addEventListener('keyup', function (e) {
+  window.addEventListener('keyup', function(e) {
     let x = e.keyCode;
-    if (
+    if(
       x === 65 ||
       x === 87 ||
       x === 83 ||
@@ -105,14 +106,14 @@ export default function App() {
 
   function keyDown(event) {
     const key = (event.detail || event.which).toString();
-    if (keyboardFrequencyMap[key] && !activeOscillators[key] && !keyOff) {
+    if(keyboardFrequencyMap[key] && !activeOscillators[key] && !keyOff) {
       playNote(key);
     }
   }
 
   function keyUp(event) {
     const key = (event.detail || event.which).toString();
-    if (keyboardFrequencyMap[key] && activeOscillators[key] && !keyOff) {
+    if(keyboardFrequencyMap[key] && activeOscillators[key] && !keyOff) {
       activeOscillators[key].stop();
       delete activeOscillators[key];
     }
@@ -128,39 +129,42 @@ export default function App() {
 
   return (
     <>
-      <input
-        type="radio"
-        value="square"
-        name="waveshapes"
-        id="square"
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>square</label>
-      <input
-        type="radio"
-        value="sine"
-        name="waveshapes"
-        id="sine"
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>sine</label>
-      <input
-        type="radio"
-        value="triangle"
-        name="waveshapes"
-        id="triangle"
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>triangle</label>
-      <input
-        type="radio"
-        value="sawtooth"
-        name="waveshapes"
-        id="sawtooth"
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>sawtooth</label>
-      <h1>Hello World</h1>
+      <div className={styles.Container}>
+        <h1>Synthinator</h1>
+        <input
+          className={styles.Radio}
+          type="radio"
+          value="square"
+          name="waveshapes"
+          id="square"
+          onClick={() => handleWaveshape(event)}
+        />
+        <label>square</label>
+        <input
+          type="radio"
+          value="sine"
+          name="waveshapes"
+          id="sine"
+          onClick={() => handleWaveshape(event)}
+        />
+        <label>sine</label>
+        <input
+          type="radio"
+          value="triangle"
+          name="waveshapes"
+          id="triangle"
+          onClick={() => handleWaveshape(event)}
+        />
+        <label>triangle</label>
+        <input
+          type="radio"
+          value="sawtooth"
+          name="waveshapes"
+          id="sawtooth"
+          onClick={() => handleWaveshape(event)}
+        />
+        <label>sawtooth</label>
+      </div>
     </>
   );
 }
