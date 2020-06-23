@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styles from './app.css';
+import KeyboardEventHandler from 'react-keyboard-event-handler';
 
 export default function App() {
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext);
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   let keyOff;
   const gain = audioCtx.createGain();
   const activeOscillators = {};
@@ -46,81 +47,23 @@ export default function App() {
     activeOscillators[key].start();
   }
 
-  window.addEventListener('keydown', function(e) {
-    let x = e.keyCode;
-    if(
-      x === 65 ||
-      x === 87 ||
-      x === 83 ||
-      x === 69 ||
-      x === 68 ||
-      x === 70 ||
-      x === 84 ||
-      x === 71 ||
-      x === 89 ||
-      x === 72 ||
-      x === 85 ||
-      x === 74 ||
-      x === 75 ||
-      x === 79 ||
-      x === 76 ||
-      x === 80 ||
-      x === 186 ||
-      x === 222 ||
-      x === 221
-    ) {
-      // if (!keyOff) {
-      //   const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-      //   key.classList.add('active');
-      // }
-    }
-  });
-
-  window.addEventListener('keyup', function(e) {
-    let x = e.keyCode;
-    if(
-      x === 65 ||
-      x === 87 ||
-      x === 83 ||
-      x === 69 ||
-      x === 68 ||
-      x === 70 ||
-      x === 84 ||
-      x === 71 ||
-      x === 89 ||
-      x === 72 ||
-      x === 85 ||
-      x === 74 ||
-      x === 75 ||
-      x === 79 ||
-      x === 76 ||
-      x === 80 ||
-      x === 186 ||
-      x === 222 ||
-      x === 221
-    ) {
-      // const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-      // key.classList.remove('active');
-    }
-  });
-
   function keyDown(event) {
     const key = (event.detail || event.which).toString();
-    if(keyboardFrequencyMap[key] && !activeOscillators[key] && !keyOff) {
+    if (keyboardFrequencyMap[key] && !activeOscillators[key] && !keyOff) {
       playNote(key);
     }
   }
 
   function keyUp(event) {
     const key = (event.detail || event.which).toString();
-    if(keyboardFrequencyMap[key] && activeOscillators[key] && !keyOff) {
+    if (keyboardFrequencyMap[key] && activeOscillators[key] && !keyOff) {
       activeOscillators[key].stop();
       delete activeOscillators[key];
     }
   }
 
-  window.addEventListener('keydown', keyDown, false);
-  window.addEventListener('keyup', keyUp, false);
+  // window.addEventListener('keydown', keyDown, false);
+  // window.addEventListener('keyup', keyUp, false);
 
   const handleWaveshape = ({ target }) => {
     console.log(target.value);
@@ -130,6 +73,16 @@ export default function App() {
   return (
     <>
       <div className={styles.Container}>
+        <KeyboardEventHandler
+          handleKeys={['all']}
+          onKeyEvent={(key, e) => keyDown(e)}
+        />
+
+        <KeyboardEventHandler
+          handleKeys={['all']}
+          handleEventType="keyup"
+          onKeyEvent={(key, e) => keyUp(e)}
+        />
         <h1>Synthinator</h1>
         <input
           className={styles.Radio}
