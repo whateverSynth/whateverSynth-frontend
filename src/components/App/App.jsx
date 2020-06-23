@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './app.css';
 
 export default function App() {
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext);
   let keyOff;
   const gain = audioCtx.createGain();
   const activeOscillators = {};
