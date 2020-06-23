@@ -1,0 +1,18 @@
+* {
+  background-color: #001eff;
+  font-family: 'Press Start 2P', cursive;
+  color: #d600ff;
+}
+.Container{
+  display: grid;
+  justify-content: center;
+}
+
+h1 {
+  color: #00ff9f;
+  font-size: 2em;
+}
+.Radio {
+  display: flex;
+  flex-direction: row;
+}
