@@ -18,6 +18,14 @@ export const EffectsProvider = ({ children }) => {
   const [chorusFeedback, setChorusFeedback] = useState(0.2); //0 to 1+
   const [chorusDelay, setChorusDelay] = useState(0.0045); //0 to 1
 
+  //phaser
+  const [phaserBypass, setPhaserBypass] = useState(1); //0 or 1
+  const [phaserRate, setPhaserRate] = useState(1.2); //0.01 to 8+
+  const [phaserDepth, setPhaserDepth] = useState(0.3); //0 to 1
+  const [phaserFeedback, setPhaserFeedback] = useState(0.2); //0 to 1+
+  const [phaserStereoPhase, setPhaserStereoPhase] = useState(30); //0 to 180
+  const [phaserBaseModFreq, setPhaserBaseModFreq] = useState(700); //500 to 1500
+
   return (
     <EffectsContext.Provider
       value={{
@@ -41,6 +49,18 @@ export const EffectsProvider = ({ children }) => {
         setChorusFeedback,
         chorusDelay,
         setChorusDelay,
+        phaserBypass,
+        setPhaserBypass,
+        phaserRate,
+        setPhaserRate,
+        phaserDepth,
+        setPhaserDepth,
+        phaserFeedback,
+        setPhaserFeedback,
+        phaserStereoPhase,
+        setPhaserStereoPhase,
+        phaserBaseModFreq,
+        setPhaserBaseModFreq,
       }}
     >
       {children}
@@ -152,4 +172,55 @@ export const useChorusDelay = () => {
 export const useSetChorusDelay = () => {
   const { setChorusDelay } = useContext(EffectsContext);
   return setChorusDelay;
+};
+
+//phaser exports
+export const usePhaserBypass = () => {
+  const { chorusBypass } = useContext(EffectsContext);
+  return chorusBypass;
+};
+
+export const useSetPhaserBypass = () => {
+  const { setPhaserBypass } = useContext(EffectsContext);
+  return setPhaserBypass;
+};
+
+export const usePhaserRate = () => {
+  const { phaserRate } = useContext(EffectsContext);
+  return phaserRate;
+};
+
+export const useSetPhaserRate = () => {
+  const { setPhaserRate } = useContext(EffectsContext);
+  return setPhaserRate;
+};
+
+export const usePhaserFeedback = () => {
+  const { phaserFeedback } = useContext(EffectsContext);
+  return phaserFeedback;
+};
+
+export const useSetPhaserFeedback = () => {
+  const { setPhaserFeedback } = useContext(EffectsContext);
+  return setPhaserFeedback;
+};
+
+export const usePhaserStereoPhase = () => {
+  const { phaserStereoPhase } = useContext(EffectsContext);
+  return phaserStereoPhase;
+};
+
+export const useSetPhaserStereoPhase = () => {
+  const { setPhaserStereoPhase } = useContext(EffectsContext);
+  return setPhaserStereoPhase;
+};
+
+export const usePhaserBaseModeFreq = () => {
+  const { phaserBaseModeFreq } = useContext(EffectsContext);
+  return phaserBaseModeFreq;
+};
+
+export const useSetPhaserBaseModeFreq = () => {
+  const { setPhaserBaseModeFreq } = useContext(EffectsContext);
+  return setPhaserBaseModeFreq;
 };
