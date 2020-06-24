@@ -12,6 +12,10 @@ import {
   useHandleDelayFeedback,
   useDelayTime,
   useHandleDelayTime,
+  useDelayDryLevel,
+  useDelayCutoff,
+  useHandleDelayDryLevel,
+  useHandleDelayCutoff,
 } from '../../hooks/EffectsProvider';
 // import Effects from '../Effects/Effects';
 
@@ -20,13 +24,17 @@ export default function Synth() {
   // const [delayWet, setDelayWet] = useState(0.5);
 
   const delayBypass = useDelayBypass();
-  const delayWetLevel = useDelayWetLevel();
   const delayFeedback = useDelayFeedback();
   const delayTime = useDelayTime();
+  const delayWetLevel = useDelayWetLevel();
+  const delayDryLevel = useDelayDryLevel();
+  const delayCutoff = useDelayCutoff();
   const handleDelayBypass = useHandleDelayBypass();
-  const handleDelayWetLevel = useHandleDelayWetLevel();
   const handleDelayFeedback = useHandleDelayFeedback();
   const handleDelayTime = useHandleDelayTime();
+  const handleDelayWetLevel = useHandleDelayWetLevel();
+  const handleDelayDryLevel = useHandleDelayDryLevel();
+  const handleDelayCutoff = useHandleDelayCutoff();
 
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const tuna = new Tuna(audioCtx);
@@ -173,11 +181,38 @@ export default function Synth() {
           max="1"
           value={delayWetLevel}
           step="0.1"
-          id="myRange"
+          id="delayWetLevelRange"
           onChange={handleDelayWetLevel}
         ></input>
         <label>Delay Wet Level</label>
       </div>
+
+      <div>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          value={delayDryLevel}
+          step="0.1"
+          id="delayDryLevelRange"
+          onChange={handleDelayDryLevel}
+        ></input>
+        <label>Delay Dry Level</label>
+      </div>
+
+      <div>
+        <input
+          type="range"
+          min="20"
+          max="22050"
+          value={delayCutoff}
+          step="10"
+          id="delayCutoffRange"
+          onChange={handleDelayCutoff}
+        ></input>
+        <label>Delay Cutoff</label>
+      </div>
+
       {/* <Effects tuna={tuna} delayWet={delayWet} handleDelayWetness={handleDelayWetness}/> */}
     </div>
   );
