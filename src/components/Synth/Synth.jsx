@@ -11,10 +11,8 @@ import {
   useDelayTime,
   useDelayDryLevel,
   useDelayCutoff,
-  // useHandleWaveshape,
   useWaveshape,
   useGainSetting,
-  // useHandleGainSetting,
 } from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
 
@@ -26,8 +24,6 @@ export default function Synth() {
   const delayWetLevel = useDelayWetLevel();
   const delayDryLevel = useDelayDryLevel();
   const delayCutoff = useDelayCutoff();
-  // const handleGainSetting = useHandleGainSetting();
-  // const handleWaveshape = useHandleWaveshape();
 
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const tuna = new Tuna(audioCtx);
