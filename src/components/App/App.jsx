@@ -1,6 +1,13 @@
 import React from 'react';
+import Synth from '../Synth/Synth';
+import { EffectsProvider } from '../../hooks/EffectsProvider';
 
 export default function App() {
-  return <h1>Hello World</h1>;
+  return (
+    <>
+      <EffectsProvider>
+        <Synth />
+      </EffectsProvider>
+    </>
+  );
 }
-  
