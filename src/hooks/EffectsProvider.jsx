@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 const EffectsContext = createContext();
 
 export const EffectsProvider = ({ children }) => {
+  const [waveshape, setWaveshape] = useState('square');
+
   //delay
   const [delayBypass, setDelayBypass] = useState(0); //0 or 1
   const [delayFeedback, setDelayFeedback] = useState(0.45); //0 to 1+
@@ -33,6 +35,10 @@ export const EffectsProvider = ({ children }) => {
   const [overdriveCurveAmount, setOverdriveCurveAmount] = useState(1); //0 to 1
   const [overdriveAlgorithm, setOverdriveAlgorithm] = useState(0); //0 to 5, selects one of the drive algorithms
 
+  const handleWaveshape = ({ target }) => {
+    setWaveshape(target.value);
+  };
+
   const handleDelayBypass = ({ target }) => {
     setDelayBypass(target.value);
   };
@@ -60,6 +66,7 @@ export const EffectsProvider = ({ children }) => {
   return (
     <EffectsContext.Provider
       value={{
+        waveshape,
         delayBypass,
         setDelayBypass,
         delayFeedback,
@@ -102,6 +109,7 @@ export const EffectsProvider = ({ children }) => {
         setOverdriveCurveAmount,
         overdriveAlgorithm,
         setOverdriveAlgorithm,
+        handleWaveshape,
         handleDelayBypass,
         handleDelayFeedback,
         handleDelayTime,
@@ -117,6 +125,11 @@ export const EffectsProvider = ({ children }) => {
 
 EffectsProvider.propTypes = {
   children: PropTypes.node,
+};
+
+export const useWaveshape = () => {
+  const { waveshape } = useContext(EffectsContext);
+  return waveshape;
 };
 
 //delay exports
@@ -321,6 +334,11 @@ export const useOverdriveAlgorithm = () => {
 export const useSetOverdriveAlgorithm = () => {
   const { setOverdriveAlgorithm } = useContext(EffectsContext);
   return setOverdriveAlgorithm;
+};
+
+export const useHandleWaveshape = () => {
+  const { waveshape } = useContext(EffectsContext);
+  return waveshape;
 };
 
 //delay handlers export

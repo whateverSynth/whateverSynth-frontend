@@ -16,6 +16,8 @@ import {
   useDelayCutoff,
   useHandleDelayDryLevel,
   useHandleDelayCutoff,
+  // useHandleWaveshape,
+  // useWaveshape,
 } from '../../hooks/EffectsProvider';
 // import Effects from '../Effects/Effects';
 
@@ -23,18 +25,24 @@ export default function Synth() {
   const [waveshape, setWaveshape] = useState('sine');
   // const [delayWet, setDelayWet] = useState(0.5);
 
+  // const waveshape = useWaveshape();
   const delayBypass = useDelayBypass();
   const delayFeedback = useDelayFeedback();
   const delayTime = useDelayTime();
   const delayWetLevel = useDelayWetLevel();
   const delayDryLevel = useDelayDryLevel();
   const delayCutoff = useDelayCutoff();
+  // const handleWaveshape = useHandleWaveshape();
   const handleDelayBypass = useHandleDelayBypass();
   const handleDelayFeedback = useHandleDelayFeedback();
   const handleDelayTime = useHandleDelayTime();
   const handleDelayWetLevel = useHandleDelayWetLevel();
   const handleDelayDryLevel = useHandleDelayDryLevel();
   const handleDelayCutoff = useHandleDelayCutoff();
+
+  const handleWaveshape = ({ target }) => {
+    setWaveshape(target.value);
+  };
 
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const tuna = new Tuna(audioCtx);
@@ -79,14 +87,6 @@ export default function Synth() {
       delete activeOscillators[key];
     }
   }
-
-  const handleWaveshape = ({ target }) => {
-    setWaveshape(target.value);
-  };
-
-  // const handleDelayWetness = ({ target }) => {
-  //   setDelayWet(target.value);
-  // };
 
   return (
     <div className={styles.Container}>
