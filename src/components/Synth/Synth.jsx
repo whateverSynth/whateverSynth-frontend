@@ -6,17 +6,11 @@ import DelayEffect from '../Effects/DelayEffect/DelayEffect';
 import Tuna from 'tunajs';
 import {
   useDelayWetLevel,
-  // useHandleDelayWetLevel,
   useDelayBypass,
-  // useHandleDelayBypass,
   useDelayFeedback,
-  // useHandleDelayFeedback,
   useDelayTime,
-  // useHandleDelayTime,
   useDelayDryLevel,
   useDelayCutoff,
-  // useHandleDelayDryLevel,
-  // useHandleDelayCutoff,
   useHandleWaveshape,
   useWaveshape,
   useGainSetting,
@@ -33,13 +27,6 @@ export default function Synth() {
   const delayCutoff = useDelayCutoff();
   const handleGainSetting = useHandleGainSetting();
   const handleWaveshape = useHandleWaveshape();
-  // const delay = delayThing;
-  // const handleDelayBypass = useHandleDelayBypass();
-  // const handleDelayFeedback = useHandleDelayFeedback();
-  // const handleDelayTime = useHandleDelayTime();
-  // const handleDelayWetLevel = useHandleDelayWetLevel();
-  // const handleDelayDryLevel = useHandleDelayDryLevel();
-  // const handleDelayCutoff = useHandleDelayCutoff();
 
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const tuna = new Tuna(audioCtx);
@@ -169,81 +156,6 @@ export default function Synth() {
       <label>sawtooth</label>
 
       <DelayEffect />
-
-      {/* <div>
-        <input
-          type="checkbox"
-          value={delayBypass}
-          onChange={handleDelayBypass}
-          // onClick={window.focus()}
-        ></input>
-        <label>Delay Bypass</label>
-      </div>
-
-      <div>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={delayFeedback}
-          step="0.05"
-          id="delayFeedbackRange"
-          onChange={handleDelayFeedback}
-        ></input>
-        <label>Delay Feedback</label>
-      </div>
-
-      <div>
-        <input
-          type="range"
-          min="1"
-          max="1000"
-          value={delayTime}
-          step="1"
-          id="delayTimeRange"
-          onChange={handleDelayTime}
-        ></input>
-        <label>Delay Time</label>
-      </div>
-
-      <div>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={delayWetLevel}
-          step="0.1"
-          id="delayWetLevelRange"
-          onChange={handleDelayWetLevel}
-        ></input>
-        <label>Delay Wet Level</label>
-      </div>
-
-      <div>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={delayDryLevel}
-          step="0.1"
-          id="delayDryLevelRange"
-          onChange={handleDelayDryLevel}
-        ></input>
-        <label>Delay Dry Level</label>
-      </div>
-
-      <div>
-        <input
-          type="range"
-          min="20"
-          max="22050"
-          value={delayCutoff}
-          step="10"
-          id="delayCutoffRange"
-          onChange={handleDelayCutoff}
-        ></input>
-        <label>Delay Cutoff</label>
-      </div> */}
     </div>
   );
 }
