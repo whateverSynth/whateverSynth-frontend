@@ -11,11 +11,12 @@ import {
   useDelayTime,
   useDelayDryLevel,
   useDelayCutoff,
-  useHandleWaveshape,
+  // useHandleWaveshape,
   useWaveshape,
   useGainSetting,
-  useHandleGainSetting,
+  // useHandleGainSetting,
 } from '../../hooks/EffectsProvider';
+import Waveshapes from '../Waveshapes/Waveshapes';
 
 export default function Synth() {
   const waveshape = useWaveshape();
@@ -25,8 +26,8 @@ export default function Synth() {
   const delayWetLevel = useDelayWetLevel();
   const delayDryLevel = useDelayDryLevel();
   const delayCutoff = useDelayCutoff();
-  const handleGainSetting = useHandleGainSetting();
-  const handleWaveshape = useHandleWaveshape();
+  // const handleGainSetting = useHandleGainSetting();
+  // const handleWaveshape = useHandleWaveshape();
 
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const tuna = new Tuna(audioCtx);
@@ -107,53 +108,7 @@ export default function Synth() {
       />
       <h1>Synthinator</h1>
 
-      <div>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={gainSetting}
-          step="0.05"
-          id="gainSetting"
-          onChange={handleGainSetting}
-        ></input>
-        <label>gain</label>
-      </div>
-
-      <input
-        type="radio"
-        value="sine"
-        name="waveshapes"
-        id="sine"
-        defaultChecked
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>sine</label>
-      <input
-        className={styles.Radio}
-        type="radio"
-        value="square"
-        name="waveshapes"
-        id="square"
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>square</label>
-      <input
-        type="radio"
-        value="triangle"
-        name="waveshapes"
-        id="triangle"
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>triangle</label>
-      <input
-        type="radio"
-        value="sawtooth"
-        name="waveshapes"
-        id="sawtooth"
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>sawtooth</label>
+      <Waveshapes />
 
       <DelayEffect />
     </div>
