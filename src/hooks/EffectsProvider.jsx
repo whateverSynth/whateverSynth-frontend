@@ -33,6 +33,10 @@ export const EffectsProvider = ({ children }) => {
   const [overdriveCurveAmount, setOverdriveCurveAmount] = useState(1); //0 to 1
   const [overdriveAlgorithm, setOverdriveAlgorithm] = useState(0); //0 to 5, selects one of the drive algorithms
 
+  const handleDelayWetLevel = ({ target }) => {
+    setDelayWetLevel(target.value);
+  };
+
   return (
     <EffectsContext.Provider
       value={{
@@ -78,6 +82,7 @@ export const EffectsProvider = ({ children }) => {
         setOverdriveCurveAmount,
         overdriveAlgorithm,
         setOverdriveAlgorithm,
+        handleDelayWetLevel,
       }}
     >
       {children}
@@ -291,4 +296,10 @@ export const useOverdriveAlgorithm = () => {
 export const useSetOverdriveAlgorithm = () => {
   const { setOverdriveAlgorithm } = useContext(EffectsContext);
   return setOverdriveAlgorithm;
+};
+
+//handlers export
+export const useHandleDelayWetLevel = () => {
+  const { handleDelayWetLevel } = useContext(EffectsContext);
+  return handleDelayWetLevel;
 };

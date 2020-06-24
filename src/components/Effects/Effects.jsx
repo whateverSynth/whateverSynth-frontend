@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Effects({ tuna, delayWet, handleDelayWetness }) {
-
+export default function Effects() {
   // const chorus = new tuna.Chorus({
   //   rate: 1.5,         //0.01 to 8+
   //   feedback: 0.2,     //0 to 1+
@@ -34,17 +33,24 @@ export default function Effects({ tuna, delayWet, handleDelayWetness }) {
         <option value="delay">Delay</option>
         <option value="phaser">Phaser</option>
       </select>
-      <div>
-        <input type="range" min="0" max="1" value={delayWet} step="0.1" id="myRange" onChange={handleDelayWetness}></input>
+      {/* <div>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          value={delayWet}
+          step="0.1"
+          id="myRange"
+          onChange={handleDelayWetness}
+        ></input>
         <label>Delay Wet/Dry</label>
-      </div>
+      </div> */}
     </div>
   );
 }
 
 Effects.propTypes = {
   tuna: PropTypes.object,
-  delayWet: PropTypes.number,
-  handleDelayWetness: PropTypes.func
+  // delayWet: PropTypes.number,
+  handleDelayWetness: PropTypes.func,
 };
-
