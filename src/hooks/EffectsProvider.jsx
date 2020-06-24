@@ -5,7 +5,7 @@ const EffectsContext = createContext();
 
 export const EffectsProvider = ({ children }) => {
   const [waveshape, setWaveshape] = useState('sine');
-
+  
   //delay
   const [delayBypass, setDelayBypass] = useState(false); //0 or 1
   const [delayFeedback, setDelayFeedback] = useState(0.45); //0 to 1+
@@ -34,6 +34,51 @@ export const EffectsProvider = ({ children }) => {
   const [overdriveDrive, setOverdriveDrive] = useState(0.7); //0 to 1
   const [overdriveCurveAmount, setOverdriveCurveAmount] = useState(1); //0 to 1
   const [overdriveAlgorithm, setOverdriveAlgorithm] = useState(0); //0 to 5, selects one of the drive algorithms
+
+  const [effects, setEffects] = useState({
+    Chorus: ({
+      rate: 1.5,         //0.01 to 8+
+      feedback: 0.2,     //0 to 1+
+      delay: 0.0045,     //0 to 1
+      bypass: 0          //the value 1 starts the effect as bypassed, 0 or 1
+    }),
+    Phaser : ({
+      rate: 1.2,                     //0.01 to 8 is a decent range, but higher values are possible
+      depth: 0.3,                    //0 to 1
+      feedback: 0.2,                 //0 to 1+
+      stereoPhase: 30,               //0 to 180
+      baseModulationFrequency: 700,  //500 to 1500
+      bypass: 0
+    }),
+    Delay: ({
+      feedback: delayFeedback,    //0 to 1+
+      delayTime: delayTime,    //1 to 10000 milliseconds
+      wetLevel: delayWetLevel,    //0 to 1+
+      dryLevel: delayDryLevel,       //0 to 1+
+      cutoff: delayCutoff,      //cutoff frequency of the built in lowpass-filter. 20 to 22050
+      bypass: delayBypass
+    }),
+    Tremolo: ({
+      intensity: 0.3,    //0 to 1
+      rate: 4,         //0.001 to 8
+      stereoPhase: 0,    //0 to 180
+      bypass: 0
+    }),
+    WahWah: ({
+      automode: false,                //true/false
+      baseFrequency: 0.5,            //0 to 1
+      excursionOctaves: 2,           //1 to 6
+      sweep: 0.2,                    //0 to 1
+      resonance: 10,                 //1 to 100
+      sensitivity: 0.5,              //-1 to 1
+      bypass: 0
+    }),
+    Bitcrusher: ({
+      bits: 4,          //1 to 16
+      normfreq: 0.1,    //0 to 1
+      bufferSize: 4096  //256 to 16384
+    })
+  });
 
   const handleWaveshape = ({ target }) => {
     setWaveshape(target.value);
@@ -116,6 +161,7 @@ export const EffectsProvider = ({ children }) => {
         handleDelayWetLevel,
         handleDelayDryLevel,
         handleDelayCutoff,
+        effects
       }}
     >
       {children}
@@ -370,4 +416,9 @@ export const useHandleDelayDryLevel = () => {
 export const useHandleDelayCutoff = () => {
   const { handleDelayCutoff } = useContext(EffectsContext);
   return handleDelayCutoff;
+};
+
+export const useEffects = () => {
+  const { effects } = useContext(EffectsContext);
+  return effects;
 };

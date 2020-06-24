@@ -2,8 +2,8 @@
 
 exports[`App component renders App 1`] = `
 <Fragment>
-  <div>
+  <EffectsProvider>
     <Synth />
-  </div>
+  </EffectsProvider>
 </Fragment>
 `;
