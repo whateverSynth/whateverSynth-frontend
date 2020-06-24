@@ -5,7 +5,7 @@ const EffectsContext = createContext();
 
 export const EffectsProvider = ({ children }) => {
   //delay
-  const [delayBypass, setDelayBypass] = useState(1); //0 or 1
+  const [delayBypass, setDelayBypass] = useState(0); //0 or 1
   const [delayFeedback, setDelayFeedback] = useState(0.45); //0 to 1+
   const [delayTime, setDelayTime] = useState(150); //1 to 10000 ms
   const [delayWetLevel, setDelayWetLevel] = useState(0.25); //0 to 1+
@@ -33,8 +33,28 @@ export const EffectsProvider = ({ children }) => {
   const [overdriveCurveAmount, setOverdriveCurveAmount] = useState(1); //0 to 1
   const [overdriveAlgorithm, setOverdriveAlgorithm] = useState(0); //0 to 5, selects one of the drive algorithms
 
+  const handleDelayBypass = ({ target }) => {
+    setDelayBypass(target.value);
+  };
+
+  const handleDelayFeedback = ({ target }) => {
+    setDelayFeedback(target.value);
+  };
+
+  const handleDelayTime = ({ target }) => {
+    setDelayTime(target.value);
+  };
+
   const handleDelayWetLevel = ({ target }) => {
     setDelayWetLevel(target.value);
+  };
+
+  const handleDelayDryLevel = ({ target }) => {
+    setDelayDryLevel(target.value);
+  };
+
+  const handleDelayCutoff = ({ target }) => {
+    setDelayCutoff(target.value);
   };
 
   return (
@@ -82,7 +102,12 @@ export const EffectsProvider = ({ children }) => {
         setOverdriveCurveAmount,
         overdriveAlgorithm,
         setOverdriveAlgorithm,
+        handleDelayBypass,
+        handleDelayFeedback,
+        handleDelayTime,
         handleDelayWetLevel,
+        handleDelayDryLevel,
+        handleDelayCutoff,
       }}
     >
       {children}
@@ -298,8 +323,33 @@ export const useSetOverdriveAlgorithm = () => {
   return setOverdriveAlgorithm;
 };
 
-//handlers export
+//delay handlers export
+export const useHandleDelayBypass = () => {
+  const { handleDelayBypass } = useContext(EffectsContext);
+  return handleDelayBypass;
+};
+
+export const useHandleDelayFeedback = () => {
+  const { handleDelayFeedback } = useContext(EffectsContext);
+  return handleDelayFeedback;
+};
+
+export const useHandleDelayTime = () => {
+  const { handleDelayTime } = useContext(EffectsContext);
+  return handleDelayTime;
+};
+
 export const useHandleDelayWetLevel = () => {
   const { handleDelayWetLevel } = useContext(EffectsContext);
   return handleDelayWetLevel;
+};
+
+export const useHandleDelayDryLevel = () => {
+  const { handleDelayWetLevel } = useContext(EffectsContext);
+  return handleDelayWetLevel;
+};
+
+export const useHandleDelayCutoff = () => {
+  const { handleDelayCutoff } = useContext(EffectsContext);
+  return handleDelayCutoff;
 };

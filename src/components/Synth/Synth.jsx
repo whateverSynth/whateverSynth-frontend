@@ -3,28 +3,46 @@ import styles from './Synth.css';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 import { keyboardFrequencyMap } from '../../utils/data';
 import Tuna from 'tunajs';
-import Effects from '../Effects/Effects';
+import {
+  useDelayWetLevel,
+  useHandleDelayWetLevel,
+  useDelayBypass,
+  useHandleDelayBypass,
+  useDelayFeedback,
+  useHandleDelayFeedback,
+  useDelayTime,
+  useHandleDelayTime,
+} from '../../hooks/EffectsProvider';
+// import Effects from '../Effects/Effects';
 
 export default function Synth() {
   const [waveshape, setWaveshape] = useState('sine');
-  const [delayWet, setDelayWet] = useState(0.5);
+  // const [delayWet, setDelayWet] = useState(0.5);
+
+  const delayBypass = useDelayBypass();
+  const delayWetLevel = useDelayWetLevel();
+  const delayFeedback = useDelayFeedback();
+  const delayTime = useDelayTime();
+  const handleDelayBypass = useHandleDelayBypass();
+  const handleDelayWetLevel = useHandleDelayWetLevel();
+  const handleDelayFeedback = useHandleDelayFeedback();
+  const handleDelayTime = useHandleDelayTime();
 
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
   const tuna = new Tuna(audioCtx);
+  const gain = audioCtx.createGain();
+  const activeOscillators = {};
   const delay = new tuna.Delay({
-    feedback: delayWet,    //0 to 1+
-    delayTime: 150,    //1 to 10000 milliseconds
-    wetLevel: 0.25,    //0 to 1+
-    dryLevel: 1,       //0 to 1+
-    cutoff: 2000,      //cutoff frequency of the built in lowpass-filter. 20 to 22050
-    bypass: 0
+    feedback: delayFeedback, //0 to 1+
+    delayTime: 150, //1 to 10000 milliseconds
+    wetLevel: delayWetLevel, //0 to 1+
+    dryLevel: 1, //0 to 1+
+    cutoff: 2000, //cutoff frequency of the built in lowpass-filter. 20 to 22050
+    bypass: delayBypass,
   });
 
-  const gain = audioCtx.createGain();
   gain.connect(delay);
   delay.connect(audioCtx.destination);
-  const activeOscillators = {};
 
   //HANDLES CREATION & STORING OF OSCILLATORS
   function playNote(key) {
@@ -41,14 +59,14 @@ export default function Synth() {
 
   function keyDown(event) {
     const key = (event.detail || event.which).toString();
-    if(keyboardFrequencyMap[key] && !activeOscillators[key]) {
+    if (keyboardFrequencyMap[key] && !activeOscillators[key]) {
       playNote(key);
     }
   }
 
   function keyUp(event) {
     const key = (event.detail || event.which).toString();
-    if(keyboardFrequencyMap[key] && activeOscillators[key]) {
+    if (keyboardFrequencyMap[key] && activeOscillators[key]) {
       activeOscillators[key].stop();
       delete activeOscillators[key];
     }
@@ -58,9 +76,9 @@ export default function Synth() {
     setWaveshape(target.value);
   };
 
-  const handleDelayWetness = ({ target }) => {
-    setDelayWet(target.value);
-  };
+  // const handleDelayWetness = ({ target }) => {
+  //   setDelayWet(target.value);
+  // };
 
   return (
     <div className={styles.Container}>
@@ -108,7 +126,59 @@ export default function Synth() {
         onClick={() => handleWaveshape(event)}
       />
       <label>sawtooth</label>
-      <Effects tuna={tuna} delayWet={delayWet} handleDelayWetness={handleDelayWetness}/>
+
+      <div>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          value={delayBypass}
+          step="1"
+          id="delayBypassRange"
+          onChange={handleDelayBypass}
+        ></input>
+        <label>Delay Bypass</label>
+      </div>
+
+      <div>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          value={delayFeedback}
+          step="0.05"
+          id="delayFeedbackRange"
+          onChange={handleDelayFeedback}
+        ></input>
+        <label>Delay Feedback</label>
+      </div>
+
+      <div>
+        <input
+          type="range"
+          min="1"
+          max="1000"
+          value={delayTime}
+          step="1"
+          id="delayTimeRange"
+          onChange={handleDelayTime}
+        ></input>
+        <label>Delay Time</label>
+      </div>
+
+      <div>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          value={delayWetLevel}
+          step="0.1"
+          id="myRange"
+          onChange={handleDelayWetLevel}
+        ></input>
+        <label>Delay Wet Level</label>
+      </div>
+      {/* <Effects tuna={tuna} delayWet={delayWet} handleDelayWetness={handleDelayWetness}/> */}
     </div>
   );
 }
