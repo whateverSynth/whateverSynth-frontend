@@ -26,6 +26,13 @@ export const EffectsProvider = ({ children }) => {
   const [phaserStereoPhase, setPhaserStereoPhase] = useState(30); //0 to 180
   const [phaserBaseModFreq, setPhaserBaseModFreq] = useState(700); //500 to 1500
 
+  //overdrive
+  const [overdriveBypass, setOverdriveBypass] = useState(1); //0 or 1
+  const [overdriveOutputGain, setOverdriveOutputGain] = useState(0); //-42 to 0 in dB
+  const [overdriveDrive, setOverdriveDrive] = useState(0.7); //0 to 1
+  const [overdriveCurveAmount, setOverdriveCurveAmount] = useState(1); //0 to 1
+  const [overdriveAlgorithm, setOverdriveAlgorithm] = useState(0); //0 to 5, selects one of the drive algorithms
+
   return (
     <EffectsContext.Provider
       value={{
@@ -61,6 +68,16 @@ export const EffectsProvider = ({ children }) => {
         setPhaserStereoPhase,
         phaserBaseModFreq,
         setPhaserBaseModFreq,
+        overdriveBypass,
+        setOverdriveBypass,
+        overdriveOutputGain,
+        setOverdriveOutputGain,
+        overdriveDrive,
+        setOverdriveDrive,
+        overdriveCurveAmount,
+        setOverdriveCurveAmount,
+        overdriveAlgorithm,
+        setOverdriveAlgorithm,
       }}
     >
       {children}
@@ -176,8 +193,8 @@ export const useSetChorusDelay = () => {
 
 //phaser exports
 export const usePhaserBypass = () => {
-  const { chorusBypass } = useContext(EffectsContext);
-  return chorusBypass;
+  const { phaserBypass } = useContext(EffectsContext);
+  return phaserBypass;
 };
 
 export const useSetPhaserBypass = () => {
@@ -223,4 +240,55 @@ export const usePhaserBaseModeFreq = () => {
 export const useSetPhaserBaseModeFreq = () => {
   const { setPhaserBaseModeFreq } = useContext(EffectsContext);
   return setPhaserBaseModeFreq;
+};
+
+//overdrive exports
+export const useOverdriveBypass = () => {
+  const { overdriveBypass } = useContext(EffectsContext);
+  return overdriveBypass;
+};
+
+export const useSetOverdriveBypass = () => {
+  const { setOverdriveBypass } = useContext(EffectsContext);
+  return setOverdriveBypass;
+};
+
+export const useOverdriveOutputGain = () => {
+  const { overdriveOutputGain } = useContext(EffectsContext);
+  return overdriveOutputGain;
+};
+
+export const useSetOverdriveOutputGain = () => {
+  const { setOverdriveOutputGain } = useContext(EffectsContext);
+  return setOverdriveOutputGain;
+};
+
+export const useOverdrive = () => {
+  const { overdriveDrive } = useContext(EffectsContext);
+  return overdriveDrive;
+};
+
+export const useSetOverdriveDrive = () => {
+  const { setOverdriveDrive } = useContext(EffectsContext);
+  return setOverdriveDrive;
+};
+
+export const useOverdriveCurveAmount = () => {
+  const { overdriveCurveAmount } = useContext(EffectsContext);
+  return overdriveCurveAmount;
+};
+
+export const useSetOverdriveCurveAmount = () => {
+  const { setOverdriveCurveAmount } = useContext(EffectsContext);
+  return setOverdriveCurveAmount;
+};
+
+export const useOverdriveAlgorithm = () => {
+  const { overdriveAlgorithm } = useContext(EffectsContext);
+  return overdriveAlgorithm;
+};
+
+export const useSetOverdriveAlgorithm = () => {
+  const { setOverdriveAlgorithm } = useContext(EffectsContext);
+  return setOverdriveAlgorithm;
 };
