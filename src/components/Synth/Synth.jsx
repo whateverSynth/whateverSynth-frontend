@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './Synth.css';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 import { keyboardFrequencyMap } from '../../utils/data';
@@ -16,23 +16,19 @@ import {
   useDelayCutoff,
   useHandleDelayDryLevel,
   useHandleDelayCutoff,
-  // useHandleWaveshape,
-  // useWaveshape,
+  useHandleWaveshape,
+  useWaveshape,
 } from '../../hooks/EffectsProvider';
-// import Effects from '../Effects/Effects';
 
 export default function Synth() {
-  const [waveshape, setWaveshape] = useState('sine');
-  // const [delayWet, setDelayWet] = useState(0.5);
-
-  // const waveshape = useWaveshape();
+  const waveshape = useWaveshape();
   const delayBypass = useDelayBypass();
   const delayFeedback = useDelayFeedback();
   const delayTime = useDelayTime();
   const delayWetLevel = useDelayWetLevel();
   const delayDryLevel = useDelayDryLevel();
   const delayCutoff = useDelayCutoff();
-  // const handleWaveshape = useHandleWaveshape();
+  const handleWaveshape = useHandleWaveshape();
   const handleDelayBypass = useHandleDelayBypass();
   const handleDelayFeedback = useHandleDelayFeedback();
   const handleDelayTime = useHandleDelayTime();
@@ -40,25 +36,35 @@ export default function Synth() {
   const handleDelayDryLevel = useHandleDelayDryLevel();
   const handleDelayCutoff = useHandleDelayCutoff();
 
-  const handleWaveshape = ({ target }) => {
-    setWaveshape(target.value);
-  };
-
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const tuna = new Tuna(audioCtx);
   const gain = audioCtx.createGain();
   const activeOscillators = {};
+
+  const compressor = new tuna.Compressor({
+    threshold: -1, //-100 to 0
+    makeupGain: 0, //0 and up (in decibels)
+    attack: 0, //0 to 1000
+    release: 0.25, //0 to 3000
+    ratio: 20, //1 to 20
+    knee: 5, //0 to 40
+    automakeup: false, //true/false
+    bypass: 0,
+  });
+
   const delay = new tuna.Delay({
     feedback: delayFeedback, //0 to 1+
-    delayTime: 150, //1 to 10000 milliseconds
+    delayTime: delayTime, //1 to 10000 milliseconds
     wetLevel: delayWetLevel, //0 to 1+
-    dryLevel: 1, //0 to 1+
-    cutoff: 2000, //cutoff frequency of the built in lowpass-filter. 20 to 22050
+    dryLevel: delayDryLevel, //0 to 1+
+    cutoff: delayCutoff, //cutoff frequency of the built in lowpass-filter. 20 to 22050
     bypass: delayBypass,
   });
 
+  gain.gain.value = 0.8;
   gain.connect(delay);
-  delay.connect(audioCtx.destination);
+  delay.connect(compressor);
+  compressor.connect(audioCtx.destination);
 
   //HANDLES CREATION & STORING OF OSCILLATORS
   function playNote(key) {
@@ -88,6 +94,12 @@ export default function Synth() {
     }
   }
 
+  function removeFocus(event) {
+    event.target.blur();
+  }
+
+  window.addEventListener('mouseup', removeFocus);
+
   return (
     <div className={styles.Container}>
       <KeyboardEventHandler
@@ -102,6 +114,15 @@ export default function Synth() {
       />
       <h1>Synthinator</h1>
       <input
+        type="radio"
+        value="sine"
+        name="waveshapes"
+        id="sine"
+        defaultChecked
+        onClick={() => handleWaveshape(event)}
+      />
+      <label>sine</label>
+      <input
         className={styles.Radio}
         type="radio"
         value="square"
@@ -110,14 +131,6 @@ export default function Synth() {
         onClick={() => handleWaveshape(event)}
       />
       <label>square</label>
-      <input
-        type="radio"
-        value="sine"
-        name="waveshapes"
-        id="sine"
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>sine</label>
       <input
         type="radio"
         value="triangle"
@@ -137,13 +150,10 @@ export default function Synth() {
 
       <div>
         <input
-          type="range"
-          min="0"
-          max="1"
+          type="checkbox"
           value={delayBypass}
-          step="1"
-          id="delayBypassRange"
           onChange={handleDelayBypass}
+          // onClick={window.focus()}
         ></input>
         <label>Delay Bypass</label>
       </div>
@@ -212,8 +222,6 @@ export default function Synth() {
         ></input>
         <label>Delay Cutoff</label>
       </div>
-
-      {/* <Effects tuna={tuna} delayWet={delayWet} handleDelayWetness={handleDelayWetness}/> */}
     </div>
   );
 }

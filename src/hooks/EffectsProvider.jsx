@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 const EffectsContext = createContext();
 
 export const EffectsProvider = ({ children }) => {
-  const [waveshape, setWaveshape] = useState('square');
+  const [waveshape, setWaveshape] = useState('sine');
 
   //delay
-  const [delayBypass, setDelayBypass] = useState(0); //0 or 1
+  const [delayBypass, setDelayBypass] = useState(false); //0 or 1
   const [delayFeedback, setDelayFeedback] = useState(0.45); //0 to 1+
   const [delayTime, setDelayTime] = useState(150); //1 to 10000 ms
   const [delayWetLevel, setDelayWetLevel] = useState(0.25); //0 to 1+
@@ -39,8 +39,8 @@ export const EffectsProvider = ({ children }) => {
     setWaveshape(target.value);
   };
 
-  const handleDelayBypass = ({ target }) => {
-    setDelayBypass(target.value);
+  const handleDelayBypass = () => {
+    setDelayBypass(!delayBypass);
   };
 
   const handleDelayFeedback = ({ target }) => {
@@ -337,8 +337,8 @@ export const useSetOverdriveAlgorithm = () => {
 };
 
 export const useHandleWaveshape = () => {
-  const { waveshape } = useContext(EffectsContext);
-  return waveshape;
+  const { handleWaveshape } = useContext(EffectsContext);
+  return handleWaveshape;
 };
 
 //delay handlers export
@@ -363,8 +363,8 @@ export const useHandleDelayWetLevel = () => {
 };
 
 export const useHandleDelayDryLevel = () => {
-  const { handleDelayWetLevel } = useContext(EffectsContext);
-  return handleDelayWetLevel;
+  const { handleDelayDryLevel } = useContext(EffectsContext);
+  return handleDelayDryLevel;
 };
 
 export const useHandleDelayCutoff = () => {
