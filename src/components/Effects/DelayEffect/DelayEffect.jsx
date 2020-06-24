@@ -13,7 +13,6 @@ import {
   useDelayDryLevel,
   useDelayCutoff,
 } from '../../../hooks/EffectsProvider';
-// import Tuna from 'tunajs';
 
 const DelayEffect = () => {
   const delayBypass = useDelayBypass();
@@ -28,15 +27,6 @@ const DelayEffect = () => {
   const handleDelayWetLevel = useHandleDelayWetLevel();
   const handleDelayDryLevel = useHandleDelayDryLevel();
   const handleDelayCutoff = useHandleDelayCutoff();
-
-  // const delayThing = new Tuna.Delay({
-  //   feedback: delayFeedback, //0 to 1+
-  //   delayTime: delayTime, //1 to 10000 milliseconds
-  //   wetLevel: delayWetLevel, //0 to 1+
-  //   dryLevel: delayDryLevel, //0 to 1+
-  //   cutoff: delayCutoff, //cutoff frequency of the built in lowpass-filter. 20 to 22050
-  //   bypass: delayBypass,
-  // });
 
   return (
     <>
