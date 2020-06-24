@@ -2,22 +2,25 @@ import React from 'react';
 import styles from './Synth.css';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 import { keyboardFrequencyMap } from '../../utils/data';
+import DelayEffect from '../Effects/DelayEffect/DelayEffect';
 import Tuna from 'tunajs';
 import {
   useDelayWetLevel,
-  useHandleDelayWetLevel,
+  // useHandleDelayWetLevel,
   useDelayBypass,
-  useHandleDelayBypass,
+  // useHandleDelayBypass,
   useDelayFeedback,
-  useHandleDelayFeedback,
+  // useHandleDelayFeedback,
   useDelayTime,
-  useHandleDelayTime,
+  // useHandleDelayTime,
   useDelayDryLevel,
   useDelayCutoff,
-  useHandleDelayDryLevel,
-  useHandleDelayCutoff,
+  // useHandleDelayDryLevel,
+  // useHandleDelayCutoff,
   useHandleWaveshape,
   useWaveshape,
+  useGainSetting,
+  useHandleGainSetting,
 } from '../../hooks/EffectsProvider';
 
 export default function Synth() {
@@ -28,17 +31,20 @@ export default function Synth() {
   const delayWetLevel = useDelayWetLevel();
   const delayDryLevel = useDelayDryLevel();
   const delayCutoff = useDelayCutoff();
+  const handleGainSetting = useHandleGainSetting();
   const handleWaveshape = useHandleWaveshape();
-  const handleDelayBypass = useHandleDelayBypass();
-  const handleDelayFeedback = useHandleDelayFeedback();
-  const handleDelayTime = useHandleDelayTime();
-  const handleDelayWetLevel = useHandleDelayWetLevel();
-  const handleDelayDryLevel = useHandleDelayDryLevel();
-  const handleDelayCutoff = useHandleDelayCutoff();
+  // const delay = delayThing;
+  // const handleDelayBypass = useHandleDelayBypass();
+  // const handleDelayFeedback = useHandleDelayFeedback();
+  // const handleDelayTime = useHandleDelayTime();
+  // const handleDelayWetLevel = useHandleDelayWetLevel();
+  // const handleDelayDryLevel = useHandleDelayDryLevel();
+  // const handleDelayCutoff = useHandleDelayCutoff();
 
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const tuna = new Tuna(audioCtx);
   const gain = audioCtx.createGain();
+  const gainSetting = useGainSetting();
   const activeOscillators = {};
 
   const compressor = new tuna.Compressor({
@@ -61,7 +67,7 @@ export default function Synth() {
     bypass: delayBypass,
   });
 
-  gain.gain.value = 0.8;
+  gain.gain.value = gainSetting; //defaults to 0.8
   gain.connect(delay);
   delay.connect(compressor);
   compressor.connect(audioCtx.destination);
@@ -113,6 +119,20 @@ export default function Synth() {
         onKeyEvent={(key, e) => keyUp(e)}
       />
       <h1>Synthinator</h1>
+
+      <div>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          value={gainSetting}
+          step="0.05"
+          id="gainSetting"
+          onChange={handleGainSetting}
+        ></input>
+        <label>gain</label>
+      </div>
+
       <input
         type="radio"
         value="sine"
@@ -148,7 +168,9 @@ export default function Synth() {
       />
       <label>sawtooth</label>
 
-      <div>
+      <DelayEffect />
+
+      {/* <div>
         <input
           type="checkbox"
           value={delayBypass}
@@ -221,7 +243,7 @@ export default function Synth() {
           onChange={handleDelayCutoff}
         ></input>
         <label>Delay Cutoff</label>
-      </div>
+      </div> */}
     </div>
   );
 }
