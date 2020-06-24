@@ -19,6 +19,7 @@ import {
   useHandleWaveshape,
   useWaveshape,
   useEffects,
+  useDelaySettings,
 } from '../../hooks/EffectsProvider';
 
 export default function Synth() {
@@ -36,17 +37,21 @@ export default function Synth() {
   const handleDelayWetLevel = useHandleDelayWetLevel();
   const handleDelayDryLevel = useHandleDelayDryLevel();
   const handleDelayCutoff = useHandleDelayCutoff();
+
+  // NEW EFFECT STATE
   const effects = useEffects();
-  
+  const delaySettings = useDelaySettings();
 
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const tuna = new Tuna(audioCtx);
   const gain = audioCtx.createGain();
   const activeOscillators = {};
 
+  // CREATE TUNA EFFECTS USING PROVIDER STATE
   const tunaEffects = Object.entries(effects).map(effect => {
     const name = effect[0];
-    return new tuna[name](effect[1]);
+    if(name === 'Delay') return new tuna[name](delaySettings);
+    else return new tuna[name](effect[1]);
   });
 
   // const compressor = new tuna.Compressor({
@@ -70,14 +75,21 @@ export default function Synth() {
   // });
 
   gain.gain.value = 0.8;
+
+  // MAKE CHAIN BY ITERATING OVER EFFECTS
   tunaEffects.forEach((effect, i) => {
-    if(i === 0) {
+    if(tunaEffects.length === 1) {
+      gain.connect(effect);
+      effect.connect(audioCtx.destination);
+      return;
+    }
+    else if(i === 0) {
       gain.connect(effect);
     }
-    if(i > 0 && i < tunaEffects.length - 1) {
+    else if(i > 0 && i < tunaEffects.length - 1) {
       tunaEffects[i - 1].connect(effect);
     }
-    if(i === tunaEffects.length - 1) {
+    else if(i === tunaEffects.length - 1) {
       tunaEffects[i - 1].connect(effect);
       effect.connect(audioCtx.destination);
     }
@@ -102,14 +114,14 @@ export default function Synth() {
 
   function keyDown(event) {
     const key = (event.detail || event.which).toString();
-    if (keyboardFrequencyMap[key] && !activeOscillators[key]) {
+    if(keyboardFrequencyMap[key] && !activeOscillators[key]) {
       playNote(key);
     }
   }
 
   function keyUp(event) {
     const key = (event.detail || event.which).toString();
-    if (keyboardFrequencyMap[key] && activeOscillators[key]) {
+    if(keyboardFrequencyMap[key] && activeOscillators[key]) {
       activeOscillators[key].stop();
       delete activeOscillators[key];
     }
@@ -121,10 +133,6 @@ export default function Synth() {
       oscillator.stop();
     });
   }
-
-  // useEffect(() => {
-  //   console.log(effects);
-  // }, [effects]);
 
   window.addEventListener('mouseup', removeFocus);
 

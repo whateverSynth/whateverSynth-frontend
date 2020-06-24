@@ -5,35 +5,6 @@ const EffectsContext = createContext();
 
 export const EffectsProvider = ({ children }) => {
   const [waveshape, setWaveshape] = useState('sine');
-  
-  //delay
-  const [delayBypass, setDelayBypass] = useState(false); //0 or 1
-  const [delayFeedback, setDelayFeedback] = useState(0.45); //0 to 1+
-  const [delayTime, setDelayTime] = useState(150); //1 to 10000 ms
-  const [delayWetLevel, setDelayWetLevel] = useState(0.25); //0 to 1+
-  const [delayDryLevel, setDelayDryLevel] = useState(1); //0 to 1+
-  const [delayCutoff, setDelayCutoff] = useState(2000); //20 to 22050 hz
-
-  //chorus
-  const [chorusBypass, setChorusBypass] = useState(1); //0 or 1
-  const [chorusRate, setChorusRate] = useState(1.5); //0.01 to 8+
-  const [chorusFeedback, setChorusFeedback] = useState(0.2); //0 to 1+
-  const [chorusDelay, setChorusDelay] = useState(0.0045); //0 to 1
-
-  //phaser
-  const [phaserBypass, setPhaserBypass] = useState(1); //0 or 1
-  const [phaserRate, setPhaserRate] = useState(1.2); //0.01 to 8+
-  const [phaserDepth, setPhaserDepth] = useState(0.3); //0 to 1
-  const [phaserFeedback, setPhaserFeedback] = useState(0.2); //0 to 1+
-  const [phaserStereoPhase, setPhaserStereoPhase] = useState(30); //0 to 180
-  const [phaserBaseModFreq, setPhaserBaseModFreq] = useState(700); //500 to 1500
-
-  //overdrive
-  const [overdriveBypass, setOverdriveBypass] = useState(1); //0 or 1
-  const [overdriveOutputGain, setOverdriveOutputGain] = useState(0); //-42 to 0 in dB
-  const [overdriveDrive, setOverdriveDrive] = useState(0.7); //0 to 1
-  const [overdriveCurveAmount, setOverdriveCurveAmount] = useState(1); //0 to 1
-  const [overdriveAlgorithm, setOverdriveAlgorithm] = useState(0); //0 to 5, selects one of the drive algorithms
 
   const [effects, setEffects] = useState({
     Chorus: ({
@@ -50,14 +21,7 @@ export const EffectsProvider = ({ children }) => {
       baseModulationFrequency: 700,  //500 to 1500
       bypass: 0
     }),
-    Delay: ({
-      feedback: delayFeedback,    //0 to 1+
-      delayTime: delayTime,    //1 to 10000 milliseconds
-      wetLevel: delayWetLevel,    //0 to 1+
-      dryLevel: delayDryLevel,       //0 to 1+
-      cutoff: delayCutoff,      //cutoff frequency of the built in lowpass-filter. 20 to 22050
-      bypass: delayBypass
-    }),
+    Delay: ({}),
     Tremolo: ({
       intensity: 0.3,    //0 to 1
       rate: 4,         //0.001 to 8
@@ -80,32 +44,76 @@ export const EffectsProvider = ({ children }) => {
     })
   });
 
+  //delay
+  const [delayBypass, setDelayBypass] = useState(false); //0 or 1
+  const [delayFeedback, setDelayFeedback] = useState(0.45); //0 to 1+
+  const [delayTime, setDelayTime] = useState(150); //1 to 10000 ms
+  const [delayWetLevel, setDelayWetLevel] = useState(0.25); //0 to 1+
+  const [delayDryLevel, setDelayDryLevel] = useState(1); //0 to 1+
+  const [delayCutoff, setDelayCutoff] = useState(2000); //20 to 22050 hz
+
+  const [delaySettings, setDelaySettings] = useState({    
+    feedback: delayFeedback, //0 to 1+
+    delayTime: delayTime, //1 to 10000 milliseconds
+    wetLevel: delayWetLevel, //0 to 1+
+    dryLevel: delayDryLevel, //0 to 1+
+    cutoff: delayCutoff, //cutoff frequency of the built in lowpass-filter. 20 to 22050
+    bypass: delayBypass  
+  });
+
+  //chorus
+  const [chorusBypass, setChorusBypass] = useState(1); //0 or 1
+  const [chorusRate, setChorusRate] = useState(1.5); //0.01 to 8+
+  const [chorusFeedback, setChorusFeedback] = useState(0.2); //0 to 1+
+  const [chorusDelay, setChorusDelay] = useState(0.0045); //0 to 1
+
+  //phaser
+  const [phaserBypass, setPhaserBypass] = useState(1); //0 or 1
+  const [phaserRate, setPhaserRate] = useState(1.2); //0.01 to 8+
+  const [phaserDepth, setPhaserDepth] = useState(0.3); //0 to 1
+  const [phaserFeedback, setPhaserFeedback] = useState(0.2); //0 to 1+
+  const [phaserStereoPhase, setPhaserStereoPhase] = useState(30); //0 to 180
+  const [phaserBaseModFreq, setPhaserBaseModFreq] = useState(700); //500 to 1500
+
+  //overdrive
+  const [overdriveBypass, setOverdriveBypass] = useState(1); //0 or 1
+  const [overdriveOutputGain, setOverdriveOutputGain] = useState(0); //-42 to 0 in dB
+  const [overdriveDrive, setOverdriveDrive] = useState(0.7); //0 to 1
+  const [overdriveCurveAmount, setOverdriveCurveAmount] = useState(1); //0 to 1
+  const [overdriveAlgorithm, setOverdriveAlgorithm] = useState(0); //0 to 5, selects one of the drive algorithms
+
   const handleWaveshape = ({ target }) => {
     setWaveshape(target.value);
   };
 
   const handleDelayBypass = () => {
     setDelayBypass(!delayBypass);
+    setDelaySettings({ ...delaySettings, bypass: !delayBypass });
   };
 
   const handleDelayFeedback = ({ target }) => {
     setDelayFeedback(target.value);
+    setDelaySettings({ ...delaySettings, feedback: target.value });
   };
 
   const handleDelayTime = ({ target }) => {
     setDelayTime(target.value);
+    setDelaySettings({ ...delaySettings, delayTime: target.value });
   };
 
   const handleDelayWetLevel = ({ target }) => {
     setDelayWetLevel(target.value);
+    setDelaySettings({ ...delaySettings, wetLevel: target.value });
   };
 
   const handleDelayDryLevel = ({ target }) => {
     setDelayDryLevel(target.value);
+    setDelaySettings({ ...delaySettings, dryLevel: target.value });
   };
 
   const handleDelayCutoff = ({ target }) => {
     setDelayCutoff(target.value);
+    setDelaySettings({ ...delaySettings, cutoff: target.value });
   };
 
   return (
@@ -161,7 +169,8 @@ export const EffectsProvider = ({ children }) => {
         handleDelayWetLevel,
         handleDelayDryLevel,
         handleDelayCutoff,
-        effects
+        effects,
+        delaySettings
       }}
     >
       {children}
@@ -421,4 +430,9 @@ export const useHandleDelayCutoff = () => {
 export const useEffects = () => {
   const { effects } = useContext(EffectsContext);
   return effects;
+};
+
+export const useDelaySettings = () => {
+  const { delaySettings } = useContext(EffectsContext);
+  return delaySettings;
 };
