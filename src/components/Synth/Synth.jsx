@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Synth.css';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 import { keyboardFrequencyMap } from '../../utils/data';
@@ -20,9 +20,10 @@ import Waveshapes from '../Waveshapes/Waveshapes';
 let audioCtx;
 let tuna;
 let gain;
-let tunaEffects;
+let tunaEffects = [];
 
 export default function Synth() {
+  const [localEffects, setLocalEffects] = useState([]);
 
   const waveshape = useWaveshape();
   const gainSetting = useGainSetting();
@@ -53,27 +54,32 @@ export default function Synth() {
     });
   
     // MAKE CHAIN BY ITERATING OVER EFFECTS
-    tunaEffects.forEach((effect, i) => {
-      if(tunaEffects.length === 1) {
-        gain.connect(effect);
-        effect.connect(audioCtx.destination);
-        return;
-      }
-      else if(i === 0) {
-        gain.connect(effect);
-      }
-      else if(i > 0 && i < tunaEffects.length - 1) {
-        tunaEffects[i - 1].connect(effect);
-      }
-      else if(i === tunaEffects.length - 1) {
-        tunaEffects[i - 1].connect(effect);
-        effect.connect(audioCtx.destination);
-      }
-    });
+    if(tunaEffects.length === 0) gain.connect(audioCtx.destination);
+    else {
+      tunaEffects.forEach((effect, i) => {
+        if(tunaEffects.length === 1) {
+          gain.connect(effect);
+          effect.connect(audioCtx.destination);
+          return;
+        }
+        else if(i === 0) {
+          gain.connect(effect);
+        }
+        else if(i > 0 && i < tunaEffects.length - 1) {
+          tunaEffects[i - 1].connect(effect);
+        }
+        else if(i === tunaEffects.length - 1) {
+          tunaEffects[i - 1].connect(effect);
+          effect.connect(audioCtx.destination);
+        }
+      });
+    }
+    setLocalEffects(tunaEffects);
   }, []);
 
   useEffect(() => {
     const chainIndex = tunaEffects.findIndex(effect => effect.name === 'Delay');
+    if(chainIndex === -1) return;
     Object.entries(delaySettings).forEach(setting => {
       tunaEffects[chainIndex][setting[0]] = setting[1];
     });
@@ -82,6 +88,8 @@ export default function Synth() {
   useEffect(() => {
     gain.gain.value = gainSetting; //defaults to 0.8
   }, [gainSetting]);
+
+
   
   //HANDLES CREATION & STORING OF OSCILLATORS
   function playNote(key) {
@@ -119,6 +127,16 @@ export default function Synth() {
   }
 
   window.addEventListener('mouseup', removeFocus);
+  
+
+  const effectNodes = localEffects.map(effect => {
+    if(effect.name === 'Chorus') return <li>CHORUS SETTINGS</li>;
+    if(effect.name === 'Phaser') return <li>PHASER SETTINGS</li>;
+    if(effect.name === 'Delay') return <DelayEffect />;
+    if(effect.name === 'Tremolo') return <li>TREMOLO SETTINGS</li>;
+    if(effect.name === 'WahWah') return <li>WAHWAH SETTINGS</li>;
+    if(effect.name === 'Bitcrusher') return <li>BITCRUSHER SETTINGS</li>;
+  });
 
   return (
     <div className={styles.Container}>
@@ -135,8 +153,9 @@ export default function Synth() {
       <h1>Synthinator</h1>
 
       <Waveshapes />
-
-      <DelayEffect />
+      <ul>
+        {effectNodes}
+      </ul>
     </div>
   );
 }
