@@ -12,7 +12,7 @@ const Waveshapes = () => {
   const handleWaveshape = useHandleWaveshape();
 
   return (
-    <section className={styles.Radio}>
+    <section className={styles.Controls}>
       <input
         type="range"
         min="0"
@@ -25,40 +25,42 @@ const Waveshapes = () => {
       <label className={styles.Gain}>
         volume: <p>{Math.floor(gainSetting * 100)} %</p>
       </label>
-
-      <input
-        type="radio"
-        value="sine"
-        name="waveshapes"
-        id="sine"
-        defaultChecked
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>sine</label>
-      <input
-        type="radio"
-        value="square"
-        name="waveshapes"
-        id="square"
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>square</label>
-      <input
-        type="radio"
-        value="triangle"
-        name="waveshapes"
-        id="triangle"
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>triangle</label>
-      <input
-        type="radio"
-        value="sawtooth"
-        name="waveshapes"
-        id="sawtooth"
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>sawtooth</label>
+      <div className={styles.Radio}>
+        <label>
+          <input
+            type="radio"
+            value="sine"
+            name="waveshapes"
+            id="sine"
+            defaultChecked
+            onClick={() => handleWaveshape(event)}
+            img="../../../public/assets/sine.png"
+          />sine</label>
+        <label>
+          <input
+            type="radio"
+            value="square"
+            name="waveshapes"
+            id="square"
+            onClick={() => handleWaveshape(event)}
+          />square</label>
+        <label>
+          <input
+            type="radio"
+            value="triangle"
+            name="waveshapes"
+            id="triangle"
+            onClick={() => handleWaveshape(event)}
+          />triangle</label>
+        <label>
+          <input
+            type="radio"
+            value="sawtooth"
+            name="waveshapes"
+            id="sawtooth"
+            onClick={() => handleWaveshape(event)}
+          />sawtooth</label>
+      </div>
     </section>
   );
 };
