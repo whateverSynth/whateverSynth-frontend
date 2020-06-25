@@ -7,59 +7,61 @@ export const EffectsProvider = ({ children }) => {
   const [waveshape, setWaveshape] = useState('sine');
   const [gainSetting, setGainSetting] = useState(0.8);
 
-  const [effects, setEffects] = useState({
-    Chorus: ({
-      rate: 1.5,         //0.01 to 8+
-      feedback: 0.2,     //0 to 1+
-      delay: 0.0045,     //0 to 1
-      bypass: 0          //the value 1 starts the effect as bypassed, 0 or 1
-    }),
-    Phaser : ({
-      rate: 1.2,                     //0.01 to 8 is a decent range, but higher values are possible
-      depth: 0.3,                    //0 to 1
-      feedback: 0.2,                 //0 to 1+
-      stereoPhase: 30,               //0 to 180
-      baseModulationFrequency: 700,  //500 to 1500
-      bypass: 0
-    }),
-    Delay: ({}),
-    Tremolo: ({
-      intensity: 0.3,    //0 to 1
-      rate: 4,         //0.001 to 8
-      stereoPhase: 0,    //0 to 180
-      bypass: 0
-    }),
-    WahWah: ({
-      automode: false,                //true/false
-      baseFrequency: 0.5,            //0 to 1
-      excursionOctaves: 2,           //1 to 6
-      sweep: 0.2,                    //0 to 1
-      resonance: 10,                 //1 to 100
-      sensitivity: 0.5,              //-1 to 1
-      bypass: 0
-    }),
-    Bitcrusher: ({
-      bits: 4,          //1 to 16
-      normfreq: 0.1,    //0 to 1
-      bufferSize: 4096  //256 to 16384
-    })
+  const [effects, setEffects] = useState([
+    'Chorus',
+    'Phaser',
+    'Delay',
+    'Tremolo',
+    'WahWah',
+    'Bitcrusher'
+  ]);
+
+  const [chorusSettings, setChorusSettings] = useState({    
+    rate: 1.5,         //0.01 to 8+
+    feedback: 0.2,     //0 to 1+
+    delay: 0.0045,     //0 to 1
+    bypass: 0          //the value 1 starts the effect as bypassed, 0 or 1
   });
 
-  //delay
-  const [delayBypass, setDelayBypass] = useState(false); //0 or 1
-  const [delayFeedback, setDelayFeedback] = useState(0.45); //0 to 1+
-  const [delayTime, setDelayTime] = useState(150); //1 to 10000 ms
-  const [delayWetLevel, setDelayWetLevel] = useState(0.25); //0 to 1+
-  const [delayDryLevel, setDelayDryLevel] = useState(1); //0 to 1+
-  const [delayCutoff, setDelayCutoff] = useState(2000); //20 to 22050 hz
+  const [phaserSettings, setPhaserSettings] = useState({    
+    rate: 1.2,                     //0.01 to 8 is a decent range, but higher values are possible
+    depth: 0.3,                    //0 to 1
+    feedback: 0.2,                 //0 to 1+
+    stereoPhase: 30,               //0 to 180
+    baseModulationFrequency: 700,  //500 to 1500
+    bypass: 0
+  });
 
   const [delaySettings, setDelaySettings] = useState({    
-    feedback: delayFeedback, //0 to 1+
-    delayTime: delayTime, //1 to 10000 milliseconds
-    wetLevel: delayWetLevel, //0 to 1+
-    dryLevel: delayDryLevel, //0 to 1+
-    cutoff: delayCutoff, //cutoff frequency of the built in lowpass-filter. 20 to 22050
-    bypass: delayBypass  
+    feedback: 0.45, //0 to 1+
+    delayTime: 150, //1 to 10000 milliseconds
+    wetLevel: 0.25, //0 to 1+
+    dryLevel: 1, //0 to 1+
+    cutoff: 2000, //cutoff frequency of the built in lowpass-filter. 20 to 22050
+    bypass: false  
+  });
+
+  const [tremoloSettings, setTremoloSettings] = useState({    
+    intensity: 0.3,    //0 to 1
+    rate: 4,         //0.001 to 8
+    stereoPhase: 0,    //0 to 180
+    bypass: 0
+  });
+
+  const [wahWahSettings, setWahWahSettings] = useState({    
+    automode: false,                //true/false
+    baseFrequency: 0.5,            //0 to 1
+    excursionOctaves: 2,           //1 to 6
+    sweep: 0.2,                    //0 to 1
+    resonance: 10,                 //1 to 100
+    sensitivity: 0.5,              //-1 to 1
+    bypass: 0
+  });
+
+  const [bitcrusherSettings, setBitcrusherSettings] = useState({    
+    bits: 4,          //1 to 16
+    normfreq: 0.1,    //0 to 1
+    bufferSize: 4096  //256 to 16384
   });
 
   //chorus
@@ -92,32 +94,32 @@ export const EffectsProvider = ({ children }) => {
   };
 
   const handleDelayBypass = () => {
-    setDelayBypass(!delayBypass);
-    setDelaySettings({ ...delaySettings, bypass: !delayBypass });
+    // setDelayBypass(!delayBypass);
+    setDelaySettings({ ...delaySettings, bypass: !delaySettings.bypass });
   };
 
   const handleDelayFeedback = ({ target }) => {
-    setDelayFeedback(target.value);
+    // setDelayFeedback(target.value);
     setDelaySettings({ ...delaySettings, feedback: target.value });
   };
 
   const handleDelayTime = ({ target }) => {
-    setDelayTime(target.value);
+    // setDelayTime(target.value);
     setDelaySettings({ ...delaySettings, delayTime: target.value });
   };
 
   const handleDelayWetLevel = ({ target }) => {
-    setDelayWetLevel(target.value);
+    // setDelayWetLevel(target.value);
     setDelaySettings({ ...delaySettings, wetLevel: target.value });
   };
 
   const handleDelayDryLevel = ({ target }) => {
-    setDelayDryLevel(target.value);
+    // setDelayDryLevel(target.value);
     setDelaySettings({ ...delaySettings, dryLevel: target.value });
   };
 
   const handleDelayCutoff = ({ target }) => {
-    setDelayCutoff(target.value);
+    // setDelayCutoff(target.value);
     setDelaySettings({ ...delaySettings, cutoff: target.value });
   };
 
@@ -126,18 +128,18 @@ export const EffectsProvider = ({ children }) => {
       value={{
         waveshape,
         gainSetting,
-        delayBypass,
-        setDelayBypass,
-        delayFeedback,
-        setDelayFeedback,
-        delayTime,
-        setDelayTime,
-        delayWetLevel,
-        setDelayWetLevel,
-        delayDryLevel,
-        setDelayDryLevel,
-        delayCutoff,
-        setDelayCutoff,
+        // delayBypass,
+        // setDelayBypass,
+        // delayFeedback,
+        // setDelayFeedback,
+        // delayTime,
+        // setDelayTime,
+        // delayWetLevel,
+        // setDelayWetLevel,
+        // delayDryLevel,
+        // setDelayDryLevel,
+        // delayCutoff,
+        // setDelayCutoff,
         chorusBypass,
         setChorusBypass,
         chorusRate,
@@ -177,7 +179,12 @@ export const EffectsProvider = ({ children }) => {
         handleDelayDryLevel,
         handleDelayCutoff,
         effects,
-        delaySettings
+        chorusSettings,
+        phaserSettings,
+        delaySettings,
+        tremoloSettings,
+        wahWahSettings,
+        bitcrusherSettings
       }}
     >
       {children}
@@ -200,65 +207,65 @@ export const useGainSetting = () => {
 };
 
 //delay exports
-export const useDelayBypass = () => {
-  const { delayBypass } = useContext(EffectsContext);
-  return delayBypass;
-};
+// export const useDelayBypass = () => {
+//   const { delayBypass } = useContext(EffectsContext);
+//   return delayBypass;
+// };
 
-export const useSetDelayBypass = () => {
-  const { setDelayBypass } = useContext(EffectsContext);
-  return setDelayBypass;
-};
+// export const useSetDelayBypass = () => {
+//   const { setDelayBypass } = useContext(EffectsContext);
+//   return setDelayBypass;
+// };
 
-export const useDelayFeedback = () => {
-  const { delayFeedback } = useContext(EffectsContext);
-  return delayFeedback;
-};
+// export const useDelayFeedback = () => {
+//   const { delayFeedback } = useContext(EffectsContext);
+//   return delayFeedback;
+// };
 
-export const useSetDelayFeedback = () => {
-  const { setDelayFeedback } = useContext(EffectsContext);
-  return setDelayFeedback;
-};
+// export const useSetDelayFeedback = () => {
+//   const { setDelayFeedback } = useContext(EffectsContext);
+//   return setDelayFeedback;
+// };
 
-export const useDelayTime = () => {
-  const { delayTime } = useContext(EffectsContext);
-  return delayTime;
-};
+// export const useDelayTime = () => {
+//   const { delayTime } = useContext(EffectsContext);
+//   return delayTime;
+// };
 
-export const useSetDelayTime = () => {
-  const { setDelayTime } = useContext(EffectsContext);
-  return setDelayTime;
-};
+// export const useSetDelayTime = () => {
+//   const { setDelayTime } = useContext(EffectsContext);
+//   return setDelayTime;
+// };
 
-export const useDelayWetLevel = () => {
-  const { delayWetLevel } = useContext(EffectsContext);
-  return delayWetLevel;
-};
+// export const useDelayWetLevel = () => {
+//   const { delayWetLevel } = useContext(EffectsContext);
+//   return delayWetLevel;
+// };
 
-export const useSetDelayWetLevel = () => {
-  const { setDelayWetLevel } = useContext(EffectsContext);
-  return setDelayWetLevel;
-};
+// export const useSetDelayWetLevel = () => {
+//   const { setDelayWetLevel } = useContext(EffectsContext);
+//   return setDelayWetLevel;
+// };
 
-export const useDelayDryLevel = () => {
-  const { delayDryLevel } = useContext(EffectsContext);
-  return delayDryLevel;
-};
+// export const useDelayDryLevel = () => {
+//   const { delayDryLevel } = useContext(EffectsContext);
+//   return delayDryLevel;
+// };
 
-export const useSetDelayDryLevel = () => {
-  const { setDelayDryLevel } = useContext(EffectsContext);
-  return setDelayDryLevel;
-};
+// export const useSetDelayDryLevel = () => {
+//   const { setDelayDryLevel } = useContext(EffectsContext);
+//   return setDelayDryLevel;
+// };
 
-export const useDelayCutoff = () => {
-  const { delayCutoff } = useContext(EffectsContext);
-  return delayCutoff;
-};
+// export const useDelayCutoff = () => {
+//   const { delayCutoff } = useContext(EffectsContext);
+//   return delayCutoff;
+// };
 
-export const useSetDelayCutoff = () => {
-  const { setDelayCutoff } = useContext(EffectsContext);
-  return setDelayCutoff;
-};
+// export const useSetDelayCutoff = () => {
+//   const { setDelayCutoff } = useContext(EffectsContext);
+//   return setDelayCutoff;
+// };
 
 //chorus exports
 export const useChorusBypass = () => {
@@ -445,12 +452,42 @@ export const useHandleDelayCutoff = () => {
   return handleDelayCutoff;
 };
 
+// NEW EFFECTS
+
 export const useEffects = () => {
   const { effects } = useContext(EffectsContext);
   return effects;
+};
+
+export const useChorusSettings = () => {
+  const { chorusSettings } = useContext(EffectsContext);
+  return chorusSettings;
+};
+
+export const usePhaserSettings = () => {
+  const { phaserSettings } = useContext(EffectsContext);
+  return phaserSettings;
 };
 
 export const useDelaySettings = () => {
   const { delaySettings } = useContext(EffectsContext);
   return delaySettings;
 };
+
+export const useTremoloSettings = () => {
+  const { tremoloSettings } = useContext(EffectsContext);
+  return tremoloSettings;
+};
+
+export const useWahWahSettings = () => {
+  const { wahWahSettings } = useContext(EffectsContext);
+  return wahWahSettings;
+};
+
+export const useBitcrusherSettings = () => {
+  const { bitcrusherSettings } = useContext(EffectsContext);
+  return bitcrusherSettings;
+};
+
+
+
