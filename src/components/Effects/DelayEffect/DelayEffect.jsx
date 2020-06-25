@@ -49,7 +49,7 @@ const DelayEffect = () => {
           id="delayFeedbackRange"
           onChange={handleDelayFeedback}
         ></input>
-        <label>Delay Feedback</label>
+        <label>Delay Feedback: {Math.floor(delayFeedback * 100)} %</label>
       </div>
 
       <div>
@@ -62,7 +62,7 @@ const DelayEffect = () => {
           id="delayTimeRange"
           onChange={handleDelayTime}
         ></input>
-        <label>Delay Time</label>
+        <label>Delay Time: {delayTime} ms</label>
       </div>
 
       <div>
@@ -75,7 +75,7 @@ const DelayEffect = () => {
           id="delayWetLevelRange"
           onChange={handleDelayWetLevel}
         ></input>
-        <label>Delay Wet Level</label>
+        <label>Delay Wet Level: {Math.floor(delayWetLevel * 100)} %</label>
       </div>
 
       <div>
@@ -88,7 +88,7 @@ const DelayEffect = () => {
           id="delayDryLevelRange"
           onChange={handleDelayDryLevel}
         ></input>
-        <label>Delay Dry Level</label>
+        <label>Delay Dry Level: {Math.floor(delayDryLevel * 100)} %</label>
       </div>
 
       <div>
@@ -101,7 +101,7 @@ const DelayEffect = () => {
           id="delayCutoffRange"
           onChange={handleDelayCutoff}
         ></input>
-        <label>Delay Cutoff</label>
+        <label>Delay Cutoff: {delayCutoff} Hz</label>
       </div>
     </>
   );
