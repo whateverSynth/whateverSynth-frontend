@@ -8,12 +8,12 @@ export const EffectsProvider = ({ children }) => {
   const [gainSetting, setGainSetting] = useState(0.8);
 
   const [effects, setEffects] = useState([
-    'Chorus',
-    'Phaser',
-    'Delay',
-    'Tremolo',
-    'WahWah',
-    'Bitcrusher'
+    // 'Chorus',
+    // 'Phaser',
+    // 'Delay',
+    // 'Tremolo',
+    // 'WahWah',
+    // 'Bitcrusher'
   ]);
 
   const [chorusSettings, setChorusSettings] = useState({    
@@ -27,7 +27,7 @@ export const EffectsProvider = ({ children }) => {
     rate: 1.2,                     //0.01 to 8 is a decent range, but higher values are possible
     depth: 0.3,                    //0 to 1
     feedback: 0.2,                 //0 to 1+
-    stereoPhase: 30,               //0 to 180
+    stereoPhase: 0,               //0 to 180
     baseModulationFrequency: 700,  //500 to 1500
     bypass: 0
   });
@@ -72,6 +72,10 @@ export const EffectsProvider = ({ children }) => {
     setGainSetting(target.value);
   };
 
+  const handleAddEffect = (newEffect) => {
+    setEffects([...effects, newEffect]);
+  };
+
   const handleDelay = ({ target }) => {
     const prop = target.name;
     if(prop === 'bypass') setDelaySettings({ ...delaySettings, [prop]: !delaySettings.bypass });
@@ -85,6 +89,7 @@ export const EffectsProvider = ({ children }) => {
         gainSetting,
         handleWaveshape,
         handleGainSetting,
+        handleAddEffect,
         handleDelay,
         effects,
         chorusSettings,
@@ -123,6 +128,11 @@ export const useHandleWaveshape = () => {
 export const useHandleGainSetting = () => {
   const { handleGainSetting } = useContext(EffectsContext);
   return handleGainSetting;
+};
+
+export const useHandleAddEffect = () => {
+  const { handleAddEffect } = useContext(EffectsContext);
+  return handleAddEffect;
 };
 
 // effect handlers
