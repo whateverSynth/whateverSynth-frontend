@@ -3,9 +3,17 @@
   font-family: 'Press Start 2P', cursive;
   color: #d600ff;
 }
-.Container{
+.Container {
   display: grid;
   justify-content: center;
+
+  p {
+    color: #00ff9f;
+    display: inline;
+  }
+  label {
+    margin-left: 1rem;
+  }
 }
 
 h1 {
