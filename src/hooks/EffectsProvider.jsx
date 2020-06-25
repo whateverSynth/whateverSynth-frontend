@@ -72,28 +72,10 @@ export const EffectsProvider = ({ children }) => {
     setGainSetting(target.value);
   };
 
-  const handleDelayBypass = () => {
-    setDelaySettings({ ...delaySettings, bypass: !delaySettings.bypass });
-  };
-
-  const handleDelayFeedback = ({ target }) => {
-    setDelaySettings({ ...delaySettings, feedback: target.value });
-  };
-
-  const handleDelayTime = ({ target }) => {
-    setDelaySettings({ ...delaySettings, delayTime: target.value });
-  };
-
-  const handleDelayWetLevel = ({ target }) => {
-    setDelaySettings({ ...delaySettings, wetLevel: target.value });
-  };
-
-  const handleDelayDryLevel = ({ target }) => {
-    setDelaySettings({ ...delaySettings, dryLevel: target.value });
-  };
-
-  const handleDelayCutoff = ({ target }) => {
-    setDelaySettings({ ...delaySettings, cutoff: target.value });
+  const handleDelay = ({ target }) => {
+    const prop = target.name;
+    if(prop === 'bypass') setDelaySettings({ ...delaySettings, [prop]: !delaySettings.bypass });
+    else setDelaySettings({ ...delaySettings, [prop]: target.value });
   };
 
   return (
@@ -103,12 +85,7 @@ export const EffectsProvider = ({ children }) => {
         gainSetting,
         handleWaveshape,
         handleGainSetting,
-        handleDelayBypass,
-        handleDelayFeedback,
-        handleDelayTime,
-        handleDelayWetLevel,
-        handleDelayDryLevel,
-        handleDelayCutoff,
+        handleDelay,
         effects,
         chorusSettings,
         phaserSettings,
@@ -148,39 +125,13 @@ export const useHandleGainSetting = () => {
   return handleGainSetting;
 };
 
-//delay handlers export
-export const useHandleDelayBypass = () => {
-  const { handleDelayBypass } = useContext(EffectsContext);
-  return handleDelayBypass;
+// effect handlers
+export const useHandleDelay = () => {
+  const { handleDelay } = useContext(EffectsContext);
+  return handleDelay;
 };
 
-export const useHandleDelayFeedback = () => {
-  const { handleDelayFeedback } = useContext(EffectsContext);
-  return handleDelayFeedback;
-};
-
-export const useHandleDelayTime = () => {
-  const { handleDelayTime } = useContext(EffectsContext);
-  return handleDelayTime;
-};
-
-export const useHandleDelayWetLevel = () => {
-  const { handleDelayWetLevel } = useContext(EffectsContext);
-  return handleDelayWetLevel;
-};
-
-export const useHandleDelayDryLevel = () => {
-  const { handleDelayDryLevel } = useContext(EffectsContext);
-  return handleDelayDryLevel;
-};
-
-export const useHandleDelayCutoff = () => {
-  const { handleDelayCutoff } = useContext(EffectsContext);
-  return handleDelayCutoff;
-};
-
-// NEW EFFECTS
-
+// new effects
 export const useEffects = () => {
   const { effects } = useContext(EffectsContext);
   return effects;
@@ -215,6 +166,3 @@ export const useBitcrusherSettings = () => {
   const { bitcrusherSettings } = useContext(EffectsContext);
   return bitcrusherSettings;
 };
-
-
-

@@ -73,12 +73,15 @@ export default function Synth() {
   }, []);
 
   useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(effect => effect.name === 'Delay');
     Object.entries(delaySettings).forEach(setting => {
-      tunaEffects[2][setting[0]] = setting[1];
+      tunaEffects[chainIndex][setting[0]] = setting[1];
     });
   }, [delaySettings]);
 
-  // gain.gain.value = gainSetting; //defaults to 0.8
+  useEffect(() => {
+    gain.gain.value = gainSetting; //defaults to 0.8
+  }, [gainSetting]);
   
   //HANDLES CREATION & STORING OF OSCILLATORS
   function playNote(key) {
