@@ -1,40 +1,21 @@
 import React from 'react';
 import {
-  useHandleDelayBypass,
-  useHandleDelayFeedback,
-  useHandleDelayTime,
-  useHandleDelayWetLevel,
-  useHandleDelayDryLevel,
-  useHandleDelayCutoff,
-  useDelayBypass,
-  useDelayFeedback,
-  useDelayTime,
-  useDelayWetLevel,
-  useDelayDryLevel,
-  useDelayCutoff,
+  useDelaySettings,
+  useHandleDelay,
 } from '../../../hooks/EffectsProvider';
 
 const DelayEffect = () => {
-  const delayBypass = useDelayBypass();
-  const delayFeedback = useDelayFeedback();
-  const delayTime = useDelayTime();
-  const delayWetLevel = useDelayWetLevel();
-  const delayDryLevel = useDelayDryLevel();
-  const delayCutoff = useDelayCutoff();
-  const handleDelayBypass = useHandleDelayBypass();
-  const handleDelayFeedback = useHandleDelayFeedback();
-  const handleDelayTime = useHandleDelayTime();
-  const handleDelayWetLevel = useHandleDelayWetLevel();
-  const handleDelayDryLevel = useHandleDelayDryLevel();
-  const handleDelayCutoff = useHandleDelayCutoff();
+  const delaySettings = useDelaySettings();
+  const handleDelay = useHandleDelay();
 
   return (
     <>
       <div>
         <input
           type="checkbox"
-          value={delayBypass}
-          onChange={handleDelayBypass}
+          value={delaySettings.bypass}
+          onChange={handleDelay}
+          name="bypass"
         ></input>
         <label>Delay Bypass</label>
       </div>
@@ -43,13 +24,14 @@ const DelayEffect = () => {
           type="range"
           min="0"
           max="1"
-          value={delayFeedback}
+          value={delaySettings.feedback}
           step="0.05"
           id="delayFeedbackRange"
-          onChange={handleDelayFeedback}
+          onChange={handleDelay}
+          name="feedback"
         ></input>
         <label>
-          Delay Feedback: <p>{Math.floor(delayFeedback * 100)} %</p>
+          Delay Feedback: <p>{Math.floor(delaySettings.feedback * 100)} %</p>
         </label>
       </div>
       <div>
@@ -57,13 +39,14 @@ const DelayEffect = () => {
           type="range"
           min="1"
           max="1000"
-          value={delayTime}
+          value={delaySettings.delayTime}
           step="1"
           id="delayTimeRange"
-          onChange={handleDelayTime}
+          onChange={handleDelay}
+          name="delayTime"
         ></input>
         <label>
-          Delay Time: <p>{delayTime} ms</p>
+          Delay Time: <p>{delaySettings.delayTime} ms</p>
         </label>
       </div>
       <div>
@@ -71,13 +54,14 @@ const DelayEffect = () => {
           type="range"
           min="0"
           max="1"
-          value={delayWetLevel}
+          value={delaySettings.wetLevel}
           step="0.1"
           id="delayWetLevelRange"
-          onChange={handleDelayWetLevel}
+          onChange={handleDelay}
+          name="wetLevel"
         ></input>
         <label>
-          Delay Wet Level: <p>{Math.floor(delayWetLevel * 100)} %</p>
+          Delay Wet Level: <p>{Math.floor(delaySettings.wetLevel * 100)} %</p>
         </label>
       </div>
       <div>
@@ -85,13 +69,14 @@ const DelayEffect = () => {
           type="range"
           min="0"
           max="1"
-          value={delayDryLevel}
+          value={delaySettings.dryLevel}
           step="0.1"
           id="delayDryLevelRange"
-          onChange={handleDelayDryLevel}
+          onChange={handleDelay}
+          name="dryLevel"
         ></input>
         <label>
-          Delay Dry Level: <p>{Math.floor(delayDryLevel * 100)} %</p>
+          Delay Dry Level: <p>{Math.floor(delaySettings.dryLevel * 100)} %</p>
         </label>
       </div>
       <div>
@@ -99,13 +84,14 @@ const DelayEffect = () => {
           type="range"
           min="20"
           max="22050"
-          value={delayCutoff}
+          value={delaySettings.cutoff}
           step="10"
           id="delayCutoffRange"
-          onChange={handleDelayCutoff}
+          onChange={handleDelay}
+          name="cutoff"
         ></input>
         <label>
-          Delay Cutoff: <p>{delayCutoff} Hz</p>
+          Delay Cutoff: <p>{delaySettings.cutoff} Hz</p>
         </label>
       </div>
     </>
