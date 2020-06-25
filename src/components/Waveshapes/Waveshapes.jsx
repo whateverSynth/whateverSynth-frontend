@@ -13,7 +13,6 @@ const Waveshapes = () => {
 
   return (
     <section className={styles.Controls}>
-      
       <input
         type="range"
         min="0"
@@ -23,7 +22,6 @@ const Waveshapes = () => {
         id="gainSetting"
         onChange={handleGainSetting}
       ></input>
-      
       <label className={styles.Gain}>
         volume: <p>{Math.floor(gainSetting * 100)} %</p>
       </label>
@@ -37,8 +35,7 @@ const Waveshapes = () => {
             defaultChecked
             onClick={() => handleWaveshape(event)}
             img="../../../public/assets/sine.png"
-          />
-        sine</label>
+          />sine</label>
         <label>
           <input
             type="radio"
@@ -46,8 +43,7 @@ const Waveshapes = () => {
             name="waveshapes"
             id="square"
             onClick={() => handleWaveshape(event)}
-          />
-        square</label>
+          />square</label>
         <label>
           <input
             type="radio"
@@ -55,8 +51,7 @@ const Waveshapes = () => {
             name="waveshapes"
             id="triangle"
             onClick={() => handleWaveshape(event)}
-          />
-        triangle</label>
+          />triangle</label>
         <label>
           <input
             type="radio"
@@ -64,8 +59,7 @@ const Waveshapes = () => {
             name="waveshapes"
             id="sawtooth"
             onClick={() => handleWaveshape(event)}
-          />
-        sawtooth</label>
+          />sawtooth</label>
       </div>
     </section>
   );
