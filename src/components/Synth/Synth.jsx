@@ -17,6 +17,7 @@ import {
   useHandleAddEffect,
 } from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
+import Keyboard from '../Keyboard/Keyboard';
 
 let audioCtx;
 let tuna;
@@ -48,35 +49,34 @@ export default function Synth() {
     gain.connect(audioCtx.destination);
   }, []);
 
+
   useEffect(() => {
     tunaEffects = effects.map(effect => {
+
       const name = effect;
-      if(name === 'Chorus') return new tuna[name](chorusSettings);
-      if(name === 'Phaser') return new tuna[name](phaserSettings);
-      if(name === 'Delay') return new tuna[name](delaySettings);
-      if(name === 'Tremolo') return new tuna[name](tremoloSettings);
-      if(name === 'WahWah') return new tuna[name](wahWahSettings);
-      if(name === 'Bitcrusher') return new tuna[name](bitcrusherSettings);
+      if (name === 'Chorus') return new tuna[name](chorusSettings);
+      if (name === 'Phaser') return new tuna[name](phaserSettings);
+      if (name === 'Delay') return new tuna[name](delaySettings);
+      if (name === 'Tremolo') return new tuna[name](tremoloSettings);
+      if (name === 'WahWah') return new tuna[name](wahWahSettings);
+      if (name === 'Bitcrusher') return new tuna[name](bitcrusherSettings);
     });
   
     gain.disconnect();
 
     // MAKE CHAIN BY ITERATING OVER EFFECTS
-    if(tunaEffects.length === 0) gain.connect(audioCtx.destination);
+    if (tunaEffects.length === 0) gain.connect(audioCtx.destination);
     else {
       tunaEffects.forEach((effect, i) => {
-        if(tunaEffects.length === 1) {
+        if (tunaEffects.length === 1) {
           gain.connect(effect);
           effect.connect(audioCtx.destination);
           return;
-        }
-        else if(i === 0) {
+        } else if (i === 0) {
           gain.connect(effect);
-        }
-        else if(i > 0 && i < tunaEffects.length - 1) {
+        } else if (i > 0 && i < tunaEffects.length - 1) {
           tunaEffects[i - 1].connect(effect);
-        }
-        else if(i === tunaEffects.length - 1) {
+        } else if (i === tunaEffects.length - 1) {
           tunaEffects[i - 1].connect(effect);
           effect.connect(audioCtx.destination);
         }
@@ -88,9 +88,11 @@ export default function Synth() {
 
 
   useEffect(() => {
-    const chainIndex = tunaEffects.findIndex(effect => effect.name === 'Delay');
-    if(chainIndex === -1) return;
-    Object.entries(delaySettings).forEach(setting => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Delay'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(delaySettings).forEach((setting) => {
       tunaEffects[chainIndex][setting[0]] = setting[1];
     });
   }, [delaySettings]);
@@ -99,8 +101,6 @@ export default function Synth() {
     gain.gain.value = gainSetting; //defaults to 0.8
   }, [gainSetting]);
 
-
-  
   //HANDLES CREATION & STORING OF OSCILLATORS
   function playNote(key) {
     const osc = audioCtx.createOscillator();
@@ -116,14 +116,14 @@ export default function Synth() {
 
   function keyDown(event) {
     const key = (event.detail || event.which).toString();
-    if(keyboardFrequencyMap[key] && !activeOscillators[key]) {
+    if (keyboardFrequencyMap[key] && !activeOscillators[key]) {
       playNote(key);
     }
   }
 
   function keyUp(event) {
     const key = (event.detail || event.which).toString();
-    if(keyboardFrequencyMap[key] && activeOscillators[key]) {
+    if (keyboardFrequencyMap[key] && activeOscillators[key]) {
       activeOscillators[key].stop();
       delete activeOscillators[key];
     }
@@ -165,7 +165,7 @@ export default function Synth() {
         onKeyEvent={(key, e) => keyUp(e)}
       />
       <h1>Synthinator</h1>
-
+      <Keyboard />
       <Waveshapes />
       <ul>
         {effectNodes}
