@@ -38,7 +38,6 @@ const DelayEffect = () => {
         ></input>
         <label>Delay Bypass</label>
       </div>
-
       <div>
         <input
           type="range"
@@ -49,9 +48,10 @@ const DelayEffect = () => {
           id="delayFeedbackRange"
           onChange={handleDelayFeedback}
         ></input>
-        <label>Delay Feedback: {Math.floor(delayFeedback * 100)} %</label>
+        <label>
+          Delay Feedback: <p>{Math.floor(delayFeedback * 100)} %</p>
+        </label>
       </div>
-
       <div>
         <input
           type="range"
@@ -62,9 +62,10 @@ const DelayEffect = () => {
           id="delayTimeRange"
           onChange={handleDelayTime}
         ></input>
-        <label>Delay Time: {delayTime} ms</label>
+        <label>
+          Delay Time: <p>{delayTime} ms</p>
+        </label>
       </div>
-
       <div>
         <input
           type="range"
@@ -75,9 +76,10 @@ const DelayEffect = () => {
           id="delayWetLevelRange"
           onChange={handleDelayWetLevel}
         ></input>
-        <label>Delay Wet Level: {Math.floor(delayWetLevel * 100)} %</label>
+        <label>
+          Delay Wet Level: <p>{Math.floor(delayWetLevel * 100)} %</p>
+        </label>
       </div>
-
       <div>
         <input
           type="range"
@@ -88,9 +90,10 @@ const DelayEffect = () => {
           id="delayDryLevelRange"
           onChange={handleDelayDryLevel}
         ></input>
-        <label>Delay Dry Level: {Math.floor(delayDryLevel * 100)} %</label>
+        <label>
+          Delay Dry Level: <p>{Math.floor(delayDryLevel * 100)} %</p>
+        </label>
       </div>
-
       <div>
         <input
           type="range"
@@ -101,7 +104,9 @@ const DelayEffect = () => {
           id="delayCutoffRange"
           onChange={handleDelayCutoff}
         ></input>
-        <label>Delay Cutoff: {delayCutoff} Hz</label>
+        <label>
+          Delay Cutoff: <p>{delayCutoff} Hz</p>
+        </label>
       </div>
     </>
   );

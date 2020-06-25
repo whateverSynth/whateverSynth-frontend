@@ -18,11 +18,13 @@ const Waveshapes = () => {
         min="0"
         max="1"
         value={gainSetting}
-        step="0.05"
+        step="0.01"
         id="gainSetting"
         onChange={handleGainSetting}
       ></input>
-      <label className={styles.Gain}>gain</label>
+      <label className={styles.Gain}>
+        volume: <p>{Math.floor(gainSetting * 100)} %</p>
+      </label>
 
       <input
         type="radio"
