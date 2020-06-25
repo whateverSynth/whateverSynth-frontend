@@ -2,25 +2,21 @@ import React, { useState, useEffect } from 'react';
 import styles from './Synth.css';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 import { keyboardFrequencyMap } from '../../utils/data';
+import DelayEffect from '../Effects/DelayEffect/DelayEffect';
 import Tuna from 'tunajs';
 import {
   useDelayWetLevel,
-  useHandleDelayWetLevel,
   useDelayBypass,
-  useHandleDelayBypass,
   useDelayFeedback,
-  useHandleDelayFeedback,
   useDelayTime,
-  useHandleDelayTime,
   useDelayDryLevel,
   useDelayCutoff,
-  useHandleDelayDryLevel,
-  useHandleDelayCutoff,
-  useHandleWaveshape,
   useWaveshape,
   useEffects,
   useDelaySettings,
+  useGainSetting,
 } from '../../hooks/EffectsProvider';
+import Waveshapes from '../Waveshapes/Waveshapes';
 
 export default function Synth() {
   const waveshape = useWaveshape();
@@ -30,13 +26,6 @@ export default function Synth() {
   const delayWetLevel = useDelayWetLevel();
   const delayDryLevel = useDelayDryLevel();
   const delayCutoff = useDelayCutoff();
-  const handleWaveshape = useHandleWaveshape();
-  const handleDelayBypass = useHandleDelayBypass();
-  const handleDelayFeedback = useHandleDelayFeedback();
-  const handleDelayTime = useHandleDelayTime();
-  const handleDelayWetLevel = useHandleDelayWetLevel();
-  const handleDelayDryLevel = useHandleDelayDryLevel();
-  const handleDelayCutoff = useHandleDelayCutoff();
 
   // NEW EFFECT STATE
   const effects = useEffects();
@@ -45,6 +34,7 @@ export default function Synth() {
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const tuna = new Tuna(audioCtx);
   const gain = audioCtx.createGain();
+  const gainSetting = useGainSetting();
   const activeOscillators = {};
 
   // CREATE TUNA EFFECTS USING PROVIDER STATE
@@ -74,7 +64,6 @@ export default function Synth() {
   //   bypass: delayBypass,
   // });
 
-  gain.gain.value = 0.8;
 
   // MAKE CHAIN BY ITERATING OVER EFFECTS
   tunaEffects.forEach((effect, i) => {
@@ -99,6 +88,8 @@ export default function Synth() {
   // delay.connect(compressor);
   // compressor.connect(audioCtx.destination);
 
+  gain.gain.value = gainSetting; //defaults to 0.8
+  
   //HANDLES CREATION & STORING OF OSCILLATORS
   function playNote(key) {
     const osc = audioCtx.createOscillator();
@@ -149,115 +140,10 @@ export default function Synth() {
         onKeyEvent={(key, e) => keyUp(e)}
       />
       <h1>Synthinator</h1>
-      <input
-        type="radio"
-        value="sine"
-        name="waveshapes"
-        id="sine"
-        defaultChecked
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>sine</label>
-      <input
-        className={styles.Radio}
-        type="radio"
-        value="square"
-        name="waveshapes"
-        id="square"
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>square</label>
-      <input
-        type="radio"
-        value="triangle"
-        name="waveshapes"
-        id="triangle"
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>triangle</label>
-      <input
-        type="radio"
-        value="sawtooth"
-        name="waveshapes"
-        id="sawtooth"
-        onClick={() => handleWaveshape(event)}
-      />
-      <label>sawtooth</label>
 
-      <div>
-        <input
-          type="checkbox"
-          value={delayBypass}
-          onChange={handleDelayBypass}
-          // onClick={window.focus()}
-        ></input>
-        <label>Delay Bypass</label>
-      </div>
+      <Waveshapes />
 
-      <div>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={delayFeedback}
-          step="0.05"
-          id="delayFeedbackRange"
-          onChange={handleDelayFeedback}
-        ></input>
-        <label>Delay Feedback</label>
-      </div>
-
-      <div>
-        <input
-          type="range"
-          min="1"
-          max="1000"
-          value={delayTime}
-          step="1"
-          id="delayTimeRange"
-          onChange={handleDelayTime}
-        ></input>
-        <label>Delay Time</label>
-      </div>
-
-      <div>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={delayWetLevel}
-          step="0.1"
-          id="delayWetLevelRange"
-          onChange={handleDelayWetLevel}
-        ></input>
-        <label>Delay Wet Level</label>
-      </div>
-
-      <div>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={delayDryLevel}
-          step="0.1"
-          id="delayDryLevelRange"
-          onChange={handleDelayDryLevel}
-        ></input>
-        <label>Delay Dry Level</label>
-      </div>
-
-      <div>
-        <input
-          type="range"
-          min="20"
-          max="22050"
-          value={delayCutoff}
-          step="10"
-          id="delayCutoffRange"
-          onChange={handleDelayCutoff}
-        ></input>
-        <label>Delay Cutoff</label>
-      </div>
+      <DelayEffect />
     </div>
   );
 }

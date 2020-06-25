@@ -5,6 +5,7 @@ const EffectsContext = createContext();
 
 export const EffectsProvider = ({ children }) => {
   const [waveshape, setWaveshape] = useState('sine');
+  const [gainSetting, setGainSetting] = useState(0.8);
 
   const [effects, setEffects] = useState({
     Chorus: ({
@@ -86,6 +87,10 @@ export const EffectsProvider = ({ children }) => {
     setWaveshape(target.value);
   };
 
+  const handleGainSetting = ({ target }) => {
+    setGainSetting(target.value);
+  };
+
   const handleDelayBypass = () => {
     setDelayBypass(!delayBypass);
     setDelaySettings({ ...delaySettings, bypass: !delayBypass });
@@ -120,6 +125,7 @@ export const EffectsProvider = ({ children }) => {
     <EffectsContext.Provider
       value={{
         waveshape,
+        gainSetting,
         delayBypass,
         setDelayBypass,
         delayFeedback,
@@ -163,6 +169,7 @@ export const EffectsProvider = ({ children }) => {
         overdriveAlgorithm,
         setOverdriveAlgorithm,
         handleWaveshape,
+        handleGainSetting,
         handleDelayBypass,
         handleDelayFeedback,
         handleDelayTime,
@@ -185,6 +192,11 @@ EffectsProvider.propTypes = {
 export const useWaveshape = () => {
   const { waveshape } = useContext(EffectsContext);
   return waveshape;
+};
+
+export const useGainSetting = () => {
+  const { gainSetting } = useContext(EffectsContext);
+  return gainSetting;
 };
 
 //delay exports
@@ -391,9 +403,15 @@ export const useSetOverdriveAlgorithm = () => {
   return setOverdriveAlgorithm;
 };
 
+//handlers
 export const useHandleWaveshape = () => {
   const { handleWaveshape } = useContext(EffectsContext);
   return handleWaveshape;
+};
+
+export const useHandleGainSetting = () => {
+  const { handleGainSetting } = useContext(EffectsContext);
+  return handleGainSetting;
 };
 
 //delay handlers export
