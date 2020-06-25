@@ -222,6 +222,33 @@ export default function Synth() {
         ></input>
         <label>Delay Cutoff</label>
       </div>
+      <section class="keyboard">
+        <div class="keys" class="div2">
+          <div data-key="" class="white key a" data-note="A"></div>
+          <div data-key="" class="black key a sharp" data-note="A#"></div>
+          <div data-key="" class="white key b" data-note="B"></div>
+          <div data-key="65" class="white key c" data-note="C"></div>
+          <div data-key="87" class="black key c sharp" data-note="C#"></div>
+          <div data-key="83" class="white key d" data-note="D"></div>
+          <div data-key="69" class="black key d sharp" data-note="D#"></div>
+          <div data-key="68" class="white key e" data-note="E"></div>
+          <div data-key="70" class="white key f" data-note="F"></div>
+          <div data-key="84" class="black key f sharp" data-note="F#"></div>
+          <div data-key="71" class="white key g" data-note="G"></div>
+          <div data-key="89" class="black key g sharp" data-note="G#"></div>
+          <div data-key="72" class="white key a" data-note="A"></div>
+          <div data-key="85" class="black key a sharp" data-note="A#"></div>
+          <div data-key="74" class="white key b" data-note="B"></div>
+          <div data-key="75" class="white key c" data-note="C"></div>
+          <div data-key="79" class="black key c sharp" data-note="C#"></div>
+          <div data-key="76" class="white key d" data-note="D"></div>
+          <div data-key="80" class="black key d sharp" data-note="D#"></div>
+          <div data-key="186" class="white key e" data-note="E"></div>
+          <div data-key="222" class="white key f" data-note="F"></div>
+          <div data-key="221" class="black key f sharp" data-note="F#"></div>
+          <div data-key="" class="white key g" data-note="G"></div>
+        </div>
+      </section>
     </div>
   );
 }
