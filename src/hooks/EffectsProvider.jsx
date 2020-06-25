@@ -7,6 +7,44 @@ export const EffectsProvider = ({ children }) => {
   const [waveshape, setWaveshape] = useState('sine');
   const [gainSetting, setGainSetting] = useState(0.8);
 
+  const [effects, setEffects] = useState({
+    Chorus: ({
+      rate: 1.5,         //0.01 to 8+
+      feedback: 0.2,     //0 to 1+
+      delay: 0.0045,     //0 to 1
+      bypass: 0          //the value 1 starts the effect as bypassed, 0 or 1
+    }),
+    Phaser : ({
+      rate: 1.2,                     //0.01 to 8 is a decent range, but higher values are possible
+      depth: 0.3,                    //0 to 1
+      feedback: 0.2,                 //0 to 1+
+      stereoPhase: 30,               //0 to 180
+      baseModulationFrequency: 700,  //500 to 1500
+      bypass: 0
+    }),
+    Delay: ({}),
+    Tremolo: ({
+      intensity: 0.3,    //0 to 1
+      rate: 4,         //0.001 to 8
+      stereoPhase: 0,    //0 to 180
+      bypass: 0
+    }),
+    WahWah: ({
+      automode: false,                //true/false
+      baseFrequency: 0.5,            //0 to 1
+      excursionOctaves: 2,           //1 to 6
+      sweep: 0.2,                    //0 to 1
+      resonance: 10,                 //1 to 100
+      sensitivity: 0.5,              //-1 to 1
+      bypass: 0
+    }),
+    Bitcrusher: ({
+      bits: 4,          //1 to 16
+      normfreq: 0.1,    //0 to 1
+      bufferSize: 4096  //256 to 16384
+    })
+  });
+
   //delay
   const [delayBypass, setDelayBypass] = useState(false); //0 or 1
   const [delayFeedback, setDelayFeedback] = useState(0.45); //0 to 1+
@@ -14,6 +52,15 @@ export const EffectsProvider = ({ children }) => {
   const [delayWetLevel, setDelayWetLevel] = useState(0.25); //0 to 1+
   const [delayDryLevel, setDelayDryLevel] = useState(1); //0 to 1+
   const [delayCutoff, setDelayCutoff] = useState(2000); //20 to 22050 hz
+
+  const [delaySettings, setDelaySettings] = useState({    
+    feedback: delayFeedback, //0 to 1+
+    delayTime: delayTime, //1 to 10000 milliseconds
+    wetLevel: delayWetLevel, //0 to 1+
+    dryLevel: delayDryLevel, //0 to 1+
+    cutoff: delayCutoff, //cutoff frequency of the built in lowpass-filter. 20 to 22050
+    bypass: delayBypass  
+  });
 
   //chorus
   const [chorusBypass, setChorusBypass] = useState(1); //0 or 1
@@ -46,26 +93,32 @@ export const EffectsProvider = ({ children }) => {
 
   const handleDelayBypass = () => {
     setDelayBypass(!delayBypass);
+    setDelaySettings({ ...delaySettings, bypass: !delayBypass });
   };
 
   const handleDelayFeedback = ({ target }) => {
     setDelayFeedback(target.value);
+    setDelaySettings({ ...delaySettings, feedback: target.value });
   };
 
   const handleDelayTime = ({ target }) => {
     setDelayTime(target.value);
+    setDelaySettings({ ...delaySettings, delayTime: target.value });
   };
 
   const handleDelayWetLevel = ({ target }) => {
     setDelayWetLevel(target.value);
+    setDelaySettings({ ...delaySettings, wetLevel: target.value });
   };
 
   const handleDelayDryLevel = ({ target }) => {
     setDelayDryLevel(target.value);
+    setDelaySettings({ ...delaySettings, dryLevel: target.value });
   };
 
   const handleDelayCutoff = ({ target }) => {
     setDelayCutoff(target.value);
+    setDelaySettings({ ...delaySettings, cutoff: target.value });
   };
 
   return (
@@ -123,6 +176,8 @@ export const EffectsProvider = ({ children }) => {
         handleDelayWetLevel,
         handleDelayDryLevel,
         handleDelayCutoff,
+        effects,
+        delaySettings
       }}
     >
       {children}
@@ -388,4 +443,14 @@ export const useHandleDelayDryLevel = () => {
 export const useHandleDelayCutoff = () => {
   const { handleDelayCutoff } = useContext(EffectsContext);
   return handleDelayCutoff;
+};
+
+export const useEffects = () => {
+  const { effects } = useContext(EffectsContext);
+  return effects;
+};
+
+export const useDelaySettings = () => {
+  const { delaySettings } = useContext(EffectsContext);
+  return delaySettings;
 };
