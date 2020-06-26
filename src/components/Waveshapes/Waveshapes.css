@@ -14,5 +14,8 @@ svg{
   height: 10vh;
   fill:#00b8ff;
 }
+svg:hover{
+  fill:#00ff9f;
+}
 }
 
