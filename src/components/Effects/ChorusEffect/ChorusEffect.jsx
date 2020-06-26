@@ -1,25 +1,25 @@
 import React from 'react';
 import {
-  useDelaySettings,
-  useHandleDelay,
+  useChorusSettings,
+  useHandleChorus,
 } from '../../../hooks/EffectsProvider';
 import styles from '../Effects.css';
 
-const DelayEffect = () => {
-  const delaySettings = useDelaySettings();
-  const handleDelay = useHandleDelay();
+const ChorusEffect = () => {
+  const chorusSettings = useChorusSettings();
+  const handleChorus = useHandleChorus();
 
   return (
     <section className={styles.Effects}>
       <section>
         <section className={styles.label}>
-          <h2>delay &nbsp;</h2>
+          <h2>chorus &nbsp;</h2>
           <button>x</button>
         </section>
         <input
           type="checkbox"
-          value={delaySettings.bypass}
-          onChange={handleDelay}
+          value={chorusSettings.bypass}
+          onChange={handleChorus}
           name="bypass"
         ></input>
         <label>bypass</label>
@@ -31,14 +31,14 @@ const DelayEffect = () => {
           type="range"
           min="0"
           max="1"
-          value={delaySettings.feedback}
+          value={chorusSettings.feedback}
           step="0.05"
           id="delayFeedbackRange"
-          onChange={handleDelay}
+          onChange={handleChorus}
           name="feedback"
         ></input>
         <label>
-          feedback: <p>{Math.floor(delaySettings.feedback * 100)} %</p>
+          feedback: <p>{Math.floor(chorusSettings.feedback * 100)} %</p>
         </label>
       </section>
 
@@ -47,14 +47,14 @@ const DelayEffect = () => {
           type="range"
           min="1"
           max="1000"
-          value={delaySettings.delayTime}
+          value={chorusSettings.delayTime}
           step="1"
           id="delayTimeRange"
-          onChange={handleDelay}
+          onChange={handleChorus}
           name="delayTime"
         ></input>
         <label>
-          time: <p>{delaySettings.delayTime} ms</p>
+          time: <p>{chorusSettings.delayTime} ms</p>
         </label>
       </section>
 
@@ -63,14 +63,14 @@ const DelayEffect = () => {
           type="range"
           min="0"
           max="1"
-          value={delaySettings.wetLevel}
+          value={chorusSettings.wetLevel}
           step="0.1"
           id="delayWetLevelRange"
-          onChange={handleDelay}
+          onChange={handleChorus}
           name="wetLevel"
         ></input>
         <label>
-          wet level: <p>{Math.floor(delaySettings.wetLevel * 100)} %</p>
+          wet level: <p>{Math.floor(chorusSettings.wetLevel * 100)} %</p>
         </label>
       </section>
 
@@ -79,14 +79,14 @@ const DelayEffect = () => {
           type="range"
           min="0"
           max="1"
-          value={delaySettings.dryLevel}
+          value={chorusSettings.dryLevel}
           step="0.1"
           id="delayDryLevelRange"
-          onChange={handleDelay}
+          onChange={handleChorus}
           name="dryLevel"
         ></input>
         <label>
-          dry level: <p>{Math.floor(delaySettings.dryLevel * 100)} %</p>
+          dry level: <p>{Math.floor(chorusSettings.dryLevel * 100)} %</p>
         </label>
       </section>
 
@@ -95,18 +95,18 @@ const DelayEffect = () => {
           type="range"
           min="20"
           max="22050"
-          value={delaySettings.cutoff}
+          value={chorusSettings.cutoff}
           step="10"
           id="delayCutoffRange"
-          onChange={handleDelay}
+          onChange={handleChorus}
           name="cutoff"
         ></input>
         <label>
-          cutoff: <p>{delaySettings.cutoff} Hz</p>
+          cutoff: <p>{chorusSettings.cutoff} Hz</p>
         </label>
       </section>
     </section>
   );
 };
 
-export default DelayEffect;
+export default ChorusEffect;
