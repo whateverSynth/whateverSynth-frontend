@@ -5,7 +5,13 @@ import {
   useGainSetting,
 } from '../../hooks/EffectsProvider';
 import styles from './Waveshapes.css';
+import Sine from '../../../public/assets/sine.svg';
+import Square from '../../../public/assets/square.svg';
+import Triangle from '../../../public/assets/triangle.svg';
+import Sawtooth from '../../../public/assets/sawtooth.svg';
 
+
+  
 const Waveshapes = () => {
   const gainSetting = useGainSetting();
   const handleGainSetting = useHandleGainSetting();
@@ -26,6 +32,7 @@ const Waveshapes = () => {
         volume: <p>{Math.floor(gainSetting * 100)} %</p>
       </label>
       <div className={styles.Radio}>
+        waveform:
         <label>
           <input
             type="radio"
@@ -34,8 +41,9 @@ const Waveshapes = () => {
             id="sine"
             defaultChecked
             onClick={() => handleWaveshape(event)}
-            img="../../../public/assets/sine.png"
-          />sine</label>
+          />
+          <Sine />
+        </label>
         <label>
           <input
             type="radio"
@@ -43,7 +51,9 @@ const Waveshapes = () => {
             name="waveshapes"
             id="square"
             onClick={() => handleWaveshape(event)}
-          />square</label>
+          />
+          <Square />
+        </label>
         <label>
           <input
             type="radio"
@@ -51,7 +61,9 @@ const Waveshapes = () => {
             name="waveshapes"
             id="triangle"
             onClick={() => handleWaveshape(event)}
-          />triangle</label>
+          />
+          <Triangle />
+        </label>
         <label>
           <input
             type="radio"
@@ -59,7 +71,9 @@ const Waveshapes = () => {
             name="waveshapes"
             id="sawtooth"
             onClick={() => handleWaveshape(event)}
-          />sawtooth</label>
+          />
+          <Sawtooth />
+        </label>
       </div>
     </section>
   );
