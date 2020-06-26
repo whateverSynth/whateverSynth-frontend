@@ -100,6 +100,7 @@ export default function Synth() {
     console.log(tunaEffects);
   }, [effects]);
 
+  //useEffect Effects
   useEffect(() => {
     const chainIndex = tunaEffects.findIndex(
       (effect) => effect.name === 'Delay'
@@ -109,6 +110,16 @@ export default function Synth() {
       tunaEffects[chainIndex][setting[0]] = setting[1];
     });
   }, [delaySettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Chorus'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(chorusSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [chorusSettings]);
 
   useEffect(() => {
     gain.gain.value = gainSetting; //defaults to 0.8
