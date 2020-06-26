@@ -1,9 +1,13 @@
-.Radio {
+.Controls {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
 
   .Gain {
     margin-bottom: 1rem;
+  }
+  .Radio {
+    display: flex;
+    flex-direction: row;
   }
 }

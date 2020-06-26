@@ -8,12 +8,13 @@ export const EffectsProvider = ({ children }) => {
   const [gainSetting, setGainSetting] = useState(0.8);
 
   const [effects, setEffects] = useState([
-    'Chorus',
-    'Phaser',
-    'Delay',
-    'Tremolo',
-    'WahWah',
-    'Bitcrusher'
+    // 'Chorus',
+    // 'Phaser',
+    // 'Delay',
+    // 'Tremolo',
+    // 'WahWah',
+    // 'Bitcrusher',
+    // 'Reverb'
   ]);
 
   const [chorusSettings, setChorusSettings] = useState({    
@@ -27,7 +28,7 @@ export const EffectsProvider = ({ children }) => {
     rate: 1.2,                     //0.01 to 8 is a decent range, but higher values are possible
     depth: 0.3,                    //0 to 1
     feedback: 0.2,                 //0 to 1+
-    stereoPhase: 30,               //0 to 180
+    stereoPhase: 0,               //0 to 180
     baseModulationFrequency: 700,  //500 to 1500
     bypass: 0
   });
@@ -64,12 +65,52 @@ export const EffectsProvider = ({ children }) => {
     bufferSize: 4096  //256 to 16384
   });
 
+  const [reverbSettings, setReverbSettings] = useState({
+    highCut: 22050,                         //20 to 22050
+    lowCut: 20,                             //20 to 22050
+    dryLevel: 1,                            //0 to 1+
+    wetLevel: 1,                            //0 to 1+
+    level: 1,                               //0 to 1+, adjusts total output of both wet and dry
+    impulse: 'reverb/silo.wav',    //the path to your impulse response
+    bypass: 0
+  });
+
+  const [overdriveSettings, setOverdriveSettings] = useState({
+    outputGain: -10,           //-42 to 0 in dB
+    drive: 1,              //0 to 1
+    curveAmount: 1,          //0 to 1
+    algorithmIndex: 5,       //0 to 5, selects one of our drive algorithms
+    bypass: 0
+  });
+
+  const [moogSettings, setMoogSettings] = useState({
+    cutoff: 0.45,    //0 to 1
+    resonance: 2.5,   //0 to 4
+    bufferSize: 4096  //256 to 16384
+  });
+
+  const [filterSettings, setFilterSettings] = useState({
+    frequency: 2000, //20 to 22050
+    Q: 1, //0.001 to 100
+    gain: 0, //-40 to 40 (in decibels)
+    filterType: 'highpass', //lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass
+    bypass: 0
+  });
+
+  const [pannerSettings, setPannerSettings] = useState({
+    pan: -1 // -1 (left) to 1 (right)
+  });
+
   const handleWaveshape = ({ target }) => {
     setWaveshape(target.value);
   };
 
   const handleGainSetting = ({ target }) => {
     setGainSetting(target.value);
+  };
+
+  const handleAddEffect = (newEffect) => {
+    setEffects([...effects, newEffect]);
   };
 
   const handleDelay = ({ target }) => {
@@ -85,6 +126,7 @@ export const EffectsProvider = ({ children }) => {
         gainSetting,
         handleWaveshape,
         handleGainSetting,
+        handleAddEffect,
         handleDelay,
         effects,
         chorusSettings,
@@ -92,7 +134,12 @@ export const EffectsProvider = ({ children }) => {
         delaySettings,
         tremoloSettings,
         wahWahSettings,
-        bitcrusherSettings
+        bitcrusherSettings,
+        reverbSettings,
+        overdriveSettings,
+        moogSettings,
+        filterSettings,
+        pannerSettings
       }}
     >
       {children}
@@ -123,6 +170,11 @@ export const useHandleWaveshape = () => {
 export const useHandleGainSetting = () => {
   const { handleGainSetting } = useContext(EffectsContext);
   return handleGainSetting;
+};
+
+export const useHandleAddEffect = () => {
+  const { handleAddEffect } = useContext(EffectsContext);
+  return handleAddEffect;
 };
 
 // effect handlers
@@ -165,4 +217,29 @@ export const useWahWahSettings = () => {
 export const useBitcrusherSettings = () => {
   const { bitcrusherSettings } = useContext(EffectsContext);
   return bitcrusherSettings;
+};
+
+export const useReverbSettings = () => {
+  const { reverbSettings } = useContext(EffectsContext);
+  return reverbSettings;
+};
+
+export const useOverdriveSettings = () => {
+  const { overdriveSettings } = useContext(EffectsContext);
+  return overdriveSettings;
+};
+
+export const useMoogSettings = () => {
+  const { moogSettings } = useContext(EffectsContext);
+  return moogSettings;
+};
+
+export const useFilterSettings = () => {
+  const { filterSettings } = useContext(EffectsContext);
+  return filterSettings;
+};
+
+export const usePannerSettings = () => {
+  const { pannerSettings } = useContext(EffectsContext);
+  return pannerSettings;
 };
