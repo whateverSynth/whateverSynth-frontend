@@ -18,6 +18,7 @@ import {
 } from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
 import Keyboard from '../Keyboard/Keyboard';
+import ChorusEffect from '../Effects/ChorusEffect/ChorusEffect';
 
 let audioCtx;
 let tuna;
@@ -49,10 +50,8 @@ export default function Synth() {
     gain.connect(audioCtx.destination);
   }, []);
 
-
   useEffect(() => {
-    tunaEffects = effects.map(effect => {
-
+    tunaEffects = effects.map((effect) => {
       const name = effect;
       if (name === 'Chorus') return new tuna[name](chorusSettings);
       if (name === 'Phaser') return new tuna[name](phaserSettings);
@@ -61,7 +60,7 @@ export default function Synth() {
       if (name === 'WahWah') return new tuna[name](wahWahSettings);
       if (name === 'Bitcrusher') return new tuna[name](bitcrusherSettings);
     });
-  
+
     gain.disconnect();
 
     // MAKE CHAIN BY ITERATING OVER EFFECTS
@@ -85,7 +84,6 @@ export default function Synth() {
     setLocalEffects(tunaEffects);
     console.log(tunaEffects);
   }, [effects]);
-
 
   useEffect(() => {
     const chainIndex = tunaEffects.findIndex(
@@ -130,26 +128,28 @@ export default function Synth() {
   }
 
   function removeFocus(event) {
-    if(event.target.type === 'select-one') return;
+    if (event.target.type === 'select-one') return;
     else {
       event.target.blur();
-      Object.values(activeOscillators).forEach(oscillator => {
+      Object.values(activeOscillators).forEach((oscillator) => {
         oscillator.stop();
       });
     }
-
   }
 
   window.addEventListener('mouseup', removeFocus);
-  
 
-  const effectNodes = localEffects.map(effect => {
-    if(effect.name === 'Chorus') return <li key={effect.name}>CHORUS SETTINGS</li>;
-    if(effect.name === 'Phaser') return <li key={effect.name}>PHASER SETTINGS</li>;
-    if(effect.name === 'Delay') return <DelayEffect key={effect.name}/>;
-    if(effect.name === 'Tremolo') return <li key={effect.name} >TREMOLO SETTINGS</li>;
-    if(effect.name === 'WahWah') return <li key={effect.name}>WAHWAH SETTINGS</li>;
-    if(effect.name === 'Bitcrusher') return <li key={effect.name}>BITCRUSHER SETTINGS</li>;
+  const effectNodes = localEffects.map((effect) => {
+    if (effect.name === 'Chorus') return <ChorusEffect key={effect.name} />;
+    if (effect.name === 'Phaser')
+      return <li key={effect.name}>PHASER SETTINGS</li>;
+    if (effect.name === 'Delay') return <DelayEffect key={effect.name} />;
+    if (effect.name === 'Tremolo')
+      return <li key={effect.name}>TREMOLO SETTINGS</li>;
+    if (effect.name === 'WahWah')
+      return <li key={effect.name}>WAHWAH SETTINGS</li>;
+    if (effect.name === 'Bitcrusher')
+      return <li key={effect.name}>BITCRUSHER SETTINGS</li>;
   });
 
   return (
@@ -167,12 +167,14 @@ export default function Synth() {
       <h1>Synthinator</h1>
       <Keyboard />
       <Waveshapes />
-      <ul>
-        {effectNodes}
-      </ul>
+      <ul>{effectNodes}</ul>
       <div>
         <label htmlFor="effects">Choose an Effect:</label>
-        <select name="effects" id="effects" onChange={(event) => setSelectedEffect(event.target.value)}>
+        <select
+          name="effects"
+          id="effects"
+          onChange={(event) => setSelectedEffect(event.target.value)}
+        >
           <option value="Chorus">Chorus</option>
           <option value="Phaser">Phaser</option>
           <option value="Delay">Delay</option>

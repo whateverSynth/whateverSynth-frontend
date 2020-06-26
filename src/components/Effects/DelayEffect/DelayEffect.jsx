@@ -12,7 +12,7 @@ const DelayEffect = () => {
   return (
     <section className={styles.Effects}>
       <section>
-        <section className={styles.label}>
+        <section>
           <h2>delay &nbsp;</h2>
           <button>x</button>
         </section>
@@ -27,7 +27,6 @@ const DelayEffect = () => {
 
       <section>
         <input
-          className={styles.slider}
           type="range"
           min="0"
           max="1"

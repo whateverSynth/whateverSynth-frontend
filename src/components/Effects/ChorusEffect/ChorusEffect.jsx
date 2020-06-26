@@ -12,7 +12,7 @@ const ChorusEffect = () => {
   return (
     <section className={styles.Effects}>
       <section>
-        <section className={styles.label}>
+        <section>
           <h2>chorus &nbsp;</h2>
           <button>x</button>
         </section>
@@ -27,13 +27,28 @@ const ChorusEffect = () => {
 
       <section>
         <input
-          className={styles.slider}
+          type="range"
+          min="0.01"
+          max="8"
+          value={chorusSettings.rate}
+          step="0.01"
+          id="chorusRate"
+          onChange={handleChorus}
+          name="rate"
+        ></input>
+        <label>
+          rate: <p>{chorusSettings.rate} Hz</p>
+        </label>
+      </section>
+
+      <section>
+        <input
           type="range"
           min="0"
           max="1"
           value={chorusSettings.feedback}
           step="0.05"
-          id="delayFeedbackRange"
+          id="chorusFeedbackRange"
           onChange={handleChorus}
           name="feedback"
         ></input>
@@ -45,64 +60,16 @@ const ChorusEffect = () => {
       <section>
         <input
           type="range"
-          min="1"
-          max="1000"
-          value={chorusSettings.delayTime}
-          step="1"
-          id="delayTimeRange"
-          onChange={handleChorus}
-          name="delayTime"
-        ></input>
-        <label>
-          time: <p>{chorusSettings.delayTime} ms</p>
-        </label>
-      </section>
-
-      <section>
-        <input
-          type="range"
           min="0"
           max="1"
-          value={chorusSettings.wetLevel}
+          value={chorusSettings.delay}
           step="0.1"
-          id="delayWetLevelRange"
+          id="chorusWetLevelRange"
           onChange={handleChorus}
-          name="wetLevel"
+          name="delay"
         ></input>
         <label>
-          wet level: <p>{Math.floor(chorusSettings.wetLevel * 100)} %</p>
-        </label>
-      </section>
-
-      <section>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={chorusSettings.dryLevel}
-          step="0.1"
-          id="delayDryLevelRange"
-          onChange={handleChorus}
-          name="dryLevel"
-        ></input>
-        <label>
-          dry level: <p>{Math.floor(chorusSettings.dryLevel * 100)} %</p>
-        </label>
-      </section>
-
-      <section>
-        <input
-          type="range"
-          min="20"
-          max="22050"
-          value={chorusSettings.cutoff}
-          step="10"
-          id="delayCutoffRange"
-          onChange={handleChorus}
-          name="cutoff"
-        ></input>
-        <label>
-          cutoff: <p>{chorusSettings.cutoff} Hz</p>
+          delay: <p>{Math.floor(chorusSettings.delay * 100)} %</p>
         </label>
       </section>
     </section>
