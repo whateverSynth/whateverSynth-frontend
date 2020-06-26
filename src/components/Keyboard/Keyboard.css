@@ -1,42 +1,45 @@
+* {
+  box-sizing: border-box;
+}
 .white {
   height: 14em;
   width: 4em;
   z-index: 1;
-  border-width: 0 0 1px 1px;
+  border-width: 1px 0 1px 1px;
   border-style: solid;
-  border-color: #bbb;
+  border-color: HSLA(198,97%,42%,1.00);
   border-radius: 0 0 5px 5px;
-  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.8) inset, 0 0 5px #ccc inset,
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.2) inset, 0 0 5px HSLA(198,97%,46%,1.00) inset,
     0 0 3px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(to bottom, #eee 0%, #fff 100%);
+  background: linear-gradient(to bottom, HSLA(198,97%,56%,1.00) 0%, HSLA(198,97%,76%,1.00) 100%);
   position: relative;
   float: left;
 }
 .white:active {
-  border-top: 1px solid #777;
-  border-left: 1px solid #999;
-  border-bottom: 1px solid #999;
+  border-style: solid;
+
   box-shadow: 2px 0 3px rgba(0, 0, 0, 0.1) inset,
     -5px 5px 20px rgba(0, 0, 0, 0.2) inset, 0 0 3px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(to bottom, #fff 0%, #e9e9e9 100%);
+  background: linear-gradient(to bottom, HSLA(154,98%,58%,1.00) 0%, HSLA(154,98%,78%,1.00) 100%);
 }
 .black {
   height: 8em;
   width: 2em;
   margin: 0 0 0 -1em;
   z-index: 2;
-  border: 1px solid #000;
+  border: 1px solid HSLA(289,96%,17%,0.5);
   border-radius: 0 0 3px 3px;
   box-shadow: -1px -1px 2px rgba(255, 255, 255, 0.2) inset,
-    0 -5px 2px 3px rgba(0, 0, 0, 0.6) inset, 0 2px 4px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(45deg, #222 0%, #555 100%);
+    0 -5px 2px 3px HSLA(289,96%,57%,0.6) inset, 0 2px 4px HSLA(289,96%,27%,0.5);
+  background: linear-gradient(45deg, HSLA(289,96%,57%,1.00) 0%, HSLA(282,96%,47%,1.00) 100%);
   position: relative;
   float: left;
 }
 .black:active {
   box-shadow: -1px -1px 2px rgba(255, 255, 255, 0.2) inset,
-    0 -2px 2px 3px rgba(0, 0, 0, 0.6) inset, 0 1px 2px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(to right, #444 0%, #222 100%);
+    0 -2px 2px 3px HSLA(289,96%,57%,0.6) inset, 0 1px 2px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(to right, HSLA(282,96%,77%,1.00) 0%, HSLA(282,96%,77%,1.00) 100%);
+  border-color: HSLA(289,96%,37%,0.1)
 }
 .black + .white {
   margin: 0 0 0 -1.2em;
