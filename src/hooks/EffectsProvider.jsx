@@ -17,11 +17,52 @@ export const EffectsProvider = ({ children }) => {
     // 'Reverb'
   ]);
 
+  const [bitcrusherSettings, setBitcrusherSettings] = useState({
+    bits: 4, //1 to 16
+    normfreq: 0.1, //0 to 1
+    bufferSize: 4096, //256 to 16384
+  });
+
   const [chorusSettings, setChorusSettings] = useState({
     rate: 1.5, //0.01 to 8+
     feedback: 0.2, //0 to 1+
     delay: 0.0045, //0 to 1
     bypass: false, //the value 1 starts the effect as bypassed, 0 or 1
+  });
+
+  const [delaySettings, setDelaySettings] = useState({
+    feedback: 0.45, //0 to 1+
+    delayTime: 150, //1 to 10000 milliseconds
+    wetLevel: 0.25, //0 to 1+
+    dryLevel: 1, //0 to 1+
+    cutoff: 2000, //cutoff frequency of the built in lowpass-filter. 20 to 22050
+    bypass: false,
+  });
+
+  const [filterSettings, setFilterSettings] = useState({
+    frequency: 2000, //20 to 22050
+    Q: 1, //0.001 to 100
+    gain: 0, //-40 to 40 (in decibels)
+    filterType: 'highpass', //lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass
+    bypass: 0,
+  });
+
+  const [moogSettings, setMoogSettings] = useState({
+    cutoff: 0.45, //0 to 1
+    resonance: 2.5, //0 to 4
+    bufferSize: 4096, //256 to 16384
+  });
+
+  const [overdriveSettings, setOverdriveSettings] = useState({
+    outputGain: -10, //-42 to 0 in dB
+    drive: 1, //0 to 1
+    curveAmount: 1, //0 to 1
+    algorithmIndex: 5, //0 to 5, selects one of our drive algorithms
+    bypass: 0,
+  });
+
+  const [pannerSettings, setPannerSettings] = useState({
+    pan: -1, // -1 (left) to 1 (right)
   });
 
   const [phaserSettings, setPhaserSettings] = useState({
@@ -33,13 +74,14 @@ export const EffectsProvider = ({ children }) => {
     bypass: false,
   });
 
-  const [delaySettings, setDelaySettings] = useState({
-    feedback: 0.45, //0 to 1+
-    delayTime: 150, //1 to 10000 milliseconds
-    wetLevel: 0.25, //0 to 1+
+  const [reverbSettings, setReverbSettings] = useState({
+    highCut: 22050, //20 to 22050
+    lowCut: 20, //20 to 22050
     dryLevel: 1, //0 to 1+
-    cutoff: 2000, //cutoff frequency of the built in lowpass-filter. 20 to 22050
-    bypass: false,
+    wetLevel: 1, //0 to 1+
+    level: 1, //0 to 1+, adjusts total output of both wet and dry
+    impulse: 'reverb/silo.wav', //the path to your impulse response
+    bypass: 0,
   });
 
   const [tremoloSettings, setTremoloSettings] = useState({
@@ -57,48 +99,6 @@ export const EffectsProvider = ({ children }) => {
     resonance: 10, //1 to 100
     sensitivity: 0.5, //-1 to 1
     bypass: false,
-  });
-
-  const [bitcrusherSettings, setBitcrusherSettings] = useState({
-    bits: 4, //1 to 16
-    normfreq: 0.1, //0 to 1
-    bufferSize: 4096, //256 to 16384
-  });
-
-  const [reverbSettings, setReverbSettings] = useState({
-    highCut: 22050, //20 to 22050
-    lowCut: 20, //20 to 22050
-    dryLevel: 1, //0 to 1+
-    wetLevel: 1, //0 to 1+
-    level: 1, //0 to 1+, adjusts total output of both wet and dry
-    impulse: 'reverb/silo.wav', //the path to your impulse response
-    bypass: 0,
-  });
-
-  const [overdriveSettings, setOverdriveSettings] = useState({
-    outputGain: -10, //-42 to 0 in dB
-    drive: 1, //0 to 1
-    curveAmount: 1, //0 to 1
-    algorithmIndex: 5, //0 to 5, selects one of our drive algorithms
-    bypass: 0,
-  });
-
-  const [moogSettings, setMoogSettings] = useState({
-    cutoff: 0.45, //0 to 1
-    resonance: 2.5, //0 to 4
-    bufferSize: 4096, //256 to 16384
-  });
-
-  const [filterSettings, setFilterSettings] = useState({
-    frequency: 2000, //20 to 22050
-    Q: 1, //0.001 to 100
-    gain: 0, //-40 to 40 (in decibels)
-    filterType: 'highpass', //lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass
-    bypass: 0,
-  });
-
-  const [pannerSettings, setPannerSettings] = useState({
-    pan: -1, // -1 (left) to 1 (right)
   });
 
   const handleWaveshape = ({ target }) => {
@@ -136,6 +136,20 @@ export const EffectsProvider = ({ children }) => {
     if (prop === 'bypass')
       setDelaySettings({ ...delaySettings, [prop]: !delaySettings.bypass });
     else setDelaySettings({ ...delaySettings, [prop]: target.value });
+  };
+
+  const handleFilter = ({ target }) => {
+    const prop = target.name;
+    if (prop === 'bypass')
+      setFilterSettings({ ...filterSettings, [prop]: !filterSettings.bypass });
+    else setFilterSettings({ ...filterSettings, [prop]: target.value });
+  };
+
+  const handleMoogFilter = ({ target }) => {
+    const prop = target.name;
+    if (prop === 'bypass')
+      setMoogSettings({ ...moogSettings, [prop]: !moogSettings.bypass });
+    else setMoogSettings({ ...moogSettings, [prop]: target.value });
   };
 
   return (
