@@ -64,7 +64,8 @@ export const EffectsProvider = ({ children }) => {
   });
 
   const [pannerSettings, setPannerSettings] = useState({
-    pan: -1, // -1 (left) to 1 (right)
+    pan: 0, // -1 (left) to 1 (right)
+    bypass: false,
   });
 
   const [phaserSettings, setPhaserSettings] = useState({

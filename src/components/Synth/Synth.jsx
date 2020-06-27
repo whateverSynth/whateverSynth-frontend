@@ -26,8 +26,9 @@ import ChorusEffect from '../Effects/ChorusEffect/ChorusEffect';
 import Effects from '../Effects/Effects';
 import BitcrusherEffect from '../Effects/BitcrusherEffect/BitcrusherEffect';
 import FilterEffect from '../Effects/FilterEffect/FilterEffect';
-import MoogFilterEffect from '../Effects/MoogFilter/MoogFilter';
-import OverdriveEffect from '../Effects/OverdriveEffects/OverdriveEffects';
+import MoogFilterEffect from '../Effects/MoogFilterEffect/MoogFilterEffect';
+import OverdriveEffect from '../Effects/OverdriveEffect/OverdriveEffect';
+import PannerEffect from '../Effects/PannerEffect/PannerEffect';
 
 let audioCtx;
 let tuna;
@@ -267,8 +268,7 @@ export default function Synth() {
       return <MoogFilterEffect key={effect.name} />;
     if (effect.name === 'Overdrive')
       return <OverdriveEffect key={effect.name} />;
-    if (effect.name === 'Panner')
-      return <li key={effect.name}>PANNER SETTINGS</li>;
+    if (effect.name === 'Panner') return <PannerEffect key={effect.name} />;
     if (effect.name === 'Phaser')
       return <li key={effect.name}>PHASER SETTINGS</li>;
     if (effect.name === 'Convolver')
