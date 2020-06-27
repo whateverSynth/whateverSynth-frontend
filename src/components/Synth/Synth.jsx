@@ -30,6 +30,7 @@ import MoogFilterEffect from '../Effects/MoogFilterEffect/MoogFilterEffect';
 import OverdriveEffect from '../Effects/OverdriveEffect/OverdriveEffect';
 import PannerEffect from '../Effects/PannerEffect/PannerEffect';
 import PhaserEffect from '../Effects/PhaserEffect/PhaserEffect';
+import ReverbEffect from '../Effects/ReverbEffect/ReverbEffect';
 
 let audioCtx;
 let tuna;
@@ -271,8 +272,7 @@ export default function Synth() {
       return <OverdriveEffect key={effect.name} />;
     if (effect.name === 'Panner') return <PannerEffect key={effect.name} />;
     if (effect.name === 'Phaser') return <PhaserEffect key={effect.name} />;
-    if (effect.name === 'Convolver')
-      return <li key={effect.name}>REVERB SETTINGS</li>;
+    if (effect.name === 'Convolver') return <ReverbEffect key={effect.name} />;
     if (effect.name === 'Tremolo')
       return <li key={effect.name}>TREMOLO SETTINGS</li>;
     if (effect.name === 'WahWah')

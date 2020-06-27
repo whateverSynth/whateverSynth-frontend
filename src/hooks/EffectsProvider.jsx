@@ -83,8 +83,8 @@ export const EffectsProvider = ({ children }) => {
     dryLevel: 1, //0 to 1+
     wetLevel: 1, //0 to 1+
     level: 1, //0 to 1+, adjusts total output of both wet and dry
-    impulse: 'reverb/silo.wav', //the path to your impulse response
-    bypass: 0,
+    impulse: 'reverb/garage.wav', //the path to your impulse response
+    bypass: false,
   });
 
   const [tremoloSettings, setTremoloSettings] = useState({

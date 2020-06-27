@@ -65,7 +65,7 @@ const FilterEffect = () => {
       </section>
 
       <section>
-        <label htmlFor="effects">type </label>
+        <label htmlFor="filterType">type </label>
         <select name="filterType" id="filterFilterType" onChange={handleFilter}>
           <option value="highpass">highpass</option>
           <option value="lowpass">lowpass</option>
