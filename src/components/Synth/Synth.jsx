@@ -19,11 +19,11 @@ import {
   useReverbSettings,
   useTremoloSettings,
   useWahWahSettings,
-  useHandleAddEffect,
 } from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
 import Keyboard from '../Keyboard/Keyboard';
 import ChorusEffect from '../Effects/ChorusEffect/ChorusEffect';
+import Effects from '../Effects/Effects';
 
 let audioCtx;
 let tuna;
@@ -32,7 +32,6 @@ let tunaEffects = [];
 
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
-  const [selectedEffect, setSelectedEffect] = useState('Bitcrusher');
 
   const waveshape = useWaveshape();
   const gainSetting = useGainSetting();
@@ -40,7 +39,6 @@ export default function Synth() {
 
   // NEW EFFECT STATE
   const effects = useEffects();
-  const handleAddEffect = useHandleAddEffect();
   const bitcrusherSettings = useBitcrusherSettings();
   const chorusSettings = useChorusSettings();
   const delaySettings = useDelaySettings();
@@ -210,31 +208,12 @@ export default function Synth() {
         handleEventType="keyup"
         onKeyEvent={(key, e) => keyUp(e)}
       />
+
       <h1>synthinator</h1>
       <Keyboard />
       <Waveshapes />
+      <Effects />
       <ul>{effectNodes}</ul>
-      <section>
-        <label htmlFor="effects">add effect </label>
-        <select
-          name="effects"
-          id="effects"
-          onChange={(event) => setSelectedEffect(event.target.value)}
-        >
-          <option value="Bitcrusher">bitcrusher</option>
-          <option value="Chorus">chorus</option>
-          <option value="Delay">delay</option>
-          <option value="Filter">filter</option>
-          <option value="MoogFilter">moog filter</option>
-          <option value="Overdrive">overdrive</option>
-          <option value="Panner">panner</option>
-          <option value="Phaser">phaser</option>
-          <option value="Convolver">reverb</option>
-          <option value="Tremolo">tremolo</option>
-          <option value="WahWah">wahwah</option>
-        </select>
-        <button onClick={() => handleAddEffect(selectedEffect)}>+</button>
-      </section>
     </section>
   );
 }
