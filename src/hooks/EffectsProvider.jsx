@@ -124,18 +124,18 @@ export const EffectsProvider = ({ children }) => {
     else setBitcrusherSettings({ ...bitcrusherSettings, [prop]: target.value });
   };
 
-  const handleDelay = ({ target }) => {
-    const prop = target.name;
-    if (prop === 'bypass')
-      setDelaySettings({ ...delaySettings, [prop]: !delaySettings.bypass });
-    else setDelaySettings({ ...delaySettings, [prop]: target.value });
-  };
-
   const handleChorus = ({ target }) => {
     const prop = target.name;
     if (prop === 'bypass')
       setChorusSettings({ ...chorusSettings, [prop]: !chorusSettings.bypass });
     else setChorusSettings({ ...chorusSettings, [prop]: target.value });
+  };
+
+  const handleDelay = ({ target }) => {
+    const prop = target.name;
+    if (prop === 'bypass')
+      setDelaySettings({ ...delaySettings, [prop]: !delaySettings.bypass });
+    else setDelaySettings({ ...delaySettings, [prop]: target.value });
   };
 
   return (
@@ -147,8 +147,16 @@ export const EffectsProvider = ({ children }) => {
         handleGainSetting,
         handleAddEffect,
         handleBitcrusher,
-        handleDelay,
         handleChorus,
+        handleDelay,
+        handleFilter,
+        handleMoogFilter,
+        handleOverdrive,
+        handlePanner,
+        handlePhaser,
+        handleReverb,
+        handleTremolo,
+        handleWahWah,
         effects,
         chorusSettings,
         phaserSettings,
