@@ -45,7 +45,7 @@ export const EffectsProvider = ({ children }) => {
     Q: 1, //0.001 to 100
     gain: 0, //-40 to 40 (in decibels)
     filterType: 'highpass', //lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass
-    bypass: 0,
+    bypass: false,
   });
 
   const [moogSettings, setMoogSettings] = useState({

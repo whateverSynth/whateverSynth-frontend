@@ -38,7 +38,7 @@ const BitcrusherEffect = () => {
           min="0"
           max="1"
           value={bitcrusherSettings.normfreq}
-          step="0.01"
+          step="0.1"
           id="bitcrusherNormFreqRange"
           onChange={handleBitcrusher}
           name="normfreq"
