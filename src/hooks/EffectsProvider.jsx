@@ -51,7 +51,8 @@ export const EffectsProvider = ({ children }) => {
   const [moogSettings, setMoogSettings] = useState({
     cutoff: 0.45, //0 to 1
     resonance: 2.5, //0 to 4
-    bufferSize: 4096, //256 to 16384
+    bufferSize: 4096, //256 to 16384,
+    bypass: false,
   });
 
   const [overdriveSettings, setOverdriveSettings] = useState({

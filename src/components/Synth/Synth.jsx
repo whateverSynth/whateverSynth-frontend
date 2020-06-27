@@ -26,6 +26,7 @@ import ChorusEffect from '../Effects/ChorusEffect/ChorusEffect';
 import Effects from '../Effects/Effects';
 import BitcrusherEffect from '../Effects/BitcrusherEffect/BitcrusherEffect';
 import FilterEffect from '../Effects/FilterEffect/FilterEffect';
+import MoogFilterEffect from '../Effects/MoogFilter/MoogFilter';
 
 let audioCtx;
 let tuna;
@@ -262,7 +263,7 @@ export default function Synth() {
     if (effect.name === 'Delay') return <DelayEffect key={effect.name} />;
     if (effect.name === 'Filter') return <FilterEffect key={effect.name} />;
     if (effect.name === 'MoogFilter')
-      return <li key={effect.name}>MOOG FILTER</li>;
+      return <MoogFilterEffect key={effect.name} />;
     if (effect.name === 'Overdrive')
       return <li key={effect.name}>OVERDRIVE SETTINGS</li>;
     if (effect.name === 'Panner')
