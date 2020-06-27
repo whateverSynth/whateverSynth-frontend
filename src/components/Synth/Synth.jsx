@@ -24,6 +24,7 @@ import Waveshapes from '../Waveshapes/Waveshapes';
 import Keyboard from '../Keyboard/Keyboard';
 import ChorusEffect from '../Effects/ChorusEffect/ChorusEffect';
 import Effects from '../Effects/Effects';
+import BitcrusherEffect from '../Effects/BitcrusherEffect/BitcrusherEffect';
 
 let audioCtx;
 let tuna;
@@ -255,7 +256,7 @@ export default function Synth() {
 
   const effectNodes = localEffects.map((effect) => {
     if (effect.name === 'Bitcrusher')
-      return <li key={effect.name}>BITCRUSHER SETTINGS</li>;
+      return <BitcrusherEffect key={effect.name} />;
     if (effect.name === 'Chorus') return <ChorusEffect key={effect.name} />;
     if (effect.name === 'Delay') return <DelayEffect key={effect.name} />;
     if (effect.name === 'Filter')

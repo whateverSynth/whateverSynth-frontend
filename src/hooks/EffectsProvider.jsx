@@ -21,6 +21,7 @@ export const EffectsProvider = ({ children }) => {
     bits: 4, //1 to 16
     normfreq: 0.1, //0 to 1
     bufferSize: 4096, //256 to 16384
+    bypass: false,
   });
 
   const [chorusSettings, setChorusSettings] = useState({
