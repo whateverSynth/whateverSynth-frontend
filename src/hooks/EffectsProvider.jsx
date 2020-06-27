@@ -152,6 +152,54 @@ export const EffectsProvider = ({ children }) => {
     else setMoogSettings({ ...moogSettings, [prop]: target.value });
   };
 
+  const handleOverdrive = ({ target }) => {
+    const prop = target.name;
+    if (prop === 'bypass')
+      setOverdriveSettings({
+        ...overdriveSettings,
+        [prop]: !overdriveSettings.bypass,
+      });
+    else setOverdriveSettings({ ...overdriveSettings, [prop]: target.value });
+  };
+
+  const handlePanner = ({ target }) => {
+    const prop = target.name;
+    if (prop === 'bypass')
+      setPannerSettings({ ...pannerSettings, [prop]: !pannerSettings.bypass });
+    else setPannerSettings({ ...pannerSettings, [prop]: target.value });
+  };
+
+  const handlePhaser = ({ target }) => {
+    const prop = target.name;
+    if (prop === 'bypass')
+      setPhaserSettings({ ...phaserSettings, [prop]: !phaserSettings.bypass });
+    else setPhaserSettings({ ...phaserSettings, [prop]: target.value });
+  };
+
+  const handleReverb = ({ target }) => {
+    const prop = target.name;
+    if (prop === 'bypass')
+      setReverbSettings({ ...reverbSettings, [prop]: !reverbSettings.bypass });
+    else setReverbSettings({ ...reverbSettings, [prop]: target.value });
+  };
+
+  const handleTremolo = ({ target }) => {
+    const prop = target.name;
+    if (prop === 'bypass')
+      setTremoloSettings({
+        ...tremoloSettings,
+        [prop]: !tremoloSettings.bypass,
+      });
+    else setTremoloSettings({ ...tremoloSettings, [prop]: target.value });
+  };
+
+  const handleWahWah = ({ target }) => {
+    const prop = target.name;
+    if (prop === 'bypass')
+      setWahWahSettings({ ...wahWahSettings, [prop]: !wahWahSettings.bypass });
+    else setWahWahSettings({ ...wahWahSettings, [prop]: target.value });
+  };
+
   return (
     <EffectsContext.Provider
       value={{
