@@ -17,20 +17,21 @@ const Waveshapes = () => {
 
   return (
     <section className={styles.Controls}>
-      <input
-        type="range"
-        min="0"
-        max="1"
-        value={gainSetting}
-        step="0.01"
-        id="gainSetting"
-        onChange={handleGainSetting}
-      ></input>
-      <label className={styles.Gain}>
-        volume: <p>{Math.floor(gainSetting * 100)} %</p>
-      </label>
+      <section className={styles.Volume}>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          value={gainSetting}
+          step="0.01"
+          id="gainSetting"
+          onChange={handleGainSetting}
+        ></input>
+        <label className={styles.Gain}>
+          volume: <p>{Math.floor(gainSetting * 100)} %</p>
+        </label>
+      </section>
       <div className={styles.Radio}>
-        waveform:
         <label>
           <input
             type="radio"

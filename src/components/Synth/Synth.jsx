@@ -189,7 +189,7 @@ export default function Synth() {
   });
 
   return (
-    <div className={styles.Container}>
+    <section className={styles.Container}>
       <KeyboardEventHandler
         handleKeys={['all']}
         onKeyEvent={(key, e) => keyDown(e)}
@@ -204,27 +204,27 @@ export default function Synth() {
       <Keyboard />
       <Waveshapes />
       <ul>{effectNodes}</ul>
-      <div>
-        <label htmlFor="effects">Choose an Effect:</label>
+      <section>
+        <label htmlFor="effects">add effect </label>
         <select
           name="effects"
           id="effects"
           onChange={(event) => setSelectedEffect(event.target.value)}
         >
-          <option value="Chorus">Chorus</option>
-          <option value="Phaser">Phaser</option>
-          <option value="Delay">Delay</option>
-          <option value="Tremolo">Tremolo</option>
-          <option value="WahWah">WahWah</option>
-          <option value="Bitcrusher">Bitcrusher</option>
-          <option value="Convolver">Reverb</option>
-          <option value="Overdrive">Overdrive</option>
-          <option value="MoogFilter">MoogFilter</option>
-          <option value="Filter">Filter</option>
-          <option value="Panner">Panner</option>
+          <option value="Chorus">chorus</option>
+          <option value="Phaser">chaser</option>
+          <option value="Delay">delay</option>
+          <option value="Tremolo">tremolo</option>
+          <option value="WahWah">wahwah</option>
+          <option value="Bitcrusher">bitcrusher</option>
+          <option value="Convolver">reverb</option>
+          <option value="Overdrive">overdrive</option>
+          <option value="MoogFilter">moog filter</option>
+          <option value="Filter">filter</option>
+          <option value="Panner">panner</option>
         </select>
         <button onClick={() => handleAddEffect(selectedEffect)}>+</button>
-      </div>
-    </div>
+      </section>
+    </section>
   );
 }

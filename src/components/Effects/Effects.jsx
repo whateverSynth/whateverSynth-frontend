@@ -27,7 +27,7 @@ export default function Effects() {
 
   return (
     <div>
-      <label htmlFor="effects">Choose an Effect:</label>
+      <label htmlFor="effects">+ effect</label>
       <select name="effects" id="effects">
         <option value="chorus">Chorus</option>
         <option value="delay">Delay</option>
