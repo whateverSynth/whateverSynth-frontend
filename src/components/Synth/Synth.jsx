@@ -101,13 +101,13 @@ export default function Synth() {
   //useEffect Effects
   useEffect(() => {
     const chainIndex = tunaEffects.findIndex(
-      (effect) => effect.name === 'Delay'
+      (effect) => effect.name === 'Bitcrusher'
     );
     if (chainIndex === -1) return;
-    Object.entries(delaySettings).forEach((setting) => {
+    Object.entries(bitcrusherSettings).forEach((setting) => {
       tunaEffects[chainIndex][setting[0]] = setting[1];
     });
-  }, [delaySettings]);
+  }, [bitcrusherSettings]);
 
   useEffect(() => {
     const chainIndex = tunaEffects.findIndex(
@@ -119,15 +119,95 @@ export default function Synth() {
     });
   }, [chorusSettings]);
 
-  // useEffect(() => {
-  //   const chainIndex = tunaEffects.findIndex(
-  //     (effect) => effect.name === 'Chorus'
-  //   );
-  //   if (chainIndex === -1) return;
-  //   Object.entries(chorusSettings).forEach((setting) => {
-  //     tunaEffects[chainIndex][setting[0]] = setting[1];
-  //   });
-  // }, [chorusSettings]);
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Delay'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(delaySettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [delaySettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Filter'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(filterSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [filterSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'MoogFilter'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(moogSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [moogSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Overdrive'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(overdriveSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [overdriveSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Panner'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(pannerSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [pannerSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Phaser'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(phaserSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [phaserSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Convolver'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(reverbSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [reverbSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Tremolo'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(tremoloSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [tremoloSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'WahWah'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(wahWahSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [wahWahSettings]);
 
   useEffect(() => {
     gain.gain.value = gainSetting; //defaults to 0.8
