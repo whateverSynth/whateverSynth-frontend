@@ -60,7 +60,7 @@ export const EffectsProvider = ({ children }) => {
     drive: 1, //0 to 1
     curveAmount: 1, //0 to 1
     algorithmIndex: 5, //0 to 5, selects one of our drive algorithms
-    bypass: 0,
+    bypass: false,
   });
 
   const [pannerSettings, setPannerSettings] = useState({

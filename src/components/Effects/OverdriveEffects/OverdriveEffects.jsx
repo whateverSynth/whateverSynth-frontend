@@ -23,82 +23,67 @@ const OverdriveEffect = () => {
           max="0"
           value={overdriveSettings.outputGain}
           step="1"
-          id="overdriveFeedbackRange"
+          id="overdriveOutputGain"
           onChange={handleOverdrive}
           name="outputGain"
         ></input>
         <label>
-          output gain: <p>{overdriveSettings.outputGain}</p>
+          output gain: <p>{overdriveSettings.outputGain} db</p>
         </label>
       </section>
 
       <section>
         <input
           type="range"
-          min="1"
-          max="1000"
-          value={OverdriveSettings.time}
+          min="0"
+          max="1"
+          value={overdriveSettings.drive}
+          step="0.01"
+          id="overdriveDriveRange"
+          onChange={handleOverdrive}
+          name="drive"
+        ></input>
+        <label>
+          drive: <p>{Math.floor(overdriveSettings.drive * 100)} %</p>
+        </label>
+      </section>
+
+      <section>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          value={overdriveSettings.curveAmount}
+          step="0.1"
+          id="OverdriveCurveAmountRange"
+          onChange={handleOverdrive}
+          name="curveAmount"
+        ></input>
+        <label>
+          curve amount:{' '}
+          <p>{Math.floor(overdriveSettings.curveAmount * 100)} %</p>
+        </label>
+      </section>
+
+      <section>
+        <input
+          type="range"
+          min="0"
+          max="5"
+          value={overdriveSettings.algorithmIndex}
           step="1"
-          id="OverdriveTimeRange"
+          id="overdriveAlgorithmIndexRange"
           onChange={handleOverdrive}
-          name="OverdriveTime"
+          name="algorithmIndex"
         ></input>
         <label>
-          time: <p>{OverdriveSettings.time} ms</p>
-        </label>
-      </section>
-
-      <section>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={OverdriveSettings.wetLevel}
-          step="0.1"
-          id="OverdriveWetLevelRange"
-          onChange={handleOverdrive}
-          name="wetLevel"
-        ></input>
-        <label>
-          wet level: <p>{Math.floor(OverdriveSettings.wetLevel * 100)} %</p>
-        </label>
-      </section>
-
-      <section>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={OverdriveSettings.dryLevel}
-          step="0.1"
-          id="OverdriveDryLevelRange"
-          onChange={handleOverdrive}
-          name="dryLevel"
-        ></input>
-        <label>
-          dry level: <p>{Math.floor(OverdriveSettings.dryLevel * 100)} %</p>
-        </label>
-      </section>
-
-      <section>
-        <input
-          type="range"
-          min="20"
-          max="22050"
-          value={OverdriveSettings.cutoff}
-          step="10"
-          id="OverdriveCutoffRange"
-          onChange={handleOverdrive}
-          name="cutoff"
-        ></input>
-        <label>
-          cutoff: <p>{OverdriveSettings.cutoff} Hz</p>
+          algorithm # <p>{overdriveSettings.algorithmIndex}</p>
         </label>
       </section>
 
       <input
         type="checkbox"
-        value={OverdriveSettings.bypass}
+        value={overdriveSettings.bypass}
         onChange={handleOverdrive}
         name="bypass"
       ></input>

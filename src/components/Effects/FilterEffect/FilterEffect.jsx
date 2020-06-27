@@ -77,22 +77,6 @@ const FilterEffect = () => {
           <option value="allpass">allpass</option>
         </select>
       </section>
-      {/* 
-      <section>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={filterSettings.dryLevel}
-          step="0.1"
-          id="FilterDryLevelRange"
-          onChange={handleFilter}
-          name="dryLevel"
-        ></input>
-        <label>
-          dry level: <p>{Math.floor(filterSettings.dryLevel * 100)} %</p>
-        </label>
-      </section> */}
 
       <input
         type="checkbox"

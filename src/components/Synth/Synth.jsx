@@ -27,6 +27,7 @@ import Effects from '../Effects/Effects';
 import BitcrusherEffect from '../Effects/BitcrusherEffect/BitcrusherEffect';
 import FilterEffect from '../Effects/FilterEffect/FilterEffect';
 import MoogFilterEffect from '../Effects/MoogFilter/MoogFilter';
+import OverdriveEffect from '../Effects/OverdriveEffects/OverdriveEffects';
 
 let audioCtx;
 let tuna;
@@ -265,7 +266,7 @@ export default function Synth() {
     if (effect.name === 'MoogFilter')
       return <MoogFilterEffect key={effect.name} />;
     if (effect.name === 'Overdrive')
-      return <li key={effect.name}>OVERDRIVE SETTINGS</li>;
+      return <OverdriveEffect key={effect.name} />;
     if (effect.name === 'Panner')
       return <li key={effect.name}>PANNER SETTINGS</li>;
     if (effect.name === 'Phaser')
