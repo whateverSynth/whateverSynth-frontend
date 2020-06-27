@@ -8,12 +8,6 @@
   display: grid;
   justify-content: center;
 
-  input {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-  }
-
   p {
     color: #00ff9f;
     display: inline;

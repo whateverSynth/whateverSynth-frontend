@@ -12,17 +12,8 @@ const ChorusEffect = () => {
   return (
     <section className={styles.Effects}>
       <section>
-        <section>
-          <h2>chorus &nbsp;</h2>
-          <button>x</button>
-        </section>
-        <input
-          type="checkbox"
-          value={chorusSettings.bypass}
-          onChange={handleChorus}
-          name="bypass"
-        ></input>
-        <label>bypass</label>
+        <h2>chorus &nbsp;</h2>
+        <button>x</button>
       </section>
 
       <section>
@@ -71,6 +62,16 @@ const ChorusEffect = () => {
         <label>
           delay: <p>{Math.floor(chorusSettings.delay * 100)} %</p>
         </label>
+      </section>
+
+      <section>
+        <input
+          type="checkbox"
+          value={chorusSettings.bypass}
+          onChange={handleChorus}
+          name="bypass"
+        ></input>
+        <label className={styles.bypass}>bypass</label>
       </section>
     </section>
   );

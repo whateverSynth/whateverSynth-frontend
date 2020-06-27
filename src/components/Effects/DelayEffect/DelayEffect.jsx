@@ -12,17 +12,8 @@ const DelayEffect = () => {
   return (
     <section className={styles.Effects}>
       <section>
-        <section>
-          <h2>delay &nbsp;</h2>
-          <button>x</button>
-        </section>
-        <input
-          type="checkbox"
-          value={delaySettings.bypass}
-          onChange={handleDelay}
-          name="bypass"
-        ></input>
-        <label>bypass</label>
+        <h2>delay &nbsp;</h2>
+        <button>x</button>
       </section>
 
       <section>
@@ -104,6 +95,14 @@ const DelayEffect = () => {
           cutoff: <p>{delaySettings.cutoff} Hz</p>
         </label>
       </section>
+
+      <input
+        type="checkbox"
+        value={delaySettings.bypass}
+        onChange={handleDelay}
+        name="bypass"
+      ></input>
+      <label className={styles.bypass}>bypass</label>
     </section>
   );
 };

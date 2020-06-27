@@ -121,15 +121,15 @@ export default function Synth() {
     });
   }, [chorusSettings]);
 
-  useEffect(() => {
-    const chainIndex = tunaEffects.findIndex(
-      (effect) => effect.name === 'Chorus'
-    );
-    if (chainIndex === -1) return;
-    Object.entries(chorusSettings).forEach((setting) => {
-      tunaEffects[chainIndex][setting[0]] = setting[1];
-    });
-  }, [chorusSettings]);
+  // useEffect(() => {
+  //   const chainIndex = tunaEffects.findIndex(
+  //     (effect) => effect.name === 'Chorus'
+  //   );
+  //   if (chainIndex === -1) return;
+  //   Object.entries(chorusSettings).forEach((setting) => {
+  //     tunaEffects[chainIndex][setting[0]] = setting[1];
+  //   });
+  // }, [chorusSettings]);
 
   useEffect(() => {
     gain.gain.value = gainSetting; //defaults to 0.8
