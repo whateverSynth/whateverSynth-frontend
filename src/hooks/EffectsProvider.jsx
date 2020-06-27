@@ -113,6 +113,17 @@ export const EffectsProvider = ({ children }) => {
     setEffects([...effects, newEffect]);
   };
 
+  //effects handlers
+  const handleBitcrusher = ({ target }) => {
+    const prop = target.name;
+    if (prop === 'bypass')
+      setBitcrusherSettings({
+        ...bitcrusherSettings,
+        [prop]: !bitcrusherSettings.bypass,
+      });
+    else setBitcrusherSettings({ ...bitcrusherSettings, [prop]: target.value });
+  };
+
   const handleDelay = ({ target }) => {
     const prop = target.name;
     if (prop === 'bypass')
@@ -135,6 +146,7 @@ export const EffectsProvider = ({ children }) => {
         handleWaveshape,
         handleGainSetting,
         handleAddEffect,
+        handleBitcrusher,
         handleDelay,
         handleChorus,
         effects,
@@ -187,6 +199,12 @@ export const useHandleAddEffect = () => {
 };
 
 // effect handlers
+
+export const useHandleBitcrusher = () => {
+  const { handleBitcrusher } = useContext(EffectsContext);
+  return handleBitcrusher;
+};
+
 export const useHandleDelay = () => {
   const { handleDelay } = useContext(EffectsContext);
   return handleDelay;
