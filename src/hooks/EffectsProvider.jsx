@@ -205,14 +205,54 @@ export const useHandleBitcrusher = () => {
   return handleBitcrusher;
 };
 
+export const useHandleChorus = () => {
+  const { handleChorus } = useContext(EffectsContext);
+  return handleChorus;
+};
+
 export const useHandleDelay = () => {
   const { handleDelay } = useContext(EffectsContext);
   return handleDelay;
 };
 
-export const useHandleChorus = () => {
-  const { handleChorus } = useContext(EffectsContext);
-  return handleChorus;
+export const useHandleFilter = () => {
+  const { handleFilter } = useContext(EffectsContext);
+  return handleFilter;
+};
+
+export const useHandleMoogFilter = () => {
+  const { handleMoogFilter } = useContext(EffectsContext);
+  return handleMoogFilter;
+};
+
+export const useHandleOverdrive = () => {
+  const { handleOverdrive } = useContext(EffectsContext);
+  return handleOverdrive;
+};
+
+export const useHandlePanner = () => {
+  const { handlePanner } = useContext(EffectsContext);
+  return handlePanner;
+};
+
+export const useHandlePhaser = () => {
+  const { handlePhaser } = useContext(EffectsContext);
+  return handlePhaser;
+};
+
+export const useHandleReverb = () => {
+  const { handleReverb } = useContext(EffectsContext);
+  return handleReverb;
+};
+
+export const useHandleTremolo = () => {
+  const { handleTremolo } = useContext(EffectsContext);
+  return handleTremolo;
+};
+
+export const useHandleWahWahs = () => {
+  const { handleWahWahs } = useContext(EffectsContext);
+  return handleWahWahs;
 };
 
 // new effects
