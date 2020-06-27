@@ -2,20 +2,39 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
-}
-.Gain {
-    margin-bottom: 1rem;
-}
-.Radio {
-    display: flex;
-    flex-direction: row;
-svg{
-  width: 10vw;
-  height: 10vh;
-  fill:#00b8ff;
-}
-svg:hover{
-  fill:#00ff9f;
-}
+  input[type='range'] {
+    -webkit-appearance: none;
+    background-color: #00ff9f;
+    outline: none;
+    border: dotted #d600ff;
+    border-width: 2px 2px 2px 2px;
+    width: 15rem;
+  }
 }
 
+.Gain {
+  margin-bottom: 1rem;
+}
+
+.Radio {
+  display: flex;
+  flex-direction: row;
+
+  input {
+    display: none;
+  }
+
+  svg {
+    width: 10vw;
+    height: 10vh;
+    fill: #00b8ff;
+  }
+
+  svg:hover {
+    fill: #00ff9f;
+  }
+
+  input:checked + svg {
+    fill: #00ff9f;
+  }
+}

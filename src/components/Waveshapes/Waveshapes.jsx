@@ -10,8 +10,6 @@ import Square from '../../../public/assets/square.svg';
 import Triangle from '../../../public/assets/triangle.svg';
 import Sawtooth from '../../../public/assets/sawtooth.svg';
 
-
-  
 const Waveshapes = () => {
   const gainSetting = useGainSetting();
   const handleGainSetting = useHandleGainSetting();
