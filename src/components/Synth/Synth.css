@@ -3,9 +3,16 @@
   font-family: 'Press Start 2P', cursive;
   color: #d600ff;
 }
+
 .Container {
   display: grid;
   justify-content: center;
+
+  input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
 
   p {
     color: #00ff9f;
