@@ -83,8 +83,11 @@ const FilterEffect = () => {
         value={filterSettings.bypass}
         onChange={handleFilter}
         name="bypass"
+        id="filterBypass"
       ></input>
-      <label className={styles.bypass}>bypass</label>
+      <label htmlFor="filterBypass" className={styles.bypass}>
+        bypass
+      </label>
     </section>
   );
 };

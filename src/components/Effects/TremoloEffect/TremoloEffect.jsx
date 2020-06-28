@@ -69,8 +69,11 @@ const TremoloEffect = () => {
         value={tremoloSettings.bypass}
         onChange={handleTremolo}
         name="bypass"
+        id="tremoloBypass"
       ></input>
-      <label className={styles.bypass}>bypass</label>
+      <label htmlFor="tremoloBypass" className={styles.bypass}>
+        bypass
+      </label>
     </section>
   );
 };

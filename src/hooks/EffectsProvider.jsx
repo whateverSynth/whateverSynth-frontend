@@ -116,6 +116,10 @@ export const EffectsProvider = ({ children }) => {
     setEffects([...effects, newEffect]);
   };
 
+  const handleRemoveEffect = (effectToRemove) => {
+    setEffects([...effects, effectToRemove.pop]);
+  };
+
   //effects handlers
   const handleBitcrusher = ({ target }) => {
     const prop = target.name;
@@ -200,7 +204,6 @@ export const EffectsProvider = ({ children }) => {
     const prop = target.name;
     if (prop === 'bypass')
       setWahWahSettings({ ...wahWahSettings, [prop]: !wahWahSettings.bypass });
-    else setWahWahSettings({ ...wahWahSettings, [prop]: target.value });
     if (prop === 'automode')
       setWahWahSettings({
         ...wahWahSettings,
@@ -217,6 +220,7 @@ export const EffectsProvider = ({ children }) => {
         handleWaveshape,
         handleGainSetting,
         handleAddEffect,
+        handleRemoveEffect,
         handleBitcrusher,
         handleChorus,
         handleDelay,
@@ -275,6 +279,11 @@ export const useHandleGainSetting = () => {
 export const useHandleAddEffect = () => {
   const { handleAddEffect } = useContext(EffectsContext);
   return handleAddEffect;
+};
+
+export const useHandleRemoveEffect = () => {
+  const { handleRemoveEffect } = useContext(EffectsContext);
+  return handleRemoveEffect;
 };
 
 // effect handlers

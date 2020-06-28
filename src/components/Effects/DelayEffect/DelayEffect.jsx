@@ -101,8 +101,11 @@ const DelayEffect = () => {
         value={delaySettings.bypass}
         onChange={handleDelay}
         name="bypass"
+        id="delayBypass"
       ></input>
-      <label className={styles.bypass}>bypass</label>
+      <label htmlFor="delayBypass" className={styles.bypass}>
+        bypass
+      </label>
     </section>
   );
 };

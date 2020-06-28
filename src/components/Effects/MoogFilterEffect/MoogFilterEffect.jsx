@@ -69,8 +69,11 @@ const MoogFilterEffect = () => {
         value={moogFilterSettings.bypass}
         onChange={handleMoogFilter}
         name="bypass"
+        id="moogFilterBypass"
       ></input>
-      <label className={styles.bypass}>bypass</label>
+      <label htmlFor="moogFilterBypass" className={styles.bypass}>
+        bypass
+      </label>
     </section>
   );
 };

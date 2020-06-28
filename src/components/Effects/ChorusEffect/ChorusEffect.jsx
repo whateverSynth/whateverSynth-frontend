@@ -70,8 +70,11 @@ const ChorusEffect = () => {
           value={chorusSettings.bypass}
           onChange={handleChorus}
           name="bypass"
+          id="chorusBypass"
         ></input>
-        <label className={styles.bypass}>bypass</label>
+        <label htmlFor="chorusBypass" className={styles.bypass}>
+          bypass
+        </label>
       </section>
     </section>
   );

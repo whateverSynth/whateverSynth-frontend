@@ -111,8 +111,11 @@ const ReverbEffect = () => {
         value={reverbSettings.bypass}
         onChange={handleReverb}
         name="bypass"
+        id="reverbBypass"
       ></input>
-      <label className={styles.bypass}>bypass</label>
+      <label htmlFor="reverbBypass" className={styles.bypass}>
+        bypass
+      </label>
     </section>
   );
 };

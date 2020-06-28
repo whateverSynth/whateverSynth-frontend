@@ -104,7 +104,7 @@ export default function Synth() {
       });
     }
     setLocalEffects(tunaEffects);
-    console.log(tunaEffects);
+    // console.log(tunaEffects);
   }, [effects]);
 
   //useEffect Effects

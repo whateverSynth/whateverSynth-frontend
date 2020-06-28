@@ -36,8 +36,11 @@ const PannerEffect = () => {
         value={pannerSettings.bypass}
         onChange={handlePanner}
         name="bypass"
+        id="pannerBypass"
       ></input>
-      <label className={styles.bypass}>bypass</label>
+      <label htmlFor="pannerBypass" className={styles.bypass}>
+        bypass
+      </label>
     </section>
   );
 };

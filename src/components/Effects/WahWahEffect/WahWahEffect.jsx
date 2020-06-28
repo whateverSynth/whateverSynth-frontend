@@ -21,8 +21,11 @@ const WahWahEffect = () => {
         value={wahWahSettings.automode}
         onChange={handleWahWah}
         name="automode"
+        id="automode"
       ></input>
-      <label className={styles.automode}>automode</label>
+      <label htmlFor="automode" className={styles.automode}>
+        automode
+      </label>
 
       <section>
         <input
@@ -30,7 +33,7 @@ const WahWahEffect = () => {
           min="0"
           max="1"
           value={wahWahSettings.baseFrequency}
-          step="0.05"
+          step="0.01"
           id="wahWahBaseFrequencyRange"
           onChange={handleWahWah}
           name="baseFrequency"
@@ -109,8 +112,11 @@ const WahWahEffect = () => {
         value={wahWahSettings.bypass}
         onChange={handleWahWah}
         name="bypass"
+        id="wahWahBypass"
       ></input>
-      <label className={styles.bypass}>bypass</label>
+      <label htmlFor="wahWahBypass" className={styles.bypass}>
+        bypass
+      </label>
     </section>
   );
 };

@@ -69,8 +69,11 @@ const BitcrusherEffect = () => {
         value={bitcrusherSettings.bypass}
         onChange={handleBitcrusher}
         name="bypass"
+        id="bypass"
       ></input>
-      <label className={styles.bypass}>bypass</label>
+      <label htmlFor="bypass" className={styles.bypass}>
+        bypass
+      </label>
     </section>
   );
 };

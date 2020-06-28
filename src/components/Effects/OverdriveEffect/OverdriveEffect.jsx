@@ -86,8 +86,11 @@ const OverdriveEffect = () => {
         value={overdriveSettings.bypass}
         onChange={handleOverdrive}
         name="bypass"
+        id="overdriveBypass"
       ></input>
-      <label className={styles.bypass}>bypass</label>
+      <label htmlFor="overdriveBypass" className={styles.bypass}>
+        bypass
+      </label>
     </section>
   );
 };

@@ -101,8 +101,11 @@ const PhaserEffect = () => {
         value={phaserSettings.bypass}
         onChange={handlePhaser}
         name="bypass"
+        id="phaserBypass"
       ></input>
-      <label className={styles.bypass}>bypass</label>
+      <label htmlFor="phaserBypass" className={styles.bypass}>
+        bypass
+      </label>
     </section>
   );
 };
