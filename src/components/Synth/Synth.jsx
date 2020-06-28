@@ -19,6 +19,7 @@ import {
   useReverbSettings,
   useTremoloSettings,
   useWahWahSettings,
+  useCompressorSettings,
 } from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
 import Keyboard from '../Keyboard/Keyboard';
@@ -33,6 +34,7 @@ import PhaserEffect from '../Effects/PhaserEffect/PhaserEffect';
 import ReverbEffect from '../Effects/ReverbEffect/ReverbEffect';
 import TremoloEffect from '../Effects/TremoloEffect/TremoloEffect';
 import WahWahEffect from '../Effects/WahWahEffect/WahWahEffect';
+import CompressorEffect from '../Effects/CompressorEffect/CompressorEffect';
 
 let audioCtx;
 let tuna;
@@ -50,6 +52,7 @@ export default function Synth() {
   const effects = useEffects();
   const bitcrusherSettings = useBitcrusherSettings();
   const chorusSettings = useChorusSettings();
+  const compressorSettings = useCompressorSettings();
   const delaySettings = useDelaySettings();
   const filterSettings = useFilterSettings();
   const moogSettings = useMoogSettings();
@@ -71,6 +74,7 @@ export default function Synth() {
     tunaEffects = effects.map((effect) => {
       const name = effect;
       if (name === 'Bitcrusher') return new tuna[name](bitcrusherSettings);
+      if (name === 'Compressor') return new tuna[name](compressorSettings);
       if (name === 'Chorus') return new tuna[name](chorusSettings);
       if (name === 'Delay') return new tuna[name](delaySettings);
       if (name === 'Filter') return new tuna[name](filterSettings);
@@ -117,6 +121,16 @@ export default function Synth() {
       tunaEffects[chainIndex][setting[0]] = setting[1];
     });
   }, [bitcrusherSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Compressor'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(compressorSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [compressorSettings]);
 
   useEffect(() => {
     const chainIndex = tunaEffects.findIndex(
@@ -265,6 +279,8 @@ export default function Synth() {
   const effectNodes = localEffects.map((effect) => {
     if (effect.name === 'Bitcrusher')
       return <BitcrusherEffect key={effect.name} />;
+    if (effect.name === 'Compressor')
+      return <CompressorEffect key={effect.name} />;
     if (effect.name === 'Chorus') return <ChorusEffect key={effect.name} />;
     if (effect.name === 'Delay') return <DelayEffect key={effect.name} />;
     if (effect.name === 'Filter') return <FilterEffect key={effect.name} />;
