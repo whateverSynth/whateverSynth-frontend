@@ -31,6 +31,17 @@ export const EffectsProvider = ({ children }) => {
     bypass: false, //the value 1 starts the effect as bypassed, 0 or 1
   });
 
+  const [compressorSettings, setCompressorSettings] = useState({
+    threshold: -1, //-100 to 0
+    makeupGain: 1, //0 and up (in decibels)
+    attack: 1, //0 to 1000
+    release: 0, //0 to 3000
+    ratio: 4, //1 to 20
+    knee: 5, //0 to 40
+    automakeup: false, //true/false
+    bypass: false,
+  });
+
   const [delaySettings, setDelaySettings] = useState({
     feedback: 0.45, //0 to 1+
     delayTime: 150, //1 to 10000 milliseconds
@@ -75,6 +86,13 @@ export const EffectsProvider = ({ children }) => {
     stereoPhase: 0, //0 to 180
     baseModulationFrequency: 700, //500 to 1500
     bypass: false,
+  });
+
+  const [pingPongDelaySettings, setPingPongDelaySettings] = useState({
+    wetLevel: 0.5, //0 to 1
+    feedback: 0.3, //0 to 1
+    delayTimeLeft: 150, //1 to 10000 (milliseconds)
+    delayTimeRight: 200, //1 to 10000 (milliseconds)
   });
 
   const [reverbSettings, setReverbSettings] = useState({
@@ -131,6 +149,21 @@ export const EffectsProvider = ({ children }) => {
     else setBitcrusherSettings({ ...bitcrusherSettings, [prop]: target.value });
   };
 
+  const handleCompressor = ({ target }) => {
+    const prop = target.name;
+    if (prop === 'bypass') {
+      setCompressorSettings({
+        ...compressorSettings,
+        [prop]: !compressorSettings.bypass,
+      });
+    } else if (prop === 'automakeup')
+      setCompressorSettings({
+        ...compressorSettings,
+        [prop]: !compressorSettings.automakeup,
+      });
+    else setCompressorSettings({ ...compressorSettings, [prop]: target.value });
+  };
+
   const handleChorus = ({ target }) => {
     const prop = target.name;
     if (prop === 'bypass')
@@ -183,6 +216,22 @@ export const EffectsProvider = ({ children }) => {
     else setPhaserSettings({ ...phaserSettings, [prop]: target.value });
   };
 
+  const handlePingPongDelay = ({ target }) => {
+    const prop = target.name;
+    if (prop === 'bypass')
+      setPingPongDelaySettings({
+        ...pingPongDelaySettings,
+        [prop]: !pingPongDelaySettings.bypass,
+      });
+    else
+      setPingPongDelaySettings({
+        ...pingPongDelaySettings,
+        [prop]: target.value,
+      });
+  };
+
+  setPingPongDelaySettings;
+
   const handleReverb = ({ target }) => {
     const prop = target.name;
     if (prop === 'bypass')
@@ -202,9 +251,9 @@ export const EffectsProvider = ({ children }) => {
 
   const handleWahWah = ({ target }) => {
     const prop = target.name;
-    if (prop === 'bypass')
+    if (prop === 'bypass') {
       setWahWahSettings({ ...wahWahSettings, [prop]: !wahWahSettings.bypass });
-    if (prop === 'automode')
+    } else if (prop === 'automode')
       setWahWahSettings({
         ...wahWahSettings,
         [prop]: !wahWahSettings.automode,
@@ -222,6 +271,7 @@ export const EffectsProvider = ({ children }) => {
         handleAddEffect,
         handleRemoveEffect,
         handleBitcrusher,
+        handleCompressor,
         handleChorus,
         handleDelay,
         handleFilter,
@@ -229,12 +279,15 @@ export const EffectsProvider = ({ children }) => {
         handleOverdrive,
         handlePanner,
         handlePhaser,
+        handlePingPongDelay,
         handleReverb,
         handleTremolo,
         handleWahWah,
         effects,
+        compressorSettings,
         chorusSettings,
         phaserSettings,
+        pingPongDelaySettings,
         delaySettings,
         tremoloSettings,
         wahWahSettings,
@@ -298,6 +351,11 @@ export const useHandleChorus = () => {
   return handleChorus;
 };
 
+export const useHandleCompressor = () => {
+  const { handleCompressor } = useContext(EffectsContext);
+  return handleCompressor;
+};
+
 export const useHandleDelay = () => {
   const { handleDelay } = useContext(EffectsContext);
   return handleDelay;
@@ -328,6 +386,11 @@ export const useHandlePhaser = () => {
   return handlePhaser;
 };
 
+export const useHandlePingPongDelay = () => {
+  const { handlePingPongDelay } = useContext(EffectsContext);
+  return handlePingPongDelay;
+};
+
 export const useHandleReverb = () => {
   const { handleReverb } = useContext(EffectsContext);
   return handleReverb;
@@ -352,6 +415,11 @@ export const useEffects = () => {
 export const useChorusSettings = () => {
   const { chorusSettings } = useContext(EffectsContext);
   return chorusSettings;
+};
+
+export const useCompressorSettings = () => {
+  const { compressorSettings } = useContext(EffectsContext);
+  return compressorSettings;
 };
 
 export const usePhaserSettings = () => {
@@ -402,4 +470,9 @@ export const useFilterSettings = () => {
 export const usePannerSettings = () => {
   const { pannerSettings } = useContext(EffectsContext);
   return pannerSettings;
+};
+
+export const usePingPongDelaySettings = () => {
+  const { pingPongDelaySettings } = useContext(EffectsContext);
+  return pingPongDelaySettings;
 };

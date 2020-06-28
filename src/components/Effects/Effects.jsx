@@ -15,12 +15,14 @@ export default function Effects() {
       >
         <option value="Bitcrusher">bitcrusher</option>
         <option value="Chorus">chorus</option>
+        <option value="Compressor">compressor</option>
         <option value="Delay">delay</option>
         <option value="Filter">filter</option>
         <option value="MoogFilter">moog filter</option>
         <option value="Overdrive">overdrive</option>
         <option value="Panner">panner</option>
         <option value="Phaser">phaser</option>
+        <option value="PingPongDelay">ping pong delay</option>
         <option value="Convolver">reverb</option>
         <option value="Tremolo">tremolo</option>
         <option value="WahWah">wahwah</option>
