@@ -7,22 +7,32 @@ import Tuna from 'tunajs';
 import {
   useWaveshape,
   useEffects,
-  useDelaySettings,
   useGainSetting,
+  useBitcrusherSettings,
   useChorusSettings,
+  useDelaySettings,
+  useFilterSettings,
+  useMoogSettings,
+  useOverdriveSettings,
+  usePannerSettings,
   usePhaserSettings,
+  useReverbSettings,
   useTremoloSettings,
   useWahWahSettings,
-  useBitcrusherSettings,
-  useHandleAddEffect,
-  useReverbSettings,
-  useOverdriveSettings,
-  useMoogSettings,
-  useFilterSettings,
-  usePannerSettings
 } from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
 import Keyboard from '../Keyboard/Keyboard';
+import ChorusEffect from '../Effects/ChorusEffect/ChorusEffect';
+import Effects from '../Effects/Effects';
+import BitcrusherEffect from '../Effects/BitcrusherEffect/BitcrusherEffect';
+import FilterEffect from '../Effects/FilterEffect/FilterEffect';
+import MoogFilterEffect from '../Effects/MoogFilterEffect/MoogFilterEffect';
+import OverdriveEffect from '../Effects/OverdriveEffect/OverdriveEffect';
+import PannerEffect from '../Effects/PannerEffect/PannerEffect';
+import PhaserEffect from '../Effects/PhaserEffect/PhaserEffect';
+import ReverbEffect from '../Effects/ReverbEffect/ReverbEffect';
+import TremoloEffect from '../Effects/TremoloEffect/TremoloEffect';
+import WahWahEffect from '../Effects/WahWahEffect/WahWahEffect';
 
 let audioCtx;
 let tuna;
@@ -31,7 +41,6 @@ let tunaEffects = [];
 
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
-  const [selectedEffect, setSelectedEffect] = useState('Chorus');
 
   const waveshape = useWaveshape();
   const gainSetting = useGainSetting();
@@ -39,18 +48,17 @@ export default function Synth() {
 
   // NEW EFFECT STATE
   const effects = useEffects();
-  const handleAddEffect = useHandleAddEffect();
+  const bitcrusherSettings = useBitcrusherSettings();
   const chorusSettings = useChorusSettings();
-  const phaserSettings = usePhaserSettings();
   const delaySettings = useDelaySettings();
+  const filterSettings = useFilterSettings();
+  const moogSettings = useMoogSettings();
+  const overdriveSettings = useOverdriveSettings();
+  const pannerSettings = usePannerSettings();
+  const phaserSettings = usePhaserSettings();
+  const reverbSettings = useReverbSettings();
   const tremoloSettings = useTremoloSettings();
   const wahWahSettings = useWahWahSettings();
-  const bitcrusherSettings = useBitcrusherSettings();
-  const reverbSettings = useReverbSettings();
-  const overdriveSettings = useOverdriveSettings();
-  const moogSettings = useMoogSettings();
-  const filterSettings = useFilterSettings();
-  const pannerSettings = usePannerSettings();
 
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -59,21 +67,20 @@ export default function Synth() {
     gain.connect(audioCtx.destination);
   }, []);
 
-
   useEffect(() => {
-    tunaEffects = effects.map(effect => {
+    tunaEffects = effects.map((effect) => {
       const name = effect;
+      if (name === 'Bitcrusher') return new tuna[name](bitcrusherSettings);
       if (name === 'Chorus') return new tuna[name](chorusSettings);
-      if (name === 'Phaser') return new tuna[name](phaserSettings);
       if (name === 'Delay') return new tuna[name](delaySettings);
+      if (name === 'Filter') return new tuna[name](filterSettings);
+      if (name === 'MoogFilter') return new tuna[name](moogSettings);
+      if (name === 'Overdrive') return new tuna[name](overdriveSettings);
+      if (name === 'Panner') return new tuna[name](pannerSettings);
+      if (name === 'Phaser') return new tuna[name](phaserSettings);
+      if (name === 'Convolver') return new tuna[name](reverbSettings);
       if (name === 'Tremolo') return new tuna[name](tremoloSettings);
       if (name === 'WahWah') return new tuna[name](wahWahSettings);
-      if (name === 'Bitcrusher') return new tuna[name](bitcrusherSettings);
-      if (name === 'Convolver') return new tuna[name](reverbSettings);
-      if (name === 'Overdrive') return new tuna[name](overdriveSettings);
-      if (name === 'MoogFilter') return new tuna[name](moogSettings);
-      if (name === 'Filter') return new tuna[name](filterSettings);
-      if (name === 'Panner') return new tuna[name](pannerSettings);
     });
 
     gain.disconnect();
@@ -97,9 +104,29 @@ export default function Synth() {
       });
     }
     setLocalEffects(tunaEffects);
-    console.log(tunaEffects);
+    // console.log(tunaEffects);
   }, [effects]);
 
+  //useEffect Effects
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Bitcrusher'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(bitcrusherSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [bitcrusherSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Chorus'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(chorusSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [chorusSettings]);
 
   useEffect(() => {
     const chainIndex = tunaEffects.findIndex(
@@ -110,6 +137,86 @@ export default function Synth() {
       tunaEffects[chainIndex][setting[0]] = setting[1];
     });
   }, [delaySettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Filter'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(filterSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [filterSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'MoogFilter'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(moogSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [moogSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Overdrive'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(overdriveSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [overdriveSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Panner'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(pannerSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [pannerSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Phaser'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(phaserSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [phaserSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Convolver'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(reverbSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [reverbSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'Tremolo'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(tremoloSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [tremoloSettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'WahWah'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(wahWahSettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [wahWahSettings]);
 
   useEffect(() => {
     gain.gain.value = gainSetting; //defaults to 0.8
@@ -144,34 +251,36 @@ export default function Synth() {
   }
 
   function removeFocus(event) {
-    if(event.target.type === 'select-one') return;
+    if (event.target.type === 'select-one') return;
     else {
       event.target.blur();
-      Object.values(activeOscillators).forEach(oscillator => {
+      Object.values(activeOscillators).forEach((oscillator) => {
         oscillator.stop();
       });
     }
-
   }
 
   window.addEventListener('mouseup', removeFocus);
 
-  const effectNodes = localEffects.map(effect => {
-    if(effect.name === 'Chorus') return <li key={effect.name}>CHORUS</li>;
-    if(effect.name === 'Phaser') return <li key={effect.name}>PHASER</li>;
-    if(effect.name === 'Delay') return <DelayEffect key={effect.name}/>;
-    if(effect.name === 'Tremolo') return <li key={effect.name} >TREMOLO</li>;
-    if(effect.name === 'WahWah') return <li key={effect.name}>WAHWAH</li>;
-    if(effect.name === 'Bitcrusher') return <li key={effect.name}>BITCRUSHER</li>;
-    if(effect.name === 'Convolver') return <li key={effect.name}>REVERB</li>;
-    if(effect.name === 'Overdrive') return <li key={effect.name}>OVERDRIVE</li>;
-    if(effect.name === 'MoogFilter') return <li key={effect.name}>MOOG</li>;
-    if(effect.name === 'Filter') return <li key={effect.name}>FILTER</li>;
-    if(effect.name === 'Panner') return <li key={effect.name}>PANNER</li>;
+  const effectNodes = localEffects.map((effect) => {
+    if (effect.name === 'Bitcrusher')
+      return <BitcrusherEffect key={effect.name} />;
+    if (effect.name === 'Chorus') return <ChorusEffect key={effect.name} />;
+    if (effect.name === 'Delay') return <DelayEffect key={effect.name} />;
+    if (effect.name === 'Filter') return <FilterEffect key={effect.name} />;
+    if (effect.name === 'MoogFilter')
+      return <MoogFilterEffect key={effect.name} />;
+    if (effect.name === 'Overdrive')
+      return <OverdriveEffect key={effect.name} />;
+    if (effect.name === 'Panner') return <PannerEffect key={effect.name} />;
+    if (effect.name === 'Phaser') return <PhaserEffect key={effect.name} />;
+    if (effect.name === 'Convolver') return <ReverbEffect key={effect.name} />;
+    if (effect.name === 'Tremolo') return <TremoloEffect key={effect.name} />;
+    if (effect.name === 'WahWah') return <WahWahEffect key={effect.name} />;
   });
 
   return (
-    <div className={styles.Container}>
+    <section className={styles.Container}>
       <KeyboardEventHandler
         handleKeys={['all']}
         onKeyEvent={(key, e) => keyDown(e)}
@@ -182,29 +291,12 @@ export default function Synth() {
         handleEventType="keyup"
         onKeyEvent={(key, e) => keyUp(e)}
       />
-      <h1>Synthinator</h1>
+
+      <h1>synthinator</h1>
       <Keyboard />
       <Waveshapes />
-      <ul>
-        {effectNodes}
-      </ul>
-      <div>
-        <label htmlFor="effects">Choose an Effect:</label>
-        <select name="effects" id="effects" onChange={(event) => setSelectedEffect(event.target.value)}>
-          <option value="Chorus">Chorus</option>
-          <option value="Phaser">Phaser</option>
-          <option value="Delay">Delay</option>
-          <option value="Tremolo">Tremolo</option>
-          <option value="WahWah">WahWah</option>
-          <option value="Bitcrusher">Bitcrusher</option>
-          <option value="Convolver">Reverb</option>
-          <option value="Overdrive">Overdrive</option>
-          <option value="MoogFilter">MoogFilter</option>
-          <option value="Filter">Filter</option>
-          <option value="Panner">Panner</option>
-        </select>
-        <button onClick={() => handleAddEffect(selectedEffect)}>+</button>
-      </div>
-    </div>
+      <Effects />
+      <ul>{effectNodes}</ul>
+    </section>
   );
 }

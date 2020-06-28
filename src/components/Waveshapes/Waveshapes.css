@@ -1,21 +1,48 @@
 .Controls {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   margin-bottom: 1rem;
-}
-.Gain {
-    margin-bottom: 1rem;
-}
-.Radio {
+  margin-top: 1rem;
+  input[type='range'] {
+    -webkit-appearance: none;
+    background-color: #00ff9f;
+    outline: none;
+    border: dotted #d600ff;
+    border-width: 2px 2px 2px 2px;
+    width: 15rem;
+  }
+  .Volume {
     display: flex;
-    flex-direction: row;
-svg{
-  width: 10vw;
-  height: 10vh;
-  fill:#00b8ff;
-}
-svg:hover{
-  fill:#00ff9f;
-}
+    flex-direction: column;
+  }
 }
 
+.Gain {
+  margin-bottom: 1rem;
+}
+
+.Radio {
+  display: flex;
+  flex-direction: row;
+
+  input {
+    display: none;
+    justify-content: right;
+    width: 100%;
+  }
+
+  svg {
+    width: 5.5vw;
+    height: 5.5vh;
+    fill: #00b8ff;
+  }
+
+  svg:hover {
+    fill: #d600ff;
+  }
+
+  input:checked + svg {
+    fill: #00ff9f;
+  }
+}

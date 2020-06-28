@@ -10,8 +10,6 @@ import Square from '../../../public/assets/square.svg';
 import Triangle from '../../../public/assets/triangle.svg';
 import Sawtooth from '../../../public/assets/sawtooth.svg';
 
-
-  
 const Waveshapes = () => {
   const gainSetting = useGainSetting();
   const handleGainSetting = useHandleGainSetting();
@@ -19,20 +17,21 @@ const Waveshapes = () => {
 
   return (
     <section className={styles.Controls}>
-      <input
-        type="range"
-        min="0"
-        max="1"
-        value={gainSetting}
-        step="0.01"
-        id="gainSetting"
-        onChange={handleGainSetting}
-      ></input>
-      <label className={styles.Gain}>
-        volume: <p>{Math.floor(gainSetting * 100)} %</p>
-      </label>
+      <section className={styles.Volume}>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          value={gainSetting}
+          step="0.01"
+          id="gainSetting"
+          onChange={handleGainSetting}
+        ></input>
+        <label className={styles.Gain}>
+          volume: <p>{Math.floor(gainSetting * 100)} %</p>
+        </label>
+      </section>
       <div className={styles.Radio}>
-        waveform:
         <label>
           <input
             type="radio"

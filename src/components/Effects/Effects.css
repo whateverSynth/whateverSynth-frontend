@@ -1,1 +1,43 @@
 
+.Effects {
+  margin-top: 0.5rem;
+
+  input[type='range'] {
+    -webkit-appearance: none;
+    background-color: #00ff9f;
+    outline: none;
+    border: dotted #d600ff;
+    border-width: 2px 2px 2px 2px;
+    margin-top: 0.25rem;
+  }
+
+  input[type='checkbox'] {
+    -webkit-appearance: none;
+    background-color: #00ff9f;
+    outline: none;
+    border: dotted #00ff9f;
+    border-width: 0.5rem;
+  }
+
+  input[type='checkbox']:checked {
+    -webkit-appearance: none;
+    background-color: #00ff9f;
+    outline: none;
+    border: dotted #d600ff;
+    border-width: 0.5rem;
+  }
+
+  .bypass {
+    margin-left: 0.5rem;
+  }
+
+  h2,
+  button {
+    display: inline;
+  }
+
+  button {
+    position: absolute;
+    height: -0.5rem;
+  }
+}
