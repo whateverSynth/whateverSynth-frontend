@@ -75,7 +75,7 @@ export default function Synth() {
       if (name === 'Filter') return new tuna[name](filterSettings);
       if (name === 'Panner') return new tuna[name](pannerSettings);
     });
-  
+
     gain.disconnect();
 
     // MAKE CHAIN BY ITERATING OVER EFFECTS
@@ -155,19 +155,19 @@ export default function Synth() {
   }
 
   window.addEventListener('mouseup', removeFocus);
-  
+
   const effectNodes = localEffects.map(effect => {
-    if(effect.name === 'Chorus') return <li key={effect.name}>CHORUS SETTINGS</li>;
-    if(effect.name === 'Phaser') return <li key={effect.name}>PHASER SETTINGS</li>;
+    if(effect.name === 'Chorus') return <li key={effect.name}>CHORUS</li>;
+    if(effect.name === 'Phaser') return <li key={effect.name}>PHASER</li>;
     if(effect.name === 'Delay') return <DelayEffect key={effect.name}/>;
-    if(effect.name === 'Tremolo') return <li key={effect.name} >TREMOLO SETTINGS</li>;
-    if(effect.name === 'WahWah') return <li key={effect.name}>WAHWAH SETTINGS</li>;
-    if(effect.name === 'Bitcrusher') return <li key={effect.name}>BITCRUSHER SETTINGS</li>;
-    if(effect.name === 'Convolver') return <li key={effect.name}>REVERB SETTINGS</li>;
-    if(effect.name === 'Overdrive') return <li key={effect.name}>OVERDRIVE SETTINGS</li>;
-    if(effect.name === 'MoogFilter') return <li key={effect.name}>MOOG SETTINGS</li>;
-    if(effect.name === 'Filter') return <li key={effect.name}>FILTER SETTINGS</li>;
-    if(effect.name === 'Panner') return <li key={effect.name}>PANNER SETTINGS</li>;
+    if(effect.name === 'Tremolo') return <li key={effect.name} >TREMOLO</li>;
+    if(effect.name === 'WahWah') return <li key={effect.name}>WAHWAH</li>;
+    if(effect.name === 'Bitcrusher') return <li key={effect.name}>BITCRUSHER</li>;
+    if(effect.name === 'Convolver') return <li key={effect.name}>REVERB</li>;
+    if(effect.name === 'Overdrive') return <li key={effect.name}>OVERDRIVE</li>;
+    if(effect.name === 'MoogFilter') return <li key={effect.name}>MOOG</li>;
+    if(effect.name === 'Filter') return <li key={effect.name}>FILTER</li>;
+    if(effect.name === 'Panner') return <li key={effect.name}>PANNER</li>;
   });
 
   return (
