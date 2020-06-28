@@ -20,6 +20,7 @@ import {
   useTremoloSettings,
   useWahWahSettings,
   useCompressorSettings,
+  usePingPongDelaySettings,
 } from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
 import Keyboard from '../Keyboard/Keyboard';
@@ -35,6 +36,7 @@ import ReverbEffect from '../Effects/ReverbEffect/ReverbEffect';
 import TremoloEffect from '../Effects/TremoloEffect/TremoloEffect';
 import WahWahEffect from '../Effects/WahWahEffect/WahWahEffect';
 import CompressorEffect from '../Effects/CompressorEffect/CompressorEffect';
+import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEffect';
 
 let audioCtx;
 let tuna;
@@ -59,6 +61,7 @@ export default function Synth() {
   const overdriveSettings = useOverdriveSettings();
   const pannerSettings = usePannerSettings();
   const phaserSettings = usePhaserSettings();
+  const pingPongDelaySettings = usePingPongDelaySettings();
   const reverbSettings = useReverbSettings();
   const tremoloSettings = useTremoloSettings();
   const wahWahSettings = useWahWahSettings();
@@ -82,6 +85,8 @@ export default function Synth() {
       if (name === 'Overdrive') return new tuna[name](overdriveSettings);
       if (name === 'Panner') return new tuna[name](pannerSettings);
       if (name === 'Phaser') return new tuna[name](phaserSettings);
+      if (name === 'PingPongDelay')
+        return new tuna[name](pingPongDelaySettings);
       if (name === 'Convolver') return new tuna[name](reverbSettings);
       if (name === 'Tremolo') return new tuna[name](tremoloSettings);
       if (name === 'WahWah') return new tuna[name](wahWahSettings);
@@ -204,6 +209,16 @@ export default function Synth() {
 
   useEffect(() => {
     const chainIndex = tunaEffects.findIndex(
+      (effect) => effect.name === 'PingPongDelay'
+    );
+    if (chainIndex === -1) return;
+    Object.entries(pingPongDelaySettings).forEach((setting) => {
+      tunaEffects[chainIndex][setting[0]] = setting[1];
+    });
+  }, [pingPongDelaySettings]);
+
+  useEffect(() => {
+    const chainIndex = tunaEffects.findIndex(
       (effect) => effect.name === 'Convolver'
     );
     if (chainIndex === -1) return;
@@ -290,6 +305,8 @@ export default function Synth() {
       return <OverdriveEffect key={effect.name} />;
     if (effect.name === 'Panner') return <PannerEffect key={effect.name} />;
     if (effect.name === 'Phaser') return <PhaserEffect key={effect.name} />;
+    if (effect.name === 'PingPongDelay')
+      return <PingPongDelayEffect key={effect.name} />;
     if (effect.name === 'Convolver') return <ReverbEffect key={effect.name} />;
     if (effect.name === 'Tremolo') return <TremoloEffect key={effect.name} />;
     if (effect.name === 'WahWah') return <WahWahEffect key={effect.name} />;

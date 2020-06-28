@@ -22,6 +22,7 @@ export default function Effects() {
         <option value="Overdrive">overdrive</option>
         <option value="Panner">panner</option>
         <option value="Phaser">phaser</option>
+        <option value="PingPongDelay">ping pong delay</option>
         <option value="Convolver">reverb</option>
         <option value="Tremolo">tremolo</option>
         <option value="WahWah">wahwah</option>

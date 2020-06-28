@@ -88,6 +88,13 @@ export const EffectsProvider = ({ children }) => {
     bypass: false,
   });
 
+  const [pingPongDelaySettings, setPingPongDelaySettings] = useState({
+    wetLevel: 0.5, //0 to 1
+    feedback: 0.3, //0 to 1
+    delayTimeLeft: 150, //1 to 10000 (milliseconds)
+    delayTimeRight: 200, //1 to 10000 (milliseconds)
+  });
+
   const [reverbSettings, setReverbSettings] = useState({
     highCut: 22050, //20 to 22050
     lowCut: 20, //20 to 22050
@@ -209,6 +216,22 @@ export const EffectsProvider = ({ children }) => {
     else setPhaserSettings({ ...phaserSettings, [prop]: target.value });
   };
 
+  const handlePingPongDelay = ({ target }) => {
+    const prop = target.name;
+    if (prop === 'bypass')
+      setPingPongDelaySettings({
+        ...pingPongDelaySettings,
+        [prop]: !pingPongDelaySettings.bypass,
+      });
+    else
+      setPingPongDelaySettings({
+        ...pingPongDelaySettings,
+        [prop]: target.value,
+      });
+  };
+
+  setPingPongDelaySettings;
+
   const handleReverb = ({ target }) => {
     const prop = target.name;
     if (prop === 'bypass')
@@ -256,6 +279,7 @@ export const EffectsProvider = ({ children }) => {
         handleOverdrive,
         handlePanner,
         handlePhaser,
+        handlePingPongDelay,
         handleReverb,
         handleTremolo,
         handleWahWah,
@@ -263,6 +287,7 @@ export const EffectsProvider = ({ children }) => {
         compressorSettings,
         chorusSettings,
         phaserSettings,
+        pingPongDelaySettings,
         delaySettings,
         tremoloSettings,
         wahWahSettings,
@@ -361,6 +386,11 @@ export const useHandlePhaser = () => {
   return handlePhaser;
 };
 
+export const useHandlePingPongDelay = () => {
+  const { handlePingPongDelay } = useContext(EffectsContext);
+  return handlePingPongDelay;
+};
+
 export const useHandleReverb = () => {
   const { handleReverb } = useContext(EffectsContext);
   return handleReverb;
@@ -440,4 +470,9 @@ export const useFilterSettings = () => {
 export const usePannerSettings = () => {
   const { pannerSettings } = useContext(EffectsContext);
   return pannerSettings;
+};
+
+export const usePingPongDelaySettings = () => {
+  const { pingPongDelaySettings } = useContext(EffectsContext);
+  return pingPongDelaySettings;
 };
