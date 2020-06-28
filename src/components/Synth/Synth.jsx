@@ -31,6 +31,8 @@ import OverdriveEffect from '../Effects/OverdriveEffect/OverdriveEffect';
 import PannerEffect from '../Effects/PannerEffect/PannerEffect';
 import PhaserEffect from '../Effects/PhaserEffect/PhaserEffect';
 import ReverbEffect from '../Effects/ReverbEffect/ReverbEffect';
+import TremoloEffect from '../Effects/TremoloEffect/TremoloEffect';
+import WahWahEffect from '../Effects/WahWahEffect/WahWahEffect';
 
 let audioCtx;
 let tuna;
@@ -273,10 +275,8 @@ export default function Synth() {
     if (effect.name === 'Panner') return <PannerEffect key={effect.name} />;
     if (effect.name === 'Phaser') return <PhaserEffect key={effect.name} />;
     if (effect.name === 'Convolver') return <ReverbEffect key={effect.name} />;
-    if (effect.name === 'Tremolo')
-      return <li key={effect.name}>TREMOLO SETTINGS</li>;
-    if (effect.name === 'WahWah')
-      return <li key={effect.name}>WAHWAH SETTINGS</li>;
+    if (effect.name === 'Tremolo') return <TremoloEffect key={effect.name} />;
+    if (effect.name === 'WahWah') return <WahWahEffect key={effect.name} />;
   });
 
   return (

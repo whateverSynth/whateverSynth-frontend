@@ -201,6 +201,12 @@ export const EffectsProvider = ({ children }) => {
     if (prop === 'bypass')
       setWahWahSettings({ ...wahWahSettings, [prop]: !wahWahSettings.bypass });
     else setWahWahSettings({ ...wahWahSettings, [prop]: target.value });
+    if (prop === 'automode')
+      setWahWahSettings({
+        ...wahWahSettings,
+        [prop]: !wahWahSettings.automode,
+      });
+    else setWahWahSettings({ ...wahWahSettings, [prop]: target.value });
   };
 
   return (
@@ -323,9 +329,9 @@ export const useHandleTremolo = () => {
   return handleTremolo;
 };
 
-export const useHandleWahWahs = () => {
-  const { handleWahWahs } = useContext(EffectsContext);
-  return handleWahWahs;
+export const useHandleWahWah = () => {
+  const { handleWahWah } = useContext(EffectsContext);
+  return handleWahWah;
 };
 
 // new effects

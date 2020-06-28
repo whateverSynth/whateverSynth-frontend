@@ -76,7 +76,7 @@ const PhaserEffect = () => {
           name="stereoPhase"
         ></input>
         <label>
-          stereo phase: <p>{phaserSettings.stereoPhase} °</p>
+          stereo phase: <p>{phaserSettings.stereoPhase}°</p>
         </label>
       </section>
 
