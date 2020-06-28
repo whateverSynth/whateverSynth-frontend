@@ -117,7 +117,7 @@ export const EffectsProvider = ({ children }) => {
   };
 
   const handleRemoveEffect = (effectToRemove) => {
-    setEffects([...effects, effectToRemove.pop]);
+    setEffects([effectToRemove.pop]);
   };
 
   //effects handlers

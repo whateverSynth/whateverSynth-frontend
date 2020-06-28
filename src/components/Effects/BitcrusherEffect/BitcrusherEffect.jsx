@@ -2,18 +2,26 @@ import React from 'react';
 import {
   useBitcrusherSettings,
   useHandleBitcrusher,
+  useHandleRemoveEffect,
 } from '../../../hooks/EffectsProvider';
 import styles from '../Effects.css';
 
 const BitcrusherEffect = () => {
   const bitcrusherSettings = useBitcrusherSettings();
   const handleBitcrusher = useHandleBitcrusher();
+  const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
     <section className={styles.Effects}>
       <section>
         <h2>bitcrusher &nbsp;</h2>
-        <button>x</button>
+        <button
+          name="close"
+          id="close"
+          onClick={() => handleRemoveEffect('Bitcrusher')}
+        >
+          x
+        </button>
       </section>
 
       <section>
