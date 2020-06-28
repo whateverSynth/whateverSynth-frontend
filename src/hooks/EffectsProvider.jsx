@@ -93,6 +93,7 @@ export const EffectsProvider = ({ children }) => {
     feedback: 0.3, //0 to 1
     delayTimeLeft: 150, //1 to 10000 (milliseconds)
     delayTimeRight: 200, //1 to 10000 (milliseconds)
+    bypass: false,
   });
 
   const [reverbSettings, setReverbSettings] = useState({
