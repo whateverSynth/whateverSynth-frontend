@@ -3,23 +3,20 @@ import {
   useDelaySettings,
   useHandleDelay,
 } from '../../../hooks/EffectsProvider';
+import styles from '../Effects.css';
 
 const DelayEffect = () => {
   const delaySettings = useDelaySettings();
   const handleDelay = useHandleDelay();
 
   return (
-    <>
-      <div>
-        <input
-          type="checkbox"
-          value={delaySettings.bypass}
-          onChange={handleDelay}
-          name="bypass"
-        ></input>
-        <label>Delay Bypass</label>
-      </div>
-      <div>
+    <section className={styles.Effects}>
+      <section>
+        <h2>delay &nbsp;</h2>
+        <button>x</button>
+      </section>
+
+      <section>
         <input
           type="range"
           min="0"
@@ -31,10 +28,11 @@ const DelayEffect = () => {
           name="feedback"
         ></input>
         <label>
-          Delay Feedback: <p>{Math.floor(delaySettings.feedback * 100)} %</p>
+          feedback: <p>{Math.floor(delaySettings.feedback * 100)} %</p>
         </label>
-      </div>
-      <div>
+      </section>
+
+      <section>
         <input
           type="range"
           min="1"
@@ -46,10 +44,11 @@ const DelayEffect = () => {
           name="delayTime"
         ></input>
         <label>
-          Delay Time: <p>{delaySettings.delayTime} ms</p>
+          time: <p>{delaySettings.delayTime} ms</p>
         </label>
-      </div>
-      <div>
+      </section>
+
+      <section>
         <input
           type="range"
           min="0"
@@ -61,10 +60,11 @@ const DelayEffect = () => {
           name="wetLevel"
         ></input>
         <label>
-          Delay Wet Level: <p>{Math.floor(delaySettings.wetLevel * 100)} %</p>
+          wet level: <p>{Math.floor(delaySettings.wetLevel * 100)} %</p>
         </label>
-      </div>
-      <div>
+      </section>
+
+      <section>
         <input
           type="range"
           min="0"
@@ -76,10 +76,11 @@ const DelayEffect = () => {
           name="dryLevel"
         ></input>
         <label>
-          Delay Dry Level: <p>{Math.floor(delaySettings.dryLevel * 100)} %</p>
+          dry level: <p>{Math.floor(delaySettings.dryLevel * 100)} %</p>
         </label>
-      </div>
-      <div>
+      </section>
+
+      <section>
         <input
           type="range"
           min="20"
@@ -91,10 +92,21 @@ const DelayEffect = () => {
           name="cutoff"
         ></input>
         <label>
-          Delay Cutoff: <p>{delaySettings.cutoff} Hz</p>
+          cutoff: <p>{delaySettings.cutoff} Hz</p>
         </label>
-      </div>
-    </>
+      </section>
+
+      <input
+        type="checkbox"
+        value={delaySettings.bypass}
+        onChange={handleDelay}
+        name="bypass"
+        id="delayBypass"
+      ></input>
+      <label htmlFor="delayBypass" className={styles.bypass}>
+        bypass
+      </label>
+    </section>
   );
 };
 
