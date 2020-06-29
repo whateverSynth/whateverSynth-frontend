@@ -6,6 +6,7 @@ import {
 import styles from '../Effects.css';
 import Slider from 'react-input-slider';
 
+
 const FilterEffect = () => {
   const filterSettings = useFilterSettings();
   const handleFilter = useHandleFilter();
@@ -45,7 +46,7 @@ const FilterEffect = () => {
           </label>
         </section>
         <section>
-          <Slider axis="xy" x={filterSettings.frequency} y={filterSettings.Q} xmin="20"
+          <Slider name="freqQ" axis="xy" x={filterSettings.frequency} y={filterSettings.Q} xmin="20"
             xmax="22050" ymin="0.001"
             ymax="100" yreverse="true" styles={{
               track: {
@@ -63,7 +64,7 @@ const FilterEffect = () => {
               disabled: {
                 opacity: 0.5
               }
-            }} onChange={handleFilter} name="frequency"/>
+            }}/>
         </section>
         <section>
           <input

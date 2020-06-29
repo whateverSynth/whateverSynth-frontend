@@ -41,7 +41,7 @@ const CompressorEffect = () => {
             name="makeupGain"
           ></input>
           <label>
-          makeup gain: <p>{compressorSettings.makeupGain} db</p>d
+          makeup gain: <p>{compressorSettings.makeupGain} db</p>
           </label>
         </section>
 
