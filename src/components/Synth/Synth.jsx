@@ -325,7 +325,7 @@ export default function Synth() {
         onKeyEvent={(key, e) => keyUp(e)}
       />
 
-      <h1>synthinator</h1>
+      <h1>whateverSynth</h1>
       <Keyboard />
       <Waveshapes />
       <Effects />
