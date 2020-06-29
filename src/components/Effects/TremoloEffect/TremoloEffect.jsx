@@ -10,71 +10,71 @@ const TremoloEffect = () => {
   const handleTremolo = useHandleTremolo();
 
   return (
-    <section className={styles.Effects}>
-      <section>
-        <h2>tremolo &nbsp;</h2>
+    <div className={styles.effectContainer}>
+      <main className={styles.Effects}>
+        <h2>tremolo</h2>
         <button className={styles.buttonClose}>&#10060;</button>
-      </section>
 
-      <section>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={tremoloSettings.intensity}
-          step="0.01"
-          id="tremoloIntensityRange"
-          onChange={handleTremolo}
-          name="intensity"
-        ></input>
-        <label>
+        <section>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            value={tremoloSettings.intensity}
+            step="0.01"
+            id="tremoloIntensityRange"
+            onChange={handleTremolo}
+            name="intensity"
+          ></input>
+          <label>
           intensity: <p>{Math.floor(tremoloSettings.intensity * 100)} %</p>
-        </label>
-      </section>
+          </label>
+        </section>
 
-      <section>
-        <input
-          type="range"
-          min="0.01"
-          max="8"
-          value={tremoloSettings.rate}
-          step="0.01"
-          id="tremoloRateRange"
-          onChange={handleTremolo}
-          name="rate"
-        ></input>
-        <label>
+        <section>
+          <input
+            type="range"
+            min="0.01"
+            max="8"
+            value={tremoloSettings.rate}
+            step="0.01"
+            id="tremoloRateRange"
+            onChange={handleTremolo}
+            name="rate"
+          ></input>
+          <label>
           rate: <p>{tremoloSettings.rate} Hz</p>
-        </label>
-      </section>
+          </label>
+        </section>
 
-      <section>
-        <input
-          type="range"
-          min="0"
-          max="180"
-          value={tremoloSettings.stereoPhase}
-          step="1"
-          id="tremoloStereoPhaseTremoloRange"
-          onChange={handleTremolo}
-          name="stereoPhase"
-        ></input>
-        <label>
+        <section>
+          <input
+            type="range"
+            min="0"
+            max="180"
+            value={tremoloSettings.stereoPhase}
+            step="1"
+            id="tremoloStereoPhaseTremoloRange"
+            onChange={handleTremolo}
+            name="stereoPhase"
+          ></input>
+          <label>
           stereo phase: <p>{tremoloSettings.stereoPhase}°</p>
-        </label>
-      </section>
+          </label>
+        </section>
 
-      <input
-        type="checkbox"
-        value={tremoloSettings.bypass}
-        onChange={handleTremolo}
-        name="bypass"
-        id="tremoloBypass"
-      ></input>
-      <label htmlFor="tremoloBypass" className={styles.bypass}>
+        <input
+          type="checkbox"
+          value={tremoloSettings.bypass}
+          onChange={handleTremolo}
+          name="bypass"
+          id="tremoloBypass"
+        ></input>
+        <label htmlFor="tremoloBypass" className={styles.bypass}>
         bypass
-      </label>
-    </section>
+        </label>
+      </main>
+    </div>
   );
 };
 
