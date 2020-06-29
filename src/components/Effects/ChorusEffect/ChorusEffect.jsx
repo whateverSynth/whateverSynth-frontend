@@ -11,7 +11,7 @@ const ChorusEffect = () => {
 
   return (
     <div className={styles.effectContainer}>
-      <main className={styles.Effects}><h2>filter</h2><button className={styles.buttonClose}>&#10060;</button>
+      <main className={styles.Effects}><h2>chorus</h2><button className={styles.buttonClose}>&#10060;</button>
         <section>
           <input
             type="range"

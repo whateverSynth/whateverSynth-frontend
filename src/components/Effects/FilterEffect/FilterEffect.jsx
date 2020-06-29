@@ -76,8 +76,7 @@ const FilterEffect = () => {
             onChange={handleFilter}
             name="gain"
           ></input>
-          <label>
-          gain: <p>{filterSettings.gain} db</p>
+          <label>gain: <p>{filterSettings.gain} db</p>
           </label>
         </section>
 
