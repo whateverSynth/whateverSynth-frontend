@@ -34,3 +34,8 @@ h1 {
   display: flex;
   flex-direction: row;
 }
+
+.effectsDrawer {
+  display:flex;
+  flex-wrap: wrap;
+}

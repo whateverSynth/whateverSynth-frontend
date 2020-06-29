@@ -1,43 +1,43 @@
-.Effects {
-  margin-top: 0.5rem;
+.effectContainer {
+  position: relative;
+  background-color: transparent;
+  display: flex;
+  border: 1px groove grey;
+  padding: 0 1rem;
+  background: rgba(0,0,0,0.25);
 
-  input[type='range'] {
-    -webkit-appearance: none;
-    background-color: #00ff9f;
-    outline: none;
-    border: dotted #d600ff;
-    border-width: 2px 2px 2px 2px;
-    margin-top: 0.25rem;
-  }
+*{ background-color: transparent;}
 
-  input[type='checkbox'] {
-    -webkit-appearance: none;
-    background-color: #00ff9f;
-    outline: none;
-    border: dotted #00ff9f;
-    border-width: 0.5rem;
-  }
+  .Effects {
 
-  input[type='checkbox']:checked {
-    -webkit-appearance: none;
-    background-color: #00ff9f;
-    outline: none;
-    border: dotted #d600ff;
-    border-width: 0.5rem;
-  }
+    input[type='range'] {
+      -webkit-appearance: none;
+      background-color: #00ff9f;
+      outline: none;
+      border: dotted #d600ff;
+      border-width: 2px 2px 2px 2px;
+      margin-top: 0.25rem;
+      width: 6rem;
+    }
 
-  .checkbox {
-    margin-left: 0.5rem;
-  }
+    input[type='checkbox'] {
+      -webkit-appearance: none;
+      background-color: #00ff9f;
+      outline: none;
+      border: dotted #00ff9f;
+      border-width: 0.5rem;
+    }
 
-  h2,
-  button {
-    display: inline;
-  }
+    input[type='checkbox']:checked {
+      -webkit-appearance: none;
+      background-color: #00ff9f;
+      outline: none;
+      border: dotted #d600ff;
+      border-width: 0.5rem;
+    }
 
-  button.buttonClose {
-    position: relative;
-    height: -0.5rem;
-    right: 0;
+    .checkbox {
+      margin-left: 0.5rem;
+    }
   }
 }
