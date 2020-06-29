@@ -4,6 +4,7 @@ import {
   useHandleFilter,
 } from '../../../hooks/EffectsProvider';
 import styles from '../Effects.css';
+import Slider from 'react-input-slider';
 
 const FilterEffect = () => {
   const filterSettings = useFilterSettings();
@@ -47,7 +48,9 @@ const FilterEffect = () => {
           q: <p>{filterSettings.Q}</p>
         </label>
       </section>
-
+      <section>
+        <Slider axis="xy" x={filterSettings.frequency} y={filterSettings.Q} onChange={handleFilter} name="frequency"/>
+      </section>
       <section>
         <input
           type="range"

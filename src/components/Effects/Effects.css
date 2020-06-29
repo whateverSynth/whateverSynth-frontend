@@ -35,8 +35,9 @@
     display: inline;
   }
 
-  button {
-    position: absolute;
+  button.buttonClose {
+    position: relative;
     height: -0.5rem;
+    right: 0;
   }
 }
