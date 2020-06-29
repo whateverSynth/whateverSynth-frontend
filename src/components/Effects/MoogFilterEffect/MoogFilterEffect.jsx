@@ -11,7 +11,7 @@ const MoogFilterEffect = () => {
 
   return (
     <div className={styles.effectContainer}>
-      <main className={styles.Effects}><h2>moog</h2><button className={styles.buttonClose}>&#10060;</button>
+      <main className={styles.Effects}><h2>moog filter</h2><button className={styles.buttonClose}>&#10060;</button>
         <section>
           <input
             type="range"
