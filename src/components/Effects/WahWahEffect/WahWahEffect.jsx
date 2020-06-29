@@ -13,7 +13,7 @@ const WahWahEffect = () => {
     <section className={styles.Effects}>
       <section>
         <h2>wahwah &nbsp;</h2>
-        <button>x</button>
+        <button className={styles.buttonClose}>&#10060;</button>
       </section>
 
       <input

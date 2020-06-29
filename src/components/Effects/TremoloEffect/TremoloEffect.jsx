@@ -13,7 +13,7 @@ const TremoloEffect = () => {
     <section className={styles.Effects}>
       <section>
         <h2>tremolo &nbsp;</h2>
-        <button>x</button>
+        <button className={styles.buttonClose}>&#10060;</button>
       </section>
 
       <section>
