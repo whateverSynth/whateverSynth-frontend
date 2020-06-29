@@ -10,61 +10,55 @@ const ChorusEffect = () => {
   const handleChorus = useHandleChorus();
 
   return (
-    <section className={styles.Effects}>
-      <section>
-        <h2>chorus &nbsp;</h2>
-        <button className={styles.buttonClose}>&#10060;</button>
-      </section>
-
-      <section>
-        <input
-          type="range"
-          min="0.01"
-          max="8"
-          value={chorusSettings.rate}
-          step="0.01"
-          id="chorusRate"
-          onChange={handleChorus}
-          name="rate"
-        ></input>
-        <label>
+    <div className={styles.effectContainer}>
+      <main className={styles.Effects}><h2>filter</h2><button className={styles.buttonClose}>&#10060;</button>
+        <section>
+          <input
+            type="range"
+            min="0.01"
+            max="8"
+            value={chorusSettings.rate}
+            step="0.01"
+            id="chorusRate"
+            onChange={handleChorus}
+            name="rate"
+          ></input>
+          <label>
           rate: <p>{chorusSettings.rate} Hz</p>
-        </label>
-      </section>
+          </label>
+        </section>
 
-      <section>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={chorusSettings.feedback}
-          step="0.05"
-          id="chorusFeedbackRange"
-          onChange={handleChorus}
-          name="feedback"
-        ></input>
-        <label>
+        <section>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            value={chorusSettings.feedback}
+            step="0.05"
+            id="chorusFeedbackRange"
+            onChange={handleChorus}
+            name="feedback"
+          ></input>
+          <label>
           feedback: <p>{Math.floor(chorusSettings.feedback * 100)} %</p>
-        </label>
-      </section>
+          </label>
+        </section>
 
-      <section>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          value={chorusSettings.delay}
-          step="0.1"
-          id="chorusWetLevelRange"
-          onChange={handleChorus}
-          name="delay"
-        ></input>
-        <label>
+        <section>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            value={chorusSettings.delay}
+            step="0.1"
+            id="chorusWetLevelRange"
+            onChange={handleChorus}
+            name="delay"
+          ></input>
+          <label>
           delay: <p>{Math.floor(chorusSettings.delay * 100)} %</p>
-        </label>
-      </section>
-
-      <section>
+          </label>
+        </section>
         <input
           type="checkbox"
           value={chorusSettings.bypass}
@@ -75,8 +69,8 @@ const ChorusEffect = () => {
         <label htmlFor="chorusBypass" className={styles.bypass}>
           bypass
         </label>
-      </section>
-    </section>
+      </main>
+    </div>
   );
 };
 
