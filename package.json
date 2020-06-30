@@ -32,8 +32,6 @@
     "react-input-slider": "5.1.7",
     "react-keyboard-event-handler": "^1.5.4",
     "react-music": "^1.0.3",
-    "react-rotary-knob": "1.1.8",
-    "react-rotary-knob-skin-pack": "1.0.2",
     "tunajs": "^1.0.11"
   },
   "devDependencies": {

@@ -5,8 +5,6 @@ import {
 } from '../../../hooks/EffectsProvider';
 import styles from '../Effects.css';
 import Slider from 'react-input-slider';
-import { Knob } from 'react-rotary-knob';
-import * as skins from 'react-rotary-knob-skin-pack';
 
 const FilterEffect = () => {
   const filterSettings = useFilterSettings();
