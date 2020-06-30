@@ -70,18 +70,6 @@ const FilterEffect = () => {
             }}/>
         </section>
         <section>
-          <Knob
-            style={{
-              width: '80px',
-              display: 'inline-block'
-            }}
-            onChange={handleFilter}
-            min="-40"
-            max="40"
-            value={filterSettings.wetLevel}
-            name="gain"
-          />
-
           <input
             type="range"
             min="-40"
