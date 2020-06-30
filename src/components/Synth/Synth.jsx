@@ -329,7 +329,7 @@ export default function Synth() {
       <Keyboard />
       <Waveshapes />
       <Effects />
-      <ul>{effectNodes}</ul>
+      <div className={styles.effectsDrawer}>{effectNodes}</div>
     </section>
   );
 }

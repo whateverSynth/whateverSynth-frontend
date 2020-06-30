@@ -10,38 +10,39 @@ const PannerEffect = () => {
   const handlePanner = useHandlePanner();
 
   return (
-    <section className={styles.Effects}>
-      <section>
-        <h2>panner &nbsp;</h2>
-        <button>x</button>
-      </section>
+    <div className={styles.effectContainer}>
+      <main className={styles.Effects}>
+        <header>
+          <h2>panner</h2>
+          <button className={styles.buttonClose}>&#10060;</button>
+        </header>
 
-      <section>
-        <label>L&nbsp;</label>
+        <section>
+          <input
+            type="range"
+            min="-1"
+            max="1"
+            value={pannerSettings.pan}
+            step="0.05"
+            id="pannerPanRange"
+            onChange={handlePanner}
+            name="pan"
+          ></input>
+          <label>R</label>
+        </section>
+
         <input
-          type="range"
-          min="-1"
-          max="1"
-          value={pannerSettings.pan}
-          step="0.05"
-          id="pannerPanRange"
+          type="checkbox"
+          value={pannerSettings.bypass}
           onChange={handlePanner}
-          name="pan"
+          name="bypass"
+          id="pannerBypass"
         ></input>
-        <label>R</label>
-      </section>
-
-      <input
-        type="checkbox"
-        value={pannerSettings.bypass}
-        onChange={handlePanner}
-        name="bypass"
-        id="pannerBypass"
-      ></input>
-      <label htmlFor="pannerBypass" className={styles.bypass}>
+        <label htmlFor="pannerBypass" className={styles.bypass}>
         bypass
-      </label>
-    </section>
+        </label>
+      </main>
+    </div>
   );
 };
 

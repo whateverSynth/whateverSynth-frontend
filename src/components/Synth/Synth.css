@@ -12,9 +12,7 @@
     color: #00ff9f;
     display: inline;
   }
-  label {
-    margin-left: 1rem;
-  }
+  
 
   select {
     -webkit-appearance: none;
@@ -35,20 +33,7 @@ h1 {
   flex-direction: row;
 }
 
-.EffectsPanel {
-  display: flex;
-  position: fixed;
-  height: 20rem;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
-ul {
-  display: flex;
+.effectsDrawer {
+  display:flex;
   flex-wrap: wrap;
-}
-li {
-  margin: 0 1rem 0 1rem;
-  list-style-type: none;
-  display:block;
 }
