@@ -11,10 +11,11 @@ const WahWahEffect = () => {
 
   return (
     <div className={styles.effectContainer}>
-      <main className={styles.Effects}>
+      <header>
         <h2>wah wah</h2>
         <button className={styles.buttonClose}>&#10060;</button>
-
+      </header>
+      <main className={styles.Effects}>
         <input
           type="checkbox"
           value={wahWahSettings.automode}

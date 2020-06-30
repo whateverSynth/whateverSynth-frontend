@@ -26,12 +26,14 @@
   "license": "ISC",
   "dependencies": {
     "kleur": "4.0.2",
-    "react": "^16.13.1",
-    "react-canvas-knob": "0.5.0",
+    "react": "16.13.1",
     "react-dom": "^16.13.1",
+    "react-input-autosize": "2.2.2",
     "react-input-slider": "5.1.7",
     "react-keyboard-event-handler": "^1.5.4",
     "react-music": "^1.0.3",
+    "react-rotary-knob": "1.1.8",
+    "react-rotary-knob-skin-pack": "1.0.2",
     "tunajs": "^1.0.11"
   },
   "devDependencies": {

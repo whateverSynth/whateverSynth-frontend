@@ -11,9 +11,12 @@ const TremoloEffect = () => {
 
   return (
     <div className={styles.effectContainer}>
-      <main className={styles.Effects}>
+      <header>
         <h2>tremolo</h2>
         <button className={styles.buttonClose}>&#10060;</button>
+      </header>
+      <main className={styles.Effects}>
+
 
         <section>
           <input

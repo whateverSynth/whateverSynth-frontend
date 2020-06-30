@@ -11,7 +11,8 @@ const DelayEffect = () => {
 
   return (
     <div className={styles.effectContainer}>
-      <main className={styles.Effects}><h2>delay</h2><button className={styles.buttonClose}>&#10060;</button>
+      <main className={styles.Effects}>
+        <header><h2>delay</h2><button className={styles.buttonClose}>&#10060;</button></header>
         <section>
           <input
             type="range"

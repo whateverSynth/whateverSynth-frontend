@@ -12,9 +12,7 @@
     color: #00ff9f;
     display: inline;
   }
-  label {
-    margin-left: 1rem;
-  }
+  
 
   select {
     -webkit-appearance: none;

@@ -5,7 +5,8 @@ import {
 } from '../../../hooks/EffectsProvider';
 import styles from '../Effects.css';
 import Slider from 'react-input-slider';
-
+import { Knob } from 'react-rotary-knob';
+import * as skins from 'react-rotary-knob-skin-pack';
 
 const FilterEffect = () => {
   const filterSettings = useFilterSettings();
@@ -13,7 +14,11 @@ const FilterEffect = () => {
 
   return (
     <div className={styles.effectContainer}>
-      <main className={styles.Effects}><h2>filter</h2><button className={styles.buttonClose}>&#10060;</button>
+      <main className={styles.Effects}>
+        <header>
+          <h2>filter</h2>
+          <button className={styles.buttonClose}>&#10060;</button>
+        </header>
         <section>
           <input
             type="range"
@@ -67,6 +72,18 @@ const FilterEffect = () => {
             }}/>
         </section>
         <section>
+          <Knob
+            style={{
+              width: '80px',
+              display: 'inline-block'
+            }}
+            onChange={handleFilter}
+            min="-40"
+            max="40"
+            value={filterSettings.wetLevel}
+            name="gain"
+          />
+
           <input
             type="range"
             min="-40"

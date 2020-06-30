@@ -12,9 +12,10 @@ const PingPongDelayEffect = () => {
   return (
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
-        <h2>ping pong delay</h2>
-        <button className={styles.buttonClose}>&#10060;</button>
-
+        <header>
+          <h2>ping pong delay</h2>
+          <button className={styles.buttonClose}>&#10060;</button>
+        </header>
         <section>
           <input
             type="range"

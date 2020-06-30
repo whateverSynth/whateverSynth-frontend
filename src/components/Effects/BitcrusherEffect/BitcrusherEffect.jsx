@@ -11,7 +11,12 @@ const BitcrusherEffect = () => {
 
   return (
     <div className={styles.effectContainer}>
-      <main className={styles.Effects}><h2>bitcrusher</h2><button className={styles.buttonClose}>&#10060;</button>
+      <header>
+        <h2>bitcrusher</h2>
+        <button className={styles.buttonClose}>&#10060;</button>
+      </header>
+      <main className={styles.Effects}>
+
         <section>
         </section>
 
