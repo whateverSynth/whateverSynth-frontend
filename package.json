@@ -26,6 +26,7 @@
   "license": "ISC",
   "dependencies": {
     "kleur": "4.0.2",
+    "oscilloscope": "^1.2.0",
     "react": "16.13.1",
     "react-dom": "^16.13.1",
     "react-input-autosize": "2.2.2",
