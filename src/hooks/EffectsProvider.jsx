@@ -5,7 +5,7 @@ const EffectsContext = createContext();
 
 export const EffectsProvider = ({ children }) => {
   const [waveshape, setWaveshape] = useState('sine');
-  const [gainSetting, setGainSetting] = useState(0.8);
+  const [gainSetting, setGainSetting] = useState(0.15);
 
   const [effects, setEffects] = useState([
     // 'Chorus',
@@ -136,7 +136,7 @@ export const EffectsProvider = ({ children }) => {
   };
 
   const handleRemoveEffect = (effectToRemove) => {
-    const newEffects = effects.filter(effect => effect !== effectToRemove);
+    const newEffects = effects.filter((effect) => effect !== effectToRemove);
     setEffects(newEffects);
   };
 
@@ -231,8 +231,6 @@ export const EffectsProvider = ({ children }) => {
         [prop]: target.value,
       });
   };
-
-  setPingPongDelaySettings;
 
   const handleReverb = ({ target }) => {
     const prop = target.name;
