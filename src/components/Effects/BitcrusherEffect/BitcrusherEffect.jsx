@@ -15,12 +15,15 @@ const BitcrusherEffect = () => {
     <div className={styles.effectContainer}>
       <header>
         <h2>bitcrusher</h2>
-        <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Bitcrusher')}>&#10060;</button>
+        <button
+          className={styles.buttonClose}
+          onClick={() => handleRemoveEffect('Bitcrusher')}
+        >
+          x
+        </button>
       </header>
       <main className={styles.Effects}>
-
-        <section>
-        </section>
+        <section></section>
 
         <section>
           <input
@@ -34,7 +37,7 @@ const BitcrusherEffect = () => {
             name="bits"
           ></input>
           <label>
-          bits: <p>{bitcrusherSettings.bits}</p>
+            bits: <p>{bitcrusherSettings.bits}</p>
           </label>
         </section>
 
@@ -50,7 +53,7 @@ const BitcrusherEffect = () => {
             name="normfreq"
           ></input>
           <label>
-          norm freq: <p>{Math.floor(bitcrusherSettings.normfreq * 100)} %</p>
+            norm freq: <p>{Math.floor(bitcrusherSettings.normfreq * 100)} %</p>
           </label>
         </section>
 
@@ -66,7 +69,7 @@ const BitcrusherEffect = () => {
             name="bufferSize"
           ></input>
           <label>
-          buffer size: <p>{bitcrusherSettings.bufferSize}</p>
+            buffer size: <p>{bitcrusherSettings.bufferSize}</p>
           </label>
         </section>
 
@@ -78,7 +81,7 @@ const BitcrusherEffect = () => {
           id="bypass"
         ></input>
         <label htmlFor="bypass" className={styles.bypass}>
-        bypass
+          bypass
         </label>
       </main>
     </div>

@@ -14,7 +14,15 @@ const DelayEffect = () => {
   return (
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
-        <header><h2>delay</h2><button className={styles.buttonClose} onClick={() => handleRemoveEffect('Delay')}>&#10060;</button></header>
+        <header>
+          <h2>delay</h2>
+          <button
+            className={styles.buttonClose}
+            onClick={() => handleRemoveEffect('Delay')}
+          >
+            x
+          </button>
+        </header>
         <section>
           <input
             type="range"

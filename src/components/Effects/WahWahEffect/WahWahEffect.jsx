@@ -15,7 +15,12 @@ const WahWahEffect = () => {
     <div className={styles.effectContainer}>
       <header>
         <h2>wah wah</h2>
-        <button className={styles.buttonClose} onClick={() => handleRemoveEffect('WahWah')}>&#10060;</button>
+        <button
+          className={styles.buttonClose}
+          onClick={() => handleRemoveEffect('WahWah')}
+        >
+          x
+        </button>
       </header>
       <main className={styles.Effects}>
         <input
@@ -26,7 +31,7 @@ const WahWahEffect = () => {
           id="automode"
         ></input>
         <label htmlFor="automode" className={styles.automode}>
-        automode
+          automode
         </label>
 
         <section>
@@ -41,7 +46,7 @@ const WahWahEffect = () => {
             name="baseFrequency"
           ></input>
           <label>
-          base freq: <p>{wahWahSettings.baseFrequency}</p>
+            base freq: <p>{wahWahSettings.baseFrequency}</p>
           </label>
         </section>
 
@@ -57,7 +62,7 @@ const WahWahEffect = () => {
             name="excursionOctaves"
           ></input>
           <label>
-          excursion octaves: <p>{wahWahSettings.excursionOctaves}</p>
+            excursion octaves: <p>{wahWahSettings.excursionOctaves}</p>
           </label>
         </section>
 
@@ -73,7 +78,7 @@ const WahWahEffect = () => {
             name="sweep"
           ></input>
           <label>
-          sweep: <p>{Math.floor(wahWahSettings.sweep * 100)} %</p>
+            sweep: <p>{Math.floor(wahWahSettings.sweep * 100)} %</p>
           </label>
         </section>
 
@@ -89,7 +94,7 @@ const WahWahEffect = () => {
             name="resonance"
           ></input>
           <label>
-          resonance: <p>{wahWahSettings.resonance} %</p>
+            resonance: <p>{wahWahSettings.resonance} %</p>
           </label>
         </section>
 
@@ -105,7 +110,7 @@ const WahWahEffect = () => {
             name="sensitivity"
           ></input>
           <label>
-          sensitivity: <p>{wahWahSettings.sensitivity}</p>
+            sensitivity: <p>{wahWahSettings.sensitivity}</p>
           </label>
         </section>
 
@@ -117,7 +122,7 @@ const WahWahEffect = () => {
           id="wahWahBypass"
         ></input>
         <label htmlFor="wahWahBypass" className={styles.bypass}>
-        bypass
+          bypass
         </label>
       </main>
     </div>

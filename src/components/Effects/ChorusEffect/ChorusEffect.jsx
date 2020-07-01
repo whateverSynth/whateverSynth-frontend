@@ -16,7 +16,12 @@ const ChorusEffect = () => {
       <main className={styles.Effects}>
         <header>
           <h2>chorus</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Chorus')}>&#10060;</button>
+          <button
+            className={styles.buttonClose}
+            onClick={() => handleRemoveEffect('Chorus')}
+          >
+            x
+          </button>
         </header>
         <section>
           <input
@@ -30,7 +35,7 @@ const ChorusEffect = () => {
             name="rate"
           ></input>
           <label>
-          rate: <p>{chorusSettings.rate} Hz</p>
+            rate: <p>{chorusSettings.rate} Hz</p>
           </label>
         </section>
 
@@ -46,7 +51,7 @@ const ChorusEffect = () => {
             name="feedback"
           ></input>
           <label>
-          feedback: <p>{Math.floor(chorusSettings.feedback * 100)} %</p>
+            feedback: <p>{Math.floor(chorusSettings.feedback * 100)} %</p>
           </label>
         </section>
 
@@ -62,7 +67,7 @@ const ChorusEffect = () => {
             name="delay"
           ></input>
           <label>
-          delay: <p>{Math.floor(chorusSettings.delay * 100)} %</p>
+            delay: <p>{Math.floor(chorusSettings.delay * 100)} %</p>
           </label>
         </section>
         <input

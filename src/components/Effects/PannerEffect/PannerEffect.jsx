@@ -20,7 +20,7 @@ const PannerEffect = () => {
             className={styles.buttonClose}
             onClick={() => handleRemoveEffect('Panner')}
           >
-            &#10060;
+            x
           </button>
         </header>
 

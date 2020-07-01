@@ -15,10 +15,14 @@ const CompressorEffect = () => {
     <div className={styles.effectContainer}>
       <header>
         <h2>compressor</h2>
-        <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Compressor')}>&#10060;</button>
+        <button
+          className={styles.buttonClose}
+          onClick={() => handleRemoveEffect('Compressor')}
+        >
+          x
+        </button>
       </header>
       <main className={styles.Effects}>
-
         <section>
           <input
             type="range"
@@ -31,7 +35,7 @@ const CompressorEffect = () => {
             name="threshold"
           ></input>
           <label>
-          threshold: <p>{compressorSettings.threshold} db</p>
+            threshold: <p>{compressorSettings.threshold} db</p>
           </label>
         </section>
 
@@ -47,7 +51,7 @@ const CompressorEffect = () => {
             name="makeupGain"
           ></input>
           <label>
-          makeup gain: <p>{compressorSettings.makeupGain} db</p>
+            makeup gain: <p>{compressorSettings.makeupGain} db</p>
           </label>
         </section>
 
@@ -63,7 +67,7 @@ const CompressorEffect = () => {
             name="attack"
           ></input>
           <label>
-          attack: <p>{compressorSettings.attack}</p>
+            attack: <p>{compressorSettings.attack}</p>
           </label>
         </section>
 
@@ -79,7 +83,7 @@ const CompressorEffect = () => {
             name="release"
           ></input>
           <label>
-          release: <p>{compressorSettings.release}</p>
+            release: <p>{compressorSettings.release}</p>
           </label>
         </section>
 
@@ -95,7 +99,7 @@ const CompressorEffect = () => {
             name="ratio"
           ></input>
           <label>
-          ratio: <p>{compressorSettings.ratio}</p>
+            ratio: <p>{compressorSettings.ratio}</p>
           </label>
         </section>
 
@@ -111,7 +115,7 @@ const CompressorEffect = () => {
             name="knee"
           ></input>
           <label>
-          knee: <p>{compressorSettings.knee}</p>
+            knee: <p>{compressorSettings.knee}</p>
           </label>
         </section>
 
@@ -124,7 +128,7 @@ const CompressorEffect = () => {
             id="compressorAutomakeup"
           ></input>
           <label htmlFor="compressorAutomakeup" className={styles.checkbox}>
-          automakeup
+            automakeup
           </label>
         </section>
 
@@ -137,7 +141,7 @@ const CompressorEffect = () => {
             id="compressorBypass"
           ></input>
           <label htmlFor="compressorBypass" className={styles.checkbox}>
-          bypass
+            bypass
           </label>
         </section>
       </main>

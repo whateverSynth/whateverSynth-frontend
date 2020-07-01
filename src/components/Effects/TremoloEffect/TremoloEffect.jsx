@@ -15,11 +15,14 @@ const TremoloEffect = () => {
     <div className={styles.effectContainer}>
       <header>
         <h2>tremolo</h2>
-        <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Tremolo')}>&#10060;</button>
+        <button
+          className={styles.buttonClose}
+          onClick={() => handleRemoveEffect('Tremolo')}
+        >
+          x
+        </button>
       </header>
       <main className={styles.Effects}>
-
-
         <section>
           <input
             type="range"
@@ -32,7 +35,7 @@ const TremoloEffect = () => {
             name="intensity"
           ></input>
           <label>
-          intensity: <p>{Math.floor(tremoloSettings.intensity * 100)} %</p>
+            intensity: <p>{Math.floor(tremoloSettings.intensity * 100)} %</p>
           </label>
         </section>
 
@@ -48,7 +51,7 @@ const TremoloEffect = () => {
             name="rate"
           ></input>
           <label>
-          rate: <p>{tremoloSettings.rate} Hz</p>
+            rate: <p>{tremoloSettings.rate} Hz</p>
           </label>
         </section>
 
@@ -64,7 +67,7 @@ const TremoloEffect = () => {
             name="stereoPhase"
           ></input>
           <label>
-          stereo phase: <p>{tremoloSettings.stereoPhase}°</p>
+            stereo phase: <p>{tremoloSettings.stereoPhase}°</p>
           </label>
         </section>
 
@@ -76,7 +79,7 @@ const TremoloEffect = () => {
           id="tremoloBypass"
         ></input>
         <label htmlFor="tremoloBypass" className={styles.bypass}>
-        bypass
+          bypass
         </label>
       </main>
     </div>

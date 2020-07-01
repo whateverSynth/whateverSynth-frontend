@@ -16,7 +16,12 @@ const PhaserEffect = () => {
       <main className={styles.Effects}>
         <header>
           <h2>phaser</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Phaser')}>&#10060;</button>
+          <button
+            className={styles.buttonClose}
+            onClick={() => handleRemoveEffect('Phaser')}
+          >
+            x
+          </button>
         </header>
         <section>
           <input
@@ -30,7 +35,7 @@ const PhaserEffect = () => {
             name="rate"
           ></input>
           <label>
-          rate: <p>{phaserSettings.rate} Hz</p>
+            rate: <p>{phaserSettings.rate} Hz</p>
           </label>
         </section>
 
@@ -46,7 +51,7 @@ const PhaserEffect = () => {
             name="depth"
           ></input>
           <label>
-          depth: <p>{Math.floor(phaserSettings.depth * 100)} %</p>
+            depth: <p>{Math.floor(phaserSettings.depth * 100)} %</p>
           </label>
         </section>
 
@@ -62,7 +67,7 @@ const PhaserEffect = () => {
             name="feedback"
           ></input>
           <label>
-          feedback: <p>{Math.floor(phaserSettings.feedback * 100)} %</p>
+            feedback: <p>{Math.floor(phaserSettings.feedback * 100)} %</p>
           </label>
         </section>
 
@@ -78,7 +83,7 @@ const PhaserEffect = () => {
             name="stereoPhase"
           ></input>
           <label>
-          stereo phase: <p>{phaserSettings.stereoPhase}°</p>
+            stereo phase: <p>{phaserSettings.stereoPhase}°</p>
           </label>
         </section>
 
@@ -94,7 +99,7 @@ const PhaserEffect = () => {
             name="baseModulationFrequency"
           ></input>
           <label>
-          base mod freq: <p>{phaserSettings.baseModulationFrequency} Hz</p>
+            base mod freq: <p>{phaserSettings.baseModulationFrequency} Hz</p>
           </label>
         </section>
 
@@ -106,7 +111,7 @@ const PhaserEffect = () => {
           id="phaserBypass"
         ></input>
         <label htmlFor="phaserBypass" className={styles.bypass}>
-        bypass
+          bypass
         </label>
       </main>
     </div>

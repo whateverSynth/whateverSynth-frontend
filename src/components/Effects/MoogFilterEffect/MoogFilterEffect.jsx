@@ -16,7 +16,12 @@ const MoogFilterEffect = () => {
       <main className={styles.Effects}>
         <header>
           <h2>moog filter</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('MoogFilter')}>&#10060;</button>
+          <button
+            className={styles.buttonClose}
+            onClick={() => handleRemoveEffect('MoogFilter')}
+          >
+            x
+          </button>
         </header>
         <section>
           <input
@@ -30,7 +35,7 @@ const MoogFilterEffect = () => {
             name="cutoff"
           ></input>
           <label>
-          cutoff: <p>{Math.floor(moogFilterSettings.cutoff * 100)} %</p>
+            cutoff: <p>{Math.floor(moogFilterSettings.cutoff * 100)} %</p>
           </label>
         </section>
 
@@ -46,7 +51,7 @@ const MoogFilterEffect = () => {
             name="resonance"
           ></input>
           <label>
-          resonance: <p>{moogFilterSettings.resonance}</p>
+            resonance: <p>{moogFilterSettings.resonance}</p>
           </label>
         </section>
 
@@ -62,7 +67,7 @@ const MoogFilterEffect = () => {
             name="bufferSize"
           ></input>
           <label>
-          buffer size: <p>{moogFilterSettings.bufferSize}</p>
+            buffer size: <p>{moogFilterSettings.bufferSize}</p>
           </label>
         </section>
 
@@ -74,7 +79,7 @@ const MoogFilterEffect = () => {
           id="moogFilterBypass"
         ></input>
         <label htmlFor="moogFilterBypass" className={styles.bypass}>
-        bypass
+          bypass
         </label>
       </main>
     </div>

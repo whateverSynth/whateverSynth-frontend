@@ -16,7 +16,12 @@ const PingPongDelayEffect = () => {
       <main className={styles.Effects}>
         <header>
           <h2>ping pong delay</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('PingPongDelay')}>&#10060;</button>
+          <button
+            className={styles.buttonClose}
+            onClick={() => handleRemoveEffect('PingPongDelay')}
+          >
+            x
+          </button>
         </header>
         <section>
           <input
@@ -30,7 +35,8 @@ const PingPongDelayEffect = () => {
             name="wetLevel"
           ></input>
           <label>
-          wet level: <p>{Math.floor(pingPongDelaySettings.wetLevel * 100)} %</p>
+            wet level:{' '}
+            <p>{Math.floor(pingPongDelaySettings.wetLevel * 100)} %</p>
           </label>
         </section>
 
@@ -46,7 +52,8 @@ const PingPongDelayEffect = () => {
             name="feedback"
           ></input>
           <label>
-          feedback: <p>{Math.floor(pingPongDelaySettings.feedback * 100)} %</p>
+            feedback:{' '}
+            <p>{Math.floor(pingPongDelaySettings.feedback * 100)} %</p>
           </label>
         </section>
 
@@ -62,7 +69,7 @@ const PingPongDelayEffect = () => {
             name="delayTimeLeft"
           ></input>
           <label>
-          delay time left: <p>{pingPongDelaySettings.delayTimeLeft} ms</p>
+            delay time left: <p>{pingPongDelaySettings.delayTimeLeft} ms</p>
           </label>
         </section>
 
@@ -78,7 +85,7 @@ const PingPongDelayEffect = () => {
             name="delayTimeRight"
           ></input>
           <label>
-          delay time right: <p>{pingPongDelaySettings.delayTimeRight} ms</p>
+            delay time right: <p>{pingPongDelaySettings.delayTimeRight} ms</p>
           </label>
         </section>
 
@@ -90,7 +97,7 @@ const PingPongDelayEffect = () => {
           id="pingPongDelayBypass"
         ></input>
         <label htmlFor="pingPongDelayBypass" className={styles.bypass}>
-        bypass
+          bypass
         </label>
       </main>
     </div>
