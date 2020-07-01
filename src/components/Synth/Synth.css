@@ -34,9 +34,10 @@ canvas {
   background-color: hsla(198, 97%, 56%, 1);
   width: 40rem;
   margin-left: 20rem;
+  border: 0.25rem solid #d600ff;
   border-radius: 100%;
   position: absolute;
-  top: 3rem;
+  top: 2.5rem;
 }
 
 h1 {

@@ -113,7 +113,12 @@ export default function Synth() {
       inputGain.connect(outputGain);
       outputGain.connect(audioCtx.destination);
       scope = new Oscilloscope(outputGain);
-      OScope = scope.animate(canvas.getContext('2d'));
+      const context = canvas.getContext('2d');
+      context.strokeStyle = '#d600ff';
+      context.lineWidth = 2;
+      // console.log(context);
+
+      OScope = scope.animate(context);
     } else {
       tunaEffects.forEach((effect, i) => {
         if (tunaEffects.length === 1) {
