@@ -2,18 +2,20 @@ import React from 'react';
 import {
   useCompressorSettings,
   useHandleCompressor,
+  useHandleRemoveEffect,
 } from '../../../hooks/EffectsProvider';
 import styles from '../Effects.css';
 
 const CompressorEffect = () => {
   const compressorSettings = useCompressorSettings();
   const handleCompressor = useHandleCompressor();
+  const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
     <div className={styles.effectContainer}>
       <header>
         <h2>compressor</h2>
-        <button className={styles.buttonClose}>&#10060;</button>
+        <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Compressor')}>&#10060;</button>
       </header>
       <main className={styles.Effects}>
 

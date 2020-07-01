@@ -2,17 +2,19 @@ import React from 'react';
 import {
   useDelaySettings,
   useHandleDelay,
+  useHandleRemoveEffect,
 } from '../../../hooks/EffectsProvider';
 import styles from '../Effects.css';
 
 const DelayEffect = () => {
   const delaySettings = useDelaySettings();
   const handleDelay = useHandleDelay();
+  const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
-        <header><h2>delay</h2><button className={styles.buttonClose}>&#10060;</button></header>
+        <header><h2>delay</h2><button className={styles.buttonClose} onClick={() => handleRemoveEffect('Delay')}>&#10060;</button></header>
         <section>
           <input
             type="range"

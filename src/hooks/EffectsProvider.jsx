@@ -136,7 +136,8 @@ export const EffectsProvider = ({ children }) => {
   };
 
   const handleRemoveEffect = (effectToRemove) => {
-    setEffects([...effects, effectToRemove.pop]);
+    const newEffects = effects.filter(effect => effect !== effectToRemove);
+    setEffects(newEffects);
   };
 
   //effects handlers
