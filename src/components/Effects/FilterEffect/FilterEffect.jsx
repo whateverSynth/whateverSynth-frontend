@@ -2,6 +2,7 @@ import React from 'react';
 import {
   useFilterSettings,
   useHandleFilter,
+  useHandleRemoveEffect,
 } from '../../../hooks/EffectsProvider';
 import styles from '../Effects.css';
 import Slider from 'react-input-slider';
@@ -9,13 +10,14 @@ import Slider from 'react-input-slider';
 const FilterEffect = () => {
   const filterSettings = useFilterSettings();
   const handleFilter = useHandleFilter();
+  const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <h2>filter</h2>
-          <button className={styles.buttonClose}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Filter')}>&#10060;</button>
         </header>
         <section>
           <input

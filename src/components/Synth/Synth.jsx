@@ -74,7 +74,6 @@ export default function Synth() {
   }, []);
 
   useEffect(() => {
-    console.log(effects);
     tunaEffects = effects.map((effect) => {
       const name = effect;
       if (name === 'Bitcrusher') return new tuna[name](bitcrusherSettings);

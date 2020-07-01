@@ -2,18 +2,20 @@ import React from 'react';
 import {
   useWahWahSettings,
   useHandleWahWah,
+  useHandleRemoveEffect,
 } from '../../../hooks/EffectsProvider';
 import styles from '../Effects.css';
 
 const WahWahEffect = () => {
   const wahWahSettings = useWahWahSettings();
   const handleWahWah = useHandleWahWah();
+  const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
     <div className={styles.effectContainer}>
       <header>
         <h2>wah wah</h2>
-        <button className={styles.buttonClose}>&#10060;</button>
+        <button className={styles.buttonClose} onClick={() => handleRemoveEffect('WahWah')}>&#10060;</button>
       </header>
       <main className={styles.Effects}>
         <input
