@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-  usePingPongDelaySettings,
-  useHandlePingPongDelay,
+  useHandleEffectChange,
   useHandleRemoveEffect,
   useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
@@ -9,10 +8,10 @@ import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
 const PingPongDelayEffect = ({ id }) => {
-  const pingPongDelaySettings = usePingPongDelaySettings();
-  const handlePingPongDelay = useHandlePingPongDelay();
+  const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
+  const pingpong = newEffectSettings.find(setting => setting.id === id);
 
   return (
     <div className={styles.effectContainer}>
@@ -20,8 +19,8 @@ const PingPongDelayEffect = ({ id }) => {
         <header>
           <input
             type="checkbox"
-            value={pingPongDelaySettings.bypass}
-            onChange={handlePingPongDelay}
+            value={pingpong?.settings.bypass}
+            onChange={(e) => handleEffectChange(e, id)}
             name="bypass"
             id="pingPongDelayBypass"
           ></input>
@@ -33,14 +32,14 @@ const PingPongDelayEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={pingPongDelaySettings.wetLevel}
+            value={pingpong?.settings.wetLevel}
             step="0.1"
             id="pingPongDelayWetLevelRange"
-            onChange={handlePingPongDelay}
+            onChange={(e) => handleEffectChange(e, id)}
             name="wetLevel"
           ></input>
           <label>
-          wet level: <p>{Math.floor(pingPongDelaySettings.wetLevel * 100)} %</p>
+          wet level: <p>{Math.floor(pingpong?.settings.wetLevel * 100)} %</p>
           </label>
         </section>
 
@@ -49,14 +48,14 @@ const PingPongDelayEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={pingPongDelaySettings.feedback}
+            value={pingpong?.settings.feedback}
             step="0.05"
             id="pingPongDelayFeedbackRange"
-            onChange={handlePingPongDelay}
+            onChange={(e) => handleEffectChange(e, id)}
             name="feedback"
           ></input>
           <label>
-          feedback: <p>{Math.floor(pingPongDelaySettings.feedback * 100)} %</p>
+          feedback: <p>{Math.floor(pingpong?.settings.feedback * 100)} %</p>
           </label>
         </section>
 
@@ -65,14 +64,14 @@ const PingPongDelayEffect = ({ id }) => {
             type="range"
             min="1"
             max="10000"
-            value={pingPongDelaySettings.delayTimeLeft}
+            value={pingpong?.settings.delayTimeLeft}
             step="1"
             id="pingPongDelayTimeRange"
-            onChange={handlePingPongDelay}
+            onChange={(e) => handleEffectChange(e, id)}
             name="delayTimeLeft"
           ></input>
           <label>
-          delay time left: <p>{pingPongDelaySettings.delayTimeLeft} ms</p>
+          delay time left: <p>{pingpong?.settings.delayTimeLeft} ms</p>
           </label>
         </section>
 
@@ -81,14 +80,14 @@ const PingPongDelayEffect = ({ id }) => {
             type="range"
             min="1"
             max="10000"
-            value={pingPongDelaySettings.delayTimeRight}
+            value={pingpong?.settings.delayTimeRight}
             step="1"
             id="pingPongDelayTimeRange"
-            onChange={handlePingPongDelay}
+            onChange={(e) => handleEffectChange(e, id)}
             name="delayTimeRight"
           ></input>
           <label>
-          delay time right: <p>{pingPongDelaySettings.delayTimeRight} ms</p>
+          delay time right: <p>{pingpong?.settings.delayTimeRight} ms</p>
           </label>
         </section>
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-  useReverbSettings,
-  useHandleReverb,
+  useHandleEffectChange,
   useHandleRemoveEffect,
   useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
@@ -9,10 +8,10 @@ import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
 const ReverbEffect = ({ id }) => {
-  const reverbSettings = useReverbSettings();
-  const handleReverb = useHandleReverb();
+  const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
+  const reverb = newEffectSettings.find(setting => setting.id === id);
 
   return (
     <div className={styles.effectContainer}>
@@ -20,8 +19,8 @@ const ReverbEffect = ({ id }) => {
         <header>
           <input
             type="checkbox"
-            value={reverbSettings.bypass}
-            onChange={handleReverb}
+            value={reverb?.settings.bypass}
+            onChange={(e) => handleEffectChange(e, id)}
             name="bypass"
             id="reverbBypass"
           ></input>
@@ -33,14 +32,14 @@ const ReverbEffect = ({ id }) => {
             type="range"
             min="20"
             max="22050"
-            value={reverbSettings.highCut}
+            value={reverb?.settings.highCut}
             step="1"
             id="reverbHighCutRange"
-            onChange={handleReverb}
+            onChange={(e) => handleEffectChange(e, id)}
             name="highCut"
           ></input>
           <label>
-          high cut: <p>{reverbSettings.highCut} Hz</p>
+          high cut: <p>{reverb?.settings.highCut} Hz</p>
           </label>
         </section>
 
@@ -49,14 +48,14 @@ const ReverbEffect = ({ id }) => {
             type="range"
             min="20"
             max="22050"
-            value={reverbSettings.lowCut}
+            value={reverb?.settings.lowCut}
             step="1"
             id="reverbLowCutRange"
-            onChange={handleReverb}
+            onChange={(e) => handleEffectChange(e, id)}
             name="lowCut"
           ></input>
           <label>
-          low cut: <p>{reverbSettings.lowCut} Hz</p>
+          low cut: <p>{reverb?.settings.lowCut} Hz</p>
           </label>
         </section>
 
@@ -65,14 +64,14 @@ const ReverbEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={reverbSettings.dryLevel}
+            value={reverb?.settings.dryLevel}
             step="0.1"
             id="reverbDryLevelRange"
-            onChange={handleReverb}
+            onChange={(e) => handleEffectChange(e, id)}
             name="dryLevel"
           ></input>
           <label>
-          dry level: <p>{Math.floor(reverbSettings.dryLevel * 100)} %</p>
+          dry level: <p>{Math.floor(reverb?.settings.dryLevel * 100)} %</p>
           </label>
         </section>
 
@@ -81,14 +80,14 @@ const ReverbEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={reverbSettings.wetLevel}
+            value={reverb?.settings.wetLevel}
             step="0.1"
             id="reverbWetLevelRange"
-            onChange={handleReverb}
+            onChange={(e) => handleEffectChange(e, id)}
             name="wetLevel"
           ></input>
           <label>
-          wet level: <p>{Math.floor(reverbSettings.wetLevel * 100)} %</p>
+          wet level: <p>{Math.floor(reverb?.settings.wetLevel * 100)} %</p>
           </label>
         </section>
 
@@ -97,20 +96,20 @@ const ReverbEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={reverbSettings.level}
+            value={reverb?.settings.level}
             step="0.1"
             id="reverbLevelRange"
-            onChange={handleReverb}
+            onChange={(e) => handleEffectChange(e, id)}
             name="level"
           ></input>
           <label>
-          level: <p>{Math.floor(reverbSettings.level * 100)} %</p>
+          level: <p>{Math.floor(reverb?.settings.level * 100)} %</p>
           </label>
         </section>
 
         <section>
           <label htmlFor="impulse">impulse </label>
-          <select name="impulse" id="reverbImpulse" onChange={handleReverb}>
+          <select name="impulse" id="reverbImpulse" onChange={(e) => handleEffectChange(e, id)}>
             <option value="reverb/garage.wav">garage</option>
             <option value="reverb/room.wav">room</option>
             <option value="reverb/silo.wav">silo</option>

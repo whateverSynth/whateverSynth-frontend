@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-  useChorusSettings,
-  useHandleChorus,
+  useHandleEffectChange,
   useHandleRemoveEffect,
   useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
@@ -9,10 +8,10 @@ import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
 const ChorusEffect = ({ id }) => {
-  const chorusSettings = useChorusSettings();
-  const handleChorus = useHandleChorus();
+  const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
+  const chorus = newEffectSettings.find(setting => setting.id === id);
 
   return (
     <div className={styles.effectContainer}>
@@ -20,8 +19,8 @@ const ChorusEffect = ({ id }) => {
         <header>
           <input
             type="checkbox"
-            value={chorusSettings.bypass}
-            onChange={handleChorus}
+            value={chorus?.settings.bypass}
+            onChange={(e) => handleEffectChange(e, id)}
             name="bypass"
             id="chorusBypass"
           ></input>
@@ -33,14 +32,14 @@ const ChorusEffect = ({ id }) => {
             type="range"
             min="0.01"
             max="8"
-            value={chorusSettings.rate}
+            value={chorus?.settings.rate}
             step="0.01"
             id="chorusRate"
-            onChange={handleChorus}
+            onChange={(e) => handleEffectChange(e, id)}
             name="rate"
           ></input>
           <label>
-          rate: <p>{chorusSettings.rate} Hz</p>
+          rate: <p>{chorus?.settings.rate} Hz</p>
           </label>
         </section>
 
@@ -49,14 +48,14 @@ const ChorusEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={chorusSettings.feedback}
+            value={chorus?.settings.feedback}
             step="0.05"
             id="chorusFeedbackRange"
-            onChange={handleChorus}
+            onChange={(e) => handleEffectChange(e, id)}
             name="feedback"
           ></input>
           <label>
-          feedback: <p>{Math.floor(chorusSettings.feedback * 100)} %</p>
+          feedback: <p>{Math.floor(chorus?.settings.feedback * 100)} %</p>
           </label>
         </section>
 
@@ -65,14 +64,14 @@ const ChorusEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={chorusSettings.delay}
+            value={chorus?.settings.delay}
             step="0.1"
             id="chorusWetLevelRange"
-            onChange={handleChorus}
+            onChange={(e) => handleEffectChange(e, id)}
             name="delay"
           ></input>
           <label>
-          delay: <p>{Math.floor(chorusSettings.delay * 100)} %</p>
+          delay: <p>{Math.floor(chorus?.settings.delay * 100)} %</p>
           </label>
         </section>
       </main>

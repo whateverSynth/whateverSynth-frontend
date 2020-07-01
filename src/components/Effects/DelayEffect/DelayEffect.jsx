@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  useHandleDelay,
+  useHandleEffectChange,
   useHandleRemoveEffect,
   useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
 const DelayEffect = ({ id }) => {
-  const handleDelay = useHandleDelay();
+  const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
   const delay = newEffectSettings.find(setting => setting.id === id);
@@ -20,7 +20,7 @@ const DelayEffect = ({ id }) => {
           <input
             type="checkbox"
             value={delay?.settings.bypass}
-            onChange={(e) => handleDelay(e, id)}
+            onChange={(e) => handleEffectChange(e, id)}
             name="bypass"
             id="delayBypass"
           ></input>
@@ -35,7 +35,7 @@ const DelayEffect = ({ id }) => {
             value={delay?.settings.feedback}
             step="0.05"
             id="delayFeedbackRange"
-            onChange={(e) => handleDelay(e, id)}
+            onChange={(e) => handleEffectChange(e, id)}
             name="feedback"
           ></input>
           <label>
@@ -51,7 +51,7 @@ const DelayEffect = ({ id }) => {
             value={delay?.settings.delayTime}
             step="1"
             id="delayTimeRange"
-            onChange={(e) => handleDelay(e, id)}
+            onChange={(e) => handleEffectChange(e, id)}
             name="delayTime"
           ></input>
           <label>
@@ -67,7 +67,7 @@ const DelayEffect = ({ id }) => {
             value={delay?.settings.wetLevel}
             step="0.1"
             id="delayWetLevelRange"
-            onChange={(e) => handleDelay(e, id)}
+            onChange={(e) => handleEffectChange(e, id)}
             name="wetLevel"
           ></input>
           <label>
@@ -83,7 +83,7 @@ const DelayEffect = ({ id }) => {
             value={delay?.settings.dryLevel}
             step="0.1"
             id="delayDryLevelRange"
-            onChange={(e) => handleDelay(e, id)}
+            onChange={(e) => handleEffectChange(e, id)}
             name="dryLevel"
           ></input>
           <label>
@@ -99,7 +99,7 @@ const DelayEffect = ({ id }) => {
             value={delay?.settings.cutoff}
             step="10"
             id="delayCutoffRange"
-            onChange={(e) => handleDelay(e, id)}
+            onChange={(e) => handleEffectChange(e, id)}
             name="cutoff"
           ></input>
           <label>

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  useCompressorSettings,
   useHandleCompressor,
   useHandleRemoveEffect,
   useNewEffectSettings
@@ -9,10 +8,10 @@ import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
 const CompressorEffect = ({ id }) => {
-  const compressorSettings = useCompressorSettings();
   const handleCompressor = useHandleCompressor();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
+  const compressor = newEffectSettings.find(setting => setting.id === id);
 
   return (
     <div className={styles.effectContainer}>
@@ -20,8 +19,8 @@ const CompressorEffect = ({ id }) => {
         <header>
           <input
             type="checkbox"
-            value={compressorSettings.bypass}
-            onChange={handleCompressor}
+            value={compressor?.settings.bypass}
+            onChange={(e) => handleCompressor(e, id)}
             name="bypass"
             id="compressorBypass"
           ></input>
@@ -33,14 +32,14 @@ const CompressorEffect = ({ id }) => {
             type="range"
             min="-100"
             max="0"
-            value={compressorSettings.threshold}
+            value={compressor?.settings.threshold}
             step="1"
             id="compressorThresholdRange"
-            onChange={handleCompressor}
+            onChange={(e) => handleCompressor(e, id)}
             name="threshold"
           ></input>
           <label>
-          threshold: <p>{compressorSettings.threshold} db</p>
+          threshold: <p>{compressor?.settings.threshold} db</p>
           </label>
         </section>
 
@@ -49,14 +48,14 @@ const CompressorEffect = ({ id }) => {
             type="range"
             min="0"
             max="20"
-            value={compressorSettings.makeupGain}
+            value={compressor?.settings.makeupGain}
             step="1"
             id="makeupGainRange"
-            onChange={handleCompressor}
+            onChange={(e) => handleCompressor(e, id)}
             name="makeupGain"
           ></input>
           <label>
-          makeup gain: <p>{compressorSettings.makeupGain} db</p>
+          makeup gain: <p>{compressor?.settings.makeupGain} db</p>
           </label>
         </section>
 
@@ -65,14 +64,14 @@ const CompressorEffect = ({ id }) => {
             type="range"
             min="0"
             max="1000"
-            value={compressorSettings.attack}
+            value={compressor?.settings.attack}
             step="1"
             id="compressorAttackRange"
-            onChange={handleCompressor}
+            onChange={(e) => handleCompressor(e, id)}
             name="attack"
           ></input>
           <label>
-          attack: <p>{compressorSettings.attack}</p>
+          attack: <p>{compressor?.settings.attack}</p>
           </label>
         </section>
 
@@ -81,14 +80,14 @@ const CompressorEffect = ({ id }) => {
             type="range"
             min="0"
             max="1000"
-            value={compressorSettings.release}
+            value={compressor?.settings.release}
             step="1"
             id="compressorReleaseRange"
-            onChange={handleCompressor}
+            onChange={(e) => handleCompressor(e, id)}
             name="release"
           ></input>
           <label>
-          release: <p>{compressorSettings.release}</p>
+          release: <p>{compressor?.settings.release}</p>
           </label>
         </section>
 
@@ -97,14 +96,14 @@ const CompressorEffect = ({ id }) => {
             type="range"
             min="1"
             max="20"
-            value={compressorSettings.ratio}
+            value={compressor?.settings.ratio}
             step="1"
             id="compressorRatioRange"
-            onChange={handleCompressor}
+            onChange={(e) => handleCompressor(e, id)}
             name="ratio"
           ></input>
           <label>
-          ratio: <p>{compressorSettings.ratio}</p>
+          ratio: <p>{compressor?.settings.ratio}</p>
           </label>
         </section>
 
@@ -113,22 +112,22 @@ const CompressorEffect = ({ id }) => {
             type="range"
             min="0"
             max="40"
-            value={compressorSettings.knee}
+            value={compressor?.settings.knee}
             step="1"
             id="compressorKneeRange"
-            onChange={handleCompressor}
+            onChange={(e) => handleCompressor(e, id)}
             name="knee"
           ></input>
           <label>
-          knee: <p>{compressorSettings.knee}</p>
+          knee: <p>{compressor?.settings.knee}</p>
           </label>
         </section>
 
         <section>
           <input
             type="checkbox"
-            value={compressorSettings.automakeup}
-            onChange={handleCompressor}
+            value={compressor?.settings.automakeup}
+            onChange={(e) => handleCompressor(e, id)}
             name="automakeup"
             id="compressorAutomakeup"
           ></input>

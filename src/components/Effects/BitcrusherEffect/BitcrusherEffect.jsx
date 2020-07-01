@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-  useBitcrusherSettings,
-  useHandleBitcrusher,
+  useHandleEffectChange,
   useHandleRemoveEffect,
   useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
@@ -9,10 +8,10 @@ import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
 const BitcrusherEffect = ({ id }) => {
-  const bitcrusherSettings = useBitcrusherSettings();
-  const handleBitcrusher = useHandleBitcrusher();
+  const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
+  const bitcrusher = newEffectSettings.find(setting => setting.id === id);
 
   return (
     <div className={styles.effectContainer}>
@@ -20,8 +19,8 @@ const BitcrusherEffect = ({ id }) => {
         <header>
           <input
             type="checkbox"
-            value={bitcrusherSettings.bypass}
-            onChange={handleBitcrusher}
+            value={bitcrusher?.settings.bypass}
+            onChange={(e) => handleEffectChange(e, id)}
             name="bypass"
             id="bitcrusherBypass"
           ></input>
@@ -33,14 +32,14 @@ const BitcrusherEffect = ({ id }) => {
             type="range"
             min="1"
             max="16"
-            value={bitcrusherSettings.bits}
+            value={bitcrusher?.settings.bits}
             step="1"
             id="bitcrusherBitsRange"
-            onChange={handleBitcrusher}
+            onChange={(e) => handleEffectChange(e, id)}
             name="bits"
           ></input>
           <label>
-          bits: <p>{bitcrusherSettings.bits}</p>
+          bits: <p>{bitcrusher?.settings.bits}</p>
           </label>
         </section>
 
@@ -49,14 +48,14 @@ const BitcrusherEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={bitcrusherSettings.normfreq}
+            value={bitcrusher?.settings.normfreq}
             step="0.1"
             id="bitcrusherNormFreqRange"
-            onChange={handleBitcrusher}
+            onChange={(e) => handleEffectChange(e, id)}
             name="normfreq"
           ></input>
           <label>
-          norm freq: <p>{Math.floor(bitcrusherSettings.normfreq * 100)} %</p>
+          norm freq: <p>{Math.floor(bitcrusher?.settings.normfreq * 100)} %</p>
           </label>
         </section>
 
@@ -65,14 +64,14 @@ const BitcrusherEffect = ({ id }) => {
             type="range"
             min="256"
             max="16384"
-            value={bitcrusherSettings.bufferSize}
+            value={bitcrusher?.settings.bufferSize}
             step="1"
             id="BitcrusherBufferSizeRange"
-            onChange={handleBitcrusher}
+            onChange={(e) => handleEffectChange(e, id)}
             name="bufferSize"
           ></input>
           <label>
-          buffer size: <p>{bitcrusherSettings.bufferSize}</p>
+          buffer size: <p>{bitcrusher?.settings.bufferSize}</p>
           </label>
         </section>
       </main>

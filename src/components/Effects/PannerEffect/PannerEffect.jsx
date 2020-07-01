@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-  usePannerSettings,
-  useHandlePanner,
+  useHandleEffectChange,
   useHandleRemoveEffect,
   useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
@@ -9,10 +8,10 @@ import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
 const PannerEffect = ({ id }) => {
-  const pannerSettings = usePannerSettings();
-  const handlePanner = useHandlePanner();
+  const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
+  const panner = newEffectSettings.find(setting => setting.id === id);
 
   return (
     <div className={styles.effectContainer}>
@@ -20,8 +19,8 @@ const PannerEffect = ({ id }) => {
         <header>
           <input
             type="checkbox"
-            value={pannerSettings.bypass}
-            onChange={handlePanner}
+            value={panner?.settings.bypass}
+            onChange={(e) => handleEffectChange(e, id)}
             name="bypass"
             id="pannerBypass"
           ></input>
@@ -34,10 +33,10 @@ const PannerEffect = ({ id }) => {
             type="range"
             min="-1"
             max="1"
-            value={pannerSettings.pan}
+            value={panner?.settings.pan}
             step="0.05"
             id="pannerPanRange"
-            onChange={handlePanner}
+            onChange={(e) => handleEffectChange(e, id)}
             name="pan"
           ></input>
           <label>R</label>

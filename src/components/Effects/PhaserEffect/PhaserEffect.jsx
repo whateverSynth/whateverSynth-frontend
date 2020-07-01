@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-  usePhaserSettings,
-  useHandlePhaser,
+  useHandleEffectChange,
   useHandleRemoveEffect,
   useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
@@ -9,10 +8,10 @@ import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
 const PhaserEffect = ({ id }) => {
-  const phaserSettings = usePhaserSettings();
-  const handlePhaser = useHandlePhaser();
+  const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
+  const phaser = newEffectSettings.find(setting => setting.id === id);
 
   return (
     <div className={styles.effectContainer}>
@@ -20,8 +19,8 @@ const PhaserEffect = ({ id }) => {
         <header>
           <input
             type="checkbox"
-            value={phaserSettings.bypass}
-            onChange={handlePhaser}
+            value={phaser?.settings.bypass}
+            onChange={(e) => handleEffectChange(e, id)}
             name="bypass"
             id="phaserBypass"
           ></input>
@@ -33,14 +32,14 @@ const PhaserEffect = ({ id }) => {
             type="range"
             min="0.01"
             max="8"
-            value={phaserSettings.rate}
+            value={phaser?.settings.rate}
             step="0.01"
             id="phaserRateRange"
-            onChange={handlePhaser}
+            onChange={(e) => handleEffectChange(e, id)}
             name="rate"
           ></input>
           <label>
-          rate: <p>{phaserSettings.rate} Hz</p>
+          rate: <p>{phaser?.settings.rate} Hz</p>
           </label>
         </section>
 
@@ -49,14 +48,14 @@ const PhaserEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={phaserSettings.depth}
+            value={phaser?.settings.depth}
             step="0.01"
             id="phaserDepthRange"
-            onChange={handlePhaser}
+            onChange={(e) => handleEffectChange(e, id)}
             name="depth"
           ></input>
           <label>
-          depth: <p>{Math.floor(phaserSettings.depth * 100)} %</p>
+          depth: <p>{Math.floor(phaser?.settings.depth * 100)} %</p>
           </label>
         </section>
 
@@ -65,14 +64,14 @@ const PhaserEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={phaserSettings.feedback}
+            value={phaser?.settings.feedback}
             step="0.05"
             id="phaserFeedbackRange"
-            onChange={handlePhaser}
+            onChange={(e) => handleEffectChange(e, id)}
             name="feedback"
           ></input>
           <label>
-          feedback: <p>{Math.floor(phaserSettings.feedback * 100)} %</p>
+          feedback: <p>{Math.floor(phaser?.settings.feedback * 100)} %</p>
           </label>
         </section>
 
@@ -81,14 +80,14 @@ const PhaserEffect = ({ id }) => {
             type="range"
             min="0"
             max="180"
-            value={phaserSettings.stereoPhase}
+            value={phaser?.settings.stereoPhase}
             step="1"
             id="phaserStereoPhaseRange"
-            onChange={handlePhaser}
+            onChange={(e) => handleEffectChange(e, id)}
             name="stereoPhase"
           ></input>
           <label>
-          stereo phase: <p>{phaserSettings.stereoPhase}°</p>
+          stereo phase: <p>{phaser?.settings.stereoPhase}°</p>
           </label>
         </section>
 
@@ -97,19 +96,16 @@ const PhaserEffect = ({ id }) => {
             type="range"
             min="500"
             max="1500"
-            value={phaserSettings.baseModulationFrequency}
+            value={phaser?.settings.baseModulationFrequency}
             step="10"
             id="phaserBaseModulationFrequencyRange"
-            onChange={handlePhaser}
+            onChange={(e) => handleEffectChange(e, id)}
             name="baseModulationFrequency"
           ></input>
           <label>
-          base mod freq: <p>{phaserSettings.baseModulationFrequency} Hz</p>
+          base mod freq: <p>{phaser?.settings.baseModulationFrequency} Hz</p>
           </label>
         </section>
-
-
-
       </main>
     </div>
   );

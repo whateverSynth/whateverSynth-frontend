@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  useWahWahSettings,
   useHandleWahWah,
   useHandleRemoveEffect,
   useNewEffectSettings
@@ -9,10 +8,10 @@ import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
 const WahWahEffect = ({ id }) => {
-  const wahWahSettings = useWahWahSettings();
   const handleWahWah = useHandleWahWah();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
+  const wahwah = newEffectSettings.find(setting => setting.id === id);
 
   return (
     <div className={styles.effectContainer}>
@@ -20,8 +19,8 @@ const WahWahEffect = ({ id }) => {
         <header>
           <input
             type="checkbox"
-            value={wahWahSettings.bypass}
-            onChange={handleWahWah}
+            value={wahwah?.settings.bypass}
+            onChange={(e) => handleWahWah(e, id)}
             name="bypass"
             id="wahWahBypass"
           ></input>
@@ -33,8 +32,8 @@ const WahWahEffect = ({ id }) => {
 
         <input
           type="checkbox"
-          value={wahWahSettings.automode}
-          onChange={handleWahWah}
+          value={wahwah?.settings.automode}
+          onChange={(e) => handleWahWah(e, id)}
           name="automode"
           id="automode"
         ></input>
@@ -47,14 +46,14 @@ const WahWahEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={wahWahSettings.baseFrequency}
+            value={wahwah?.settings.baseFrequency}
             step="0.01"
             id="wahWahBaseFrequencyRange"
-            onChange={handleWahWah}
+            onChange={(e) => handleWahWah(e, id)}
             name="baseFrequency"
           ></input>
           <label>
-          base freq: <p>{wahWahSettings.baseFrequency}</p>
+          base freq: <p>{wahwah?.settings.baseFrequency}</p>
           </label>
         </section>
 
@@ -63,14 +62,14 @@ const WahWahEffect = ({ id }) => {
             type="range"
             min="1"
             max="6"
-            value={wahWahSettings.excursionOctaves}
+            value={wahwah?.settings.excursionOctaves}
             step="1"
             id="excursionOctavesRange"
-            onChange={handleWahWah}
+            onChange={(e) => handleWahWah(e, id)}
             name="excursionOctaves"
           ></input>
           <label>
-          excursion octaves: <p>{wahWahSettings.excursionOctaves}</p>
+          excursion octaves: <p>{wahwah?.settings.excursionOctaves}</p>
           </label>
         </section>
 
@@ -79,14 +78,14 @@ const WahWahEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={wahWahSettings.sweep}
+            value={wahwah?.settings.sweep}
             step="0.05"
             id="wahWahSweepRange"
-            onChange={handleWahWah}
+            onChange={(e) => handleWahWah(e, id)}
             name="sweep"
           ></input>
           <label>
-          sweep: <p>{Math.floor(wahWahSettings.sweep * 100)} %</p>
+          sweep: <p>{Math.floor(wahwah?.settings.sweep * 100)} %</p>
           </label>
         </section>
 
@@ -95,14 +94,14 @@ const WahWahEffect = ({ id }) => {
             type="range"
             min="1"
             max="100"
-            value={wahWahSettings.resonance}
+            value={wahwah?.settings.resonance}
             step="0.1"
             id="wahWahResonanceRange"
-            onChange={handleWahWah}
+            onChange={(e) => handleWahWah(e, id)}
             name="resonance"
           ></input>
           <label>
-          resonance: <p>{wahWahSettings.resonance} %</p>
+          resonance: <p>{wahwah?.settings.resonance} %</p>
           </label>
         </section>
 
@@ -111,14 +110,14 @@ const WahWahEffect = ({ id }) => {
             type="range"
             min="-1"
             max="1"
-            value={wahWahSettings.sensitivity}
+            value={wahwah?.settings.sensitivity}
             step="0.1"
             id="wahWahSensitivityRange"
-            onChange={handleWahWah}
+            onChange={(e) => handleWahWah(e, id)}
             name="sensitivity"
           ></input>
           <label>
-          sensitivity: <p>{wahWahSettings.sensitivity}</p>
+          sensitivity: <p>{wahwah?.settings.sensitivity}</p>
           </label>
         </section>
       </main>

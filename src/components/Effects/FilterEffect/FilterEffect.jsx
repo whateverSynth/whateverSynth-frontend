@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-  useFilterSettings,
-  useHandleFilter,
+  useHandleEffectChange,
   useHandleRemoveEffect,
   useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
@@ -10,10 +9,10 @@ import styles from '../Effects.css';
 import Slider from 'react-input-slider';
 
 const FilterEffect = ({ id }) => {
-  const filterSettings = useFilterSettings();
-  const handleFilter = useHandleFilter();
+  const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
+  const filter = newEffectSettings.find(setting => setting.id === id);
 
   return (
     <div className={styles.effectContainer}>
@@ -21,8 +20,8 @@ const FilterEffect = ({ id }) => {
         <header>
           <input
             type="checkbox"
-            value={filterSettings.bypass}
-            onChange={handleFilter}
+            value={filter?.settings.bypass}
+            onChange={(e) => handleEffectChange(e, id)}
             name="bypass"
             id="filterBypass"
           ></input>
@@ -34,14 +33,14 @@ const FilterEffect = ({ id }) => {
             type="range"
             min="20"
             max="22050"
-            value={filterSettings.frequency}
+            value={filter?.settings.frequency}
             step="10"
             id="filterFrequencyRange"
-            onChange={handleFilter}
+            onChange={(e) => handleEffectChange(e, id)}
             name="frequency"
           ></input>
           <label>
-          frequency: <p>{filterSettings.frequency}</p>
+          frequency: <p>{filter?.settings.frequency}</p>
           </label>
         </section>
 
@@ -50,18 +49,18 @@ const FilterEffect = ({ id }) => {
             type="range"
             min="0.001"
             max="100"
-            value={filterSettings.Q}
+            value={filter?.settings.Q}
             step="0.001"
             id="filterQ"
-            onChange={handleFilter}
+            onChange={(e) => handleEffectChange(e, id)}
             name="Q"
           ></input>
           <label>
-          q: <p>{filterSettings.Q}</p>
+          q: <p>{filter?.settings.Q}</p>
           </label>
         </section>
         <section>
-          <Slider name="freqQ" axis="xy" x={filterSettings.frequency} y={filterSettings.Q} xmin="20"
+          <Slider name="freqQ" axis="xy" x={filter?.settings.frequency} y={filter?.settings.Q} xmin="20"
             xmax="22050" ymin="0.001"
             ymax="100" yreverse="true" styles={{
               track: {
@@ -80,19 +79,19 @@ const FilterEffect = ({ id }) => {
             type="range"
             min="-40"
             max="40"
-            value={filterSettings.wetLevel}
+            value={filter?.settings.wetLevel}
             step="1"
             id="filterGainRange"
-            onChange={handleFilter}
+            onChange={(e) => handleEffectChange(e, id)}
             name="gain"
           ></input>
-          <label>gain: <p>{filterSettings.gain} db</p>
+          <label>gain: <p>{filter?.settings.gain} db</p>
           </label>
         </section>
 
         <section>
           <label htmlFor="filterType">type </label>
-          <select name="filterType" id="filterFilterType" onChange={handleFilter}>
+          <select name="filterType" id="filterFilterType" onChange={(e) => handleEffectChange(e, id)}>
             <option value="highpass">highpass</option>
             <option value="lowpass">lowpass</option>
             <option value="bandpass">bandpass</option>

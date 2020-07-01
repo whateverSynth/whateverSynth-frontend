@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-  useOverdriveSettings,
-  useHandleOverdrive,
+  useHandleEffectChange,
   useHandleRemoveEffect,
   useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
@@ -9,10 +8,10 @@ import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
 const OverdriveEffect = ({ id }) => {
-  const overdriveSettings = useOverdriveSettings();
-  const handleOverdrive = useHandleOverdrive();
+  const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
+  const overdrive = newEffectSettings.find(setting => setting.id === id);
 
   return (
     <div className={styles.effectContainer}>
@@ -20,8 +19,8 @@ const OverdriveEffect = ({ id }) => {
         <header>
           <input
             type="checkbox"
-            value={overdriveSettings.bypass}
-            onChange={handleOverdrive}
+            value={overdrive?.settings.bypass}
+            onChange={(e) => handleEffectChange(e, id)}
             name="bypass"
             id="overdriveBypass"
           ></input>
@@ -34,14 +33,14 @@ const OverdriveEffect = ({ id }) => {
             type="range"
             min="-42"
             max="0"
-            value={overdriveSettings.outputGain}
+            value={overdrive?.settings.outputGain}
             step="1"
             id="overdriveOutputGain"
-            onChange={handleOverdrive}
+            onChange={(e) => handleEffectChange(e, id)}
             name="outputGain"
           ></input>
           <label>
-          output gain: <p>{overdriveSettings.outputGain} db</p>
+          output gain: <p>{overdrive?.settings.outputGain} db</p>
           </label>
         </section>
 
@@ -50,14 +49,14 @@ const OverdriveEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={overdriveSettings.drive}
+            value={overdrive?.settings.drive}
             step="0.01"
             id="overdriveDriveRange"
-            onChange={handleOverdrive}
+            onChange={(e) => handleEffectChange(e, id)}
             name="drive"
           ></input>
           <label>
-          drive: <p>{Math.floor(overdriveSettings.drive * 100)} %</p>
+          drive: <p>{Math.floor(overdrive?.settings.drive * 100)} %</p>
           </label>
         </section>
 
@@ -66,15 +65,15 @@ const OverdriveEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={overdriveSettings.curveAmount}
+            value={overdrive?.settings.curveAmount}
             step="0.1"
             id="OverdriveCurveAmountRange"
-            onChange={handleOverdrive}
+            onChange={(e) => handleEffectChange(e, id)}
             name="curveAmount"
           ></input>
           <label>
           curve amount:{' '}
-            <p>{Math.floor(overdriveSettings.curveAmount * 100)} %</p>
+            <p>{Math.floor(overdrive?.settings.curveAmount * 100)} %</p>
           </label>
         </section>
 
@@ -83,14 +82,14 @@ const OverdriveEffect = ({ id }) => {
             type="range"
             min="0"
             max="5"
-            value={overdriveSettings.algorithmIndex}
+            value={overdrive?.settings.algorithmIndex}
             step="1"
             id="overdriveAlgorithmIndexRange"
-            onChange={handleOverdrive}
+            onChange={(e) => handleEffectChange(e, id)}
             name="algorithmIndex"
           ></input>
           <label>
-          algorithm # <p>{overdriveSettings.algorithmIndex}</p>
+          algorithm # <p>{overdrive?.settings.algorithmIndex}</p>
           </label>
         </section>
 

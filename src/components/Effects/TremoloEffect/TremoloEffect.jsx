@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-  useTremoloSettings,
-  useHandleTremolo,
+  useHandleEffectChange,
   useHandleRemoveEffect,
   useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
@@ -9,10 +8,10 @@ import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
 const TremoloEffect = ({ id }) => {
-  const tremoloSettings = useTremoloSettings();
-  const handleTremolo = useHandleTremolo();
+  const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
+  const tremolo = newEffectSettings.find(setting => setting.id === id);
 
   return (
     <div className={styles.effectContainer}>
@@ -20,8 +19,8 @@ const TremoloEffect = ({ id }) => {
         <header>
           <input
             type="checkbox"
-            value={tremoloSettings.bypass}
-            onChange={handleTremolo}
+            value={tremolo?.settings.bypass}
+            onChange={(e) => handleEffectChange(e, id)}
             name="bypass"
             id="tremoloBypass"
           ></input>
@@ -36,14 +35,14 @@ const TremoloEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={tremoloSettings.intensity}
+            value={tremolo?.settings.intensity}
             step="0.01"
             id="tremoloIntensityRange"
-            onChange={handleTremolo}
+            onChange={(e) => handleEffectChange(e, id)}
             name="intensity"
           ></input>
           <label>
-          intensity: <p>{Math.floor(tremoloSettings.intensity * 100)} %</p>
+          intensity: <p>{Math.floor(tremolo?.settings.intensity * 100)} %</p>
           </label>
         </section>
 
@@ -52,14 +51,14 @@ const TremoloEffect = ({ id }) => {
             type="range"
             min="0.01"
             max="8"
-            value={tremoloSettings.rate}
+            value={tremolo?.settings.rate}
             step="0.01"
             id="tremoloRateRange"
-            onChange={handleTremolo}
+            onChange={(e) => handleEffectChange(e, id)}
             name="rate"
           ></input>
           <label>
-          rate: <p>{tremoloSettings.rate} Hz</p>
+          rate: <p>{tremolo?.settings.rate} Hz</p>
           </label>
         </section>
 
@@ -68,14 +67,14 @@ const TremoloEffect = ({ id }) => {
             type="range"
             min="0"
             max="180"
-            value={tremoloSettings.stereoPhase}
+            value={tremolo?.settings.stereoPhase}
             step="1"
             id="tremoloStereoPhaseTremoloRange"
-            onChange={handleTremolo}
+            onChange={(e) => handleEffectChange(e, id)}
             name="stereoPhase"
           ></input>
           <label>
-          stereo phase: <p>{tremoloSettings.stereoPhase}°</p>
+          stereo phase: <p>{tremolo?.settings.stereoPhase}°</p>
           </label>
         </section>
 
