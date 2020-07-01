@@ -6,12 +6,14 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import { defaultMoogSettings } from '../../../utils/data';
 
 const MoogFilterEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-  const moog = newEffectSettings.find(setting => setting.id === id);
+  let moog = newEffectSettings.find(setting => setting.id === id);
+  if(!moog) moog = { settings: defaultMoogSettings };
 
   return (
     <div className={styles.effectContainer}>

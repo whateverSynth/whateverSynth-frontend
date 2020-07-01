@@ -6,12 +6,14 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import { defaultPingPongDelaySettings } from '../../../utils/data';
 
 const PingPongDelayEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-  const pingpong = newEffectSettings.find(setting => setting.id === id);
+  let pingpong = newEffectSettings.find(setting => setting.id === id);
+  if(!pingpong) pingpong = { settings: defaultPingPongDelaySettings };
 
   return (
     <div className={styles.effectContainer}>

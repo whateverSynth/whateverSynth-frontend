@@ -6,12 +6,14 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import { defaultTremoloSettings } from '../../../utils/data';
 
 const TremoloEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-  const tremolo = newEffectSettings.find(setting => setting.id === id);
+  let tremolo = newEffectSettings.find(setting => setting.id === id);
+  if(!tremolo) tremolo = { settings: defaultTremoloSettings };
 
   return (
     <div className={styles.effectContainer}>

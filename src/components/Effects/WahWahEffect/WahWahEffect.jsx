@@ -6,12 +6,14 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import { defaultWahWahSettings } from '../../../utils/data';
 
 const WahWahEffect = ({ id }) => {
   const handleWahWah = useHandleWahWah();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-  const wahwah = newEffectSettings.find(setting => setting.id === id);
+  let wahwah = newEffectSettings.find(setting => setting.id === id);
+  if(!wahwah) wahwah = { settings: defaultWahWahSettings };
 
   return (
     <div className={styles.effectContainer}>

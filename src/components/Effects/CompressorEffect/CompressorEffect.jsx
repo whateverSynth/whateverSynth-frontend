@@ -6,12 +6,14 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import { defaultCompressorSettings } from '../../../utils/data';
 
 const CompressorEffect = ({ id }) => {
   const handleCompressor = useHandleCompressor();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-  const compressor = newEffectSettings.find(setting => setting.id === id);
+  let compressor = newEffectSettings.find(setting => setting.id === id);
+  if(!compressor) compressor = { settings: defaultCompressorSettings };
 
   return (
     <div className={styles.effectContainer}>

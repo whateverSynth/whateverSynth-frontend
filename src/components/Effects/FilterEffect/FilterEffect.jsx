@@ -7,12 +7,14 @@ import {
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 import Slider from 'react-input-slider';
+import { defaultFilterSettings } from '../../../utils/data';
 
 const FilterEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-  const filter = newEffectSettings.find(setting => setting.id === id);
+  let filter = newEffectSettings.find(setting => setting.id === id);
+  if(!filter) filter = { settings: defaultFilterSettings };
 
   return (
     <div className={styles.effectContainer}>

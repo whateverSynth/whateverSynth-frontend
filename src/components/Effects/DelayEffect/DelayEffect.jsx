@@ -6,12 +6,14 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import { defaultDelaySettings } from '../../../utils/data';
 
 const DelayEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-  const delay = newEffectSettings.find(setting => setting.id === id);
+  let delay = newEffectSettings.find(setting => setting.id === id);
+  if(!delay) delay = { settings: defaultDelaySettings };
   
   return (
     <div className={styles.effectContainer}>

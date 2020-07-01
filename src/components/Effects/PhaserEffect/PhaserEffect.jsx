@@ -6,12 +6,14 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import { defaultPhaserSettings } from '../../../utils/data';
 
 const PhaserEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-  const phaser = newEffectSettings.find(setting => setting.id === id);
+  let phaser = newEffectSettings.find(setting => setting.id === id);
+  if(!phaser) phaser = { settings: defaultPhaserSettings };
 
   return (
     <div className={styles.effectContainer}>

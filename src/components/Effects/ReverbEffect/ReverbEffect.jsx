@@ -6,12 +6,14 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import { defaultReverbSettings } from '../../../utils/data';
 
 const ReverbEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-  const reverb = newEffectSettings.find(setting => setting.id === id);
+  let reverb = newEffectSettings.find(setting => setting.id === id);
+  if(!reverb) reverb = { settings: defaultReverbSettings };
 
   return (
     <div className={styles.effectContainer}>

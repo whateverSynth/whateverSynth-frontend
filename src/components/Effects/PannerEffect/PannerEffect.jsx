@@ -6,12 +6,14 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import { defaultPannerSettings } from '../../../utils/data';
 
 const PannerEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-  const panner = newEffectSettings.find(setting => setting.id === id);
+  let panner = newEffectSettings.find(setting => setting.id === id);
+  if(!panner) panner = { settings: defaultPannerSettings };
 
   return (
     <div className={styles.effectContainer}>

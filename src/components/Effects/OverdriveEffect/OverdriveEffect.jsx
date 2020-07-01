@@ -6,12 +6,14 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import { defaultOverdriveSettings } from '../../../utils/data';
 
 const OverdriveEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-  const overdrive = newEffectSettings.find(setting => setting.id === id);
+  let overdrive = newEffectSettings.find(setting => setting.id === id);
+  if(!overdrive) overdrive = { settings: defaultOverdriveSettings };
 
   return (
     <div className={styles.effectContainer}>

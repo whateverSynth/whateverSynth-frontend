@@ -6,12 +6,14 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import { defaultBitcrusherSettings } from '../../../utils/data';
 
 const BitcrusherEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-  const bitcrusher = newEffectSettings.find(setting => setting.id === id);
+  let bitcrusher = newEffectSettings.find(setting => setting.id === id);
+  if(!bitcrusher) bitcrusher = { settings: defaultBitcrusherSettings };
 
   return (
     <div className={styles.effectContainer}>

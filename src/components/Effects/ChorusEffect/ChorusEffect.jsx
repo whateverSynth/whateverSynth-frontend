@@ -6,12 +6,14 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import { defaultChorusSettings } from '../../../utils/data';
 
 const ChorusEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-  const chorus = newEffectSettings.find(setting => setting.id === id);
+  let chorus = newEffectSettings.find(setting => setting.id === id);
+  if(!chorus) chorus = { settings: defaultChorusSettings };
 
   return (
     <div className={styles.effectContainer}>
