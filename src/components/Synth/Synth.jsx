@@ -78,9 +78,13 @@ export default function Synth() {
     outputGain = audioCtx.createGain();
 
     canvas = document.createElement('canvas');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight - 50;
+    canvas.width = window.innerWidth - 1000;
+    canvas.height = window.innerHeight - 1000;
+    canvas.lineWidth = 3;
+    canvas.shadowBlur = 4;
+    canvas.shadowColor = 'white';
     document.body.appendChild(canvas);
+    console.log(canvas);
 
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
@@ -345,7 +349,7 @@ export default function Synth() {
       />
 
       <h1>synthinator</h1>
-      <section>{OScope}</section>
+      <section className={styles.OScope}>{OScope}</section>
       <Keyboard />
       <Waveshapes />
       <Effects />

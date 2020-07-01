@@ -12,7 +12,6 @@
     color: #00ff9f;
     display: inline;
   }
-  
 
   select {
     -webkit-appearance: none;
@@ -21,6 +20,11 @@
     border: dotted #d600ff;
     border-width: 2px 2px 2px 2px;
     width: 15rem;
+  }
+
+  .OScope {
+    transform: rotate(20deg);
+    background-color: red;
   }
 }
 
@@ -34,6 +38,6 @@ h1 {
 }
 
 .effectsDrawer {
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
 }
