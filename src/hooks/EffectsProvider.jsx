@@ -232,8 +232,6 @@ export const EffectsProvider = ({ children }) => {
       });
   };
 
-  setPingPongDelaySettings;
-
   const handleReverb = ({ target }) => {
     const prop = target.name;
     if (prop === 'bypass')
