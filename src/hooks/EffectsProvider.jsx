@@ -6,7 +6,6 @@ const EffectsContext = createContext();
 export const EffectsProvider = ({ children }) => {
   const [waveshape, setWaveshape] = useState('sine');
   const [gainSetting, setGainSetting] = useState(0.8);
-  const [audio, setAudio] = useState(null);
 
   const [effects, setEffects] = useState([
     // 'Chorus',
@@ -126,10 +125,6 @@ export const EffectsProvider = ({ children }) => {
 
   const handleWaveshape = ({ target }) => {
     setWaveshape(target.value);
-  };
-
-  const handleAudio = ({ target }) => {
-    setAudio(target.value);
   };
 
   const handleGainSetting = ({ target }) => {
@@ -271,9 +266,7 @@ export const EffectsProvider = ({ children }) => {
     <EffectsContext.Provider
       value={{
         waveshape,
-        audio,
         gainSetting,
-        handleAudio,
         handleWaveshape,
         handleGainSetting,
         handleAddEffect,
@@ -321,23 +314,12 @@ export const useWaveshape = () => {
   return waveshape;
 };
 
-export const useAudio = () => {
-  const { audio } = useContext(EffectsContext);
-  return audio;
-};
-
 export const useGainSetting = () => {
   const { gainSetting } = useContext(EffectsContext);
   return gainSetting;
 };
 
 //handlers
-
-export const useHandleAudio = () => {
-  const { handleAudio } = useContext(EffectsContext);
-  return handleAudio;
-};
-
 export const useHandleWaveshape = () => {
   const { handleWaveshape } = useContext(EffectsContext);
   return handleWaveshape;
