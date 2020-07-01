@@ -163,6 +163,18 @@ export default function Synth() {
     });
   }, [delaySettings]);
 
+
+  useEffect(() => {
+    console.log(tunaEffects);
+    newEffectSettings.forEach(effectSetting => {
+      const chainIndex = tunaEffects.findIndex(effect => effect.id === effectSetting.id);
+      Object.entries(effectSetting.settings).forEach((setting) => {
+        tunaEffects[chainIndex].effect[setting[0]] = setting[1];
+      });
+    });
+  }, [newEffectSettings]);
+
+
   useEffect(() => {
     const chainIndex = tunaEffects.findIndex(
       (effect) => effect.name === 'Filter'

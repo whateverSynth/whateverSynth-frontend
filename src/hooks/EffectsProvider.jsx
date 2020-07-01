@@ -164,7 +164,7 @@ export const EffectsProvider = ({ children }) => {
     const updatedEffects = newEffects.filter(effect => effect.id !== effectToRemove);
     const updatedEffectSettings = newEffectSettings.filter(setting => setting.id !== effectToRemove);
     setNewEffects(updatedEffects);
-    setNewEffectSettings(updatedEffectSettings)
+    setNewEffectSettings(updatedEffectSettings);
   };
 
   //effects handlers
@@ -200,11 +200,21 @@ export const EffectsProvider = ({ children }) => {
     else setChorusSettings({ ...chorusSettings, [prop]: target.value });
   };
 
-  const handleDelay = ({ target }) => {
+  const handleDelay = ({ target }, id) => {
+    const oldEffects = newEffectSettings.filter(effectSetting => effectSetting.id !== id);
+    let effectToUpdate = newEffectSettings.find(effectSetting => effectSetting.id === id);
     const prop = target.name;
-    if (prop === 'bypass')
-      setDelaySettings({ ...delaySettings, [prop]: !delaySettings.bypass });
-    else setDelaySettings({ ...delaySettings, [prop]: target.value });
+    if (prop === 'bypass') {
+      effectToUpdate.settings = { ...effectToUpdate.settings, [prop]: !effectToUpdate.settings.bypass };
+      setNewEffectSettings([...oldEffects, effectToUpdate]);
+    } else {
+      effectToUpdate.settings = { ...effectToUpdate.settings, [prop]: target.value };
+      setNewEffectSettings([...oldEffects, effectToUpdate]);
+    }
+
+    // if (prop === 'bypass')
+    //   setDelaySettings({ ...delaySettings, [prop]: !delaySettings.bypass });
+    // else setDelaySettings({ ...delaySettings, [prop]: target.value });
   };
 
   const handleFilter = ({ target }) => {

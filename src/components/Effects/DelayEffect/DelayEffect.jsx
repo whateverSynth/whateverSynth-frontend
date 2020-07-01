@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  useDelaySettings,
   useHandleDelay,
   useHandleRemoveEffect,
   useNewEffectSettings
@@ -9,19 +8,19 @@ import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
 const DelayEffect = ({ id }) => {
-  const delaySettings = useDelaySettings();
   const handleDelay = useHandleDelay();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-
+  const delay = newEffectSettings.find(setting => setting.id === id);
+  
   return (
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
             type="checkbox"
-            value={delaySettings.bypass}
-            onChange={handleDelay}
+            value={delay?.settings.bypass}
+            onChange={(e) => handleDelay(e, id)}
             name="bypass"
             id="delayBypass"
           ></input>
@@ -33,14 +32,14 @@ const DelayEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={delaySettings.feedback}
+            value={delay?.settings.feedback}
             step="0.05"
             id="delayFeedbackRange"
-            onChange={handleDelay}
+            onChange={(e) => handleDelay(e, id)}
             name="feedback"
           ></input>
           <label>
-            feedback: <p>{Math.floor(delaySettings.feedback * 100)} %</p>
+            feedback: <p>{Math.floor(delay?.settings.feedback * 100)} %</p>
           </label>
         </section>
 
@@ -49,14 +48,14 @@ const DelayEffect = ({ id }) => {
             type="range"
             min="1"
             max="1000"
-            value={delaySettings.delayTime}
+            value={delay?.settings.delayTime}
             step="1"
             id="delayTimeRange"
-            onChange={handleDelay}
+            onChange={(e) => handleDelay(e, id)}
             name="delayTime"
           ></input>
           <label>
-            time: <p>{delaySettings.delayTime} ms</p>
+            time: <p>{delay?.settings.delayTime} ms</p>
           </label>
         </section>
 
@@ -65,14 +64,14 @@ const DelayEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={delaySettings.wetLevel}
+            value={delay?.settings.wetLevel}
             step="0.1"
             id="delayWetLevelRange"
-            onChange={handleDelay}
+            onChange={(e) => handleDelay(e, id)}
             name="wetLevel"
           ></input>
           <label>
-            wet level: <p>{Math.floor(delaySettings.wetLevel * 100)} %</p>
+            wet level: <p>{Math.floor(delay?.settings.wetLevel * 100)} %</p>
           </label>
         </section>
 
@@ -81,14 +80,14 @@ const DelayEffect = ({ id }) => {
             type="range"
             min="0"
             max="1"
-            value={delaySettings.dryLevel}
+            value={delay?.settings.dryLevel}
             step="0.1"
             id="delayDryLevelRange"
-            onChange={handleDelay}
+            onChange={(e) => handleDelay(e, id)}
             name="dryLevel"
           ></input>
           <label>
-            dry level: <p>{Math.floor(delaySettings.dryLevel * 100)} %</p>
+            dry level: <p>{Math.floor(delay?.settings.dryLevel * 100)} %</p>
           </label>
         </section>
 
@@ -97,14 +96,14 @@ const DelayEffect = ({ id }) => {
             type="range"
             min="20"
             max="22050"
-            value={delaySettings.cutoff}
+            value={delay?.settings.cutoff}
             step="10"
             id="delayCutoffRange"
-            onChange={handleDelay}
+            onChange={(e) => handleDelay(e, id)}
             name="cutoff"
           ></input>
           <label>
-            cutoff: <p>{delaySettings.cutoff} Hz</p>
+            cutoff: <p>{delay?.settings.cutoff} Hz</p>
           </label>
         </section>
       </main>
