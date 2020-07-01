@@ -2,19 +2,21 @@ import React from 'react';
 import {
   useChorusSettings,
   useHandleChorus,
+  useHandleRemoveEffect,
 } from '../../../hooks/EffectsProvider';
 import styles from '../Effects.css';
 
 const ChorusEffect = () => {
   const chorusSettings = useChorusSettings();
   const handleChorus = useHandleChorus();
+  const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <h2>chorus</h2>
-          <button className={styles.buttonClose}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Chorus')}>&#10060;</button>
         </header>
         <section>
           <input

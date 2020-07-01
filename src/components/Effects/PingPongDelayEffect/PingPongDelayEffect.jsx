@@ -2,19 +2,21 @@ import React from 'react';
 import {
   usePingPongDelaySettings,
   useHandlePingPongDelay,
+  useHandleRemoveEffect,
 } from '../../../hooks/EffectsProvider';
 import styles from '../Effects.css';
 
 const PingPongDelayEffect = () => {
   const pingPongDelaySettings = usePingPongDelaySettings();
   const handlePingPongDelay = useHandlePingPongDelay();
+  const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <h2>ping pong delay</h2>
-          <button className={styles.buttonClose}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('PingPongDelay')}>&#10060;</button>
         </header>
         <section>
           <input

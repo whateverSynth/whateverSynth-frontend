@@ -2,17 +2,19 @@ import React from 'react';
 import {
   useOverdriveSettings,
   useHandleOverdrive,
+  useHandleRemoveEffect,
 } from '../../../hooks/EffectsProvider';
 import styles from '../Effects.css';
 
 const OverdriveEffect = () => {
   const overdriveSettings = useOverdriveSettings();
   const handleOverdrive = useHandleOverdrive();
+  const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
-        <header><h2>overdrive</h2><button className={styles.buttonClose}>&#10060;</button></header>
+        <header><h2>overdrive</h2><button className={styles.buttonClose} onClick={() => handleRemoveEffect('Overdrive')}>&#10060;</button></header>
 
         <section>
           <input

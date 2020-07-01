@@ -2,19 +2,21 @@ import React from 'react';
 import {
   useReverbSettings,
   useHandleReverb,
+  useHandleRemoveEffect,
 } from '../../../hooks/EffectsProvider';
 import styles from '../Effects.css';
 
 const ReverbEffect = () => {
   const reverbSettings = useReverbSettings();
   const handleReverb = useHandleReverb();
+  const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <h2>reverb</h2>
-          <button className={styles.buttonClose}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Convolver')}>&#10060;</button>
         </header>
         <section>
           <input
