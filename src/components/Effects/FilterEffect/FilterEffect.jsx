@@ -16,6 +16,13 @@ const FilterEffect = () => {
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
+        <input
+          type="checkbox"
+          value={filterSettings.bypass}
+          onChange={handleFilter}
+          name="bypass"
+          id="filterBypass"
+        ></input>
           <h2>filter</h2>
           <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Filter')}>&#10060;</button>
         </header>
@@ -94,13 +101,7 @@ const FilterEffect = () => {
           </select>
         </section>
 
-        <input
-          type="checkbox"
-          value={filterSettings.bypass}
-          onChange={handleFilter}
-          name="bypass"
-          id="filterBypass"
-        ></input>
+
         <label htmlFor="filterBypass" className={styles.bypass}>
         bypass
         </label>
