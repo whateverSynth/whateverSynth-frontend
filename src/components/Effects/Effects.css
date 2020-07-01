@@ -3,19 +3,21 @@
   display: block;
   border: 1px groove grey;
   padding: 0;
-  background: rgba(0,0,0,0.25);
+  background: rgba(0, 0, 0, 0.25);
   min-width: 11rem;
-  &:first-of-type{
+  &:first-of-type {
     border-radius: 1rem 0 0 1rem;
 
-    header{
+    header {
       border-radius: 1rem 0 0 0;
     }
   }
-  * {background-color: transparent;}
+  * {
+    background-color: transparent;
+  }
 
   header {
-    background-color: hsla(198,97%,56%,1.00);
+    background-color: hsla(198, 97%, 56%, 1);
     margin: 0;
     padding: 0;
     position: relative;
@@ -48,16 +50,14 @@
       top: 0;
       right: 0;
       margin: 0;
-      padding: 0 .2rem .1rem .25rem;
+      padding: 0 0.2rem 0.1rem 0.25rem;
       border: 2px outset grey;
       background-color: lightgrey;
-      font-size: .85rem;
-
+      font-size: 0.85rem;
     }
   }
-  section{
+  section {
     margin: 0 0.5rem;
-
   }
   .Effects {
     margin: 0rem 0 0.5rem 0;
@@ -76,8 +76,6 @@
       width: 6rem;
     }
     background-color: transparent;
-
-
 
     .checkbox {
       margin-left: 0.5rem;

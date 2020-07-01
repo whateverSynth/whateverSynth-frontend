@@ -12,7 +12,7 @@ const PingPongDelayEffect = () => {
   const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
@@ -23,7 +23,12 @@ const PingPongDelayEffect = () => {
             id="pingPongDelayBypass"
           ></input>
           <h2>ping pong delay</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('PingPongDelay')}>&#10060;</button>
+          <button
+            className={styles.buttonClose}
+            onClick={() => handleRemoveEffect('PingPongDelay')}
+          >
+            x
+          </button>
         </header>
         <section>
           <input
@@ -37,7 +42,8 @@ const PingPongDelayEffect = () => {
             name="wetLevel"
           ></input>
           <label>
-          wet level: <p>{Math.floor(pingPongDelaySettings.wetLevel * 100)} %</p>
+            wet level:{' '}
+            <p>{Math.floor(pingPongDelaySettings.wetLevel * 100)} %</p>
           </label>
         </section>
 
@@ -53,7 +59,8 @@ const PingPongDelayEffect = () => {
             name="feedback"
           ></input>
           <label>
-          feedback: <p>{Math.floor(pingPongDelaySettings.feedback * 100)} %</p>
+            feedback:{' '}
+            <p>{Math.floor(pingPongDelaySettings.feedback * 100)} %</p>
           </label>
         </section>
 
@@ -69,7 +76,7 @@ const PingPongDelayEffect = () => {
             name="delayTimeLeft"
           ></input>
           <label>
-          delay time left: <p>{pingPongDelaySettings.delayTimeLeft} ms</p>
+            delay time left: <p>{pingPongDelaySettings.delayTimeLeft} ms</p>
           </label>
         </section>
 
@@ -85,12 +92,22 @@ const PingPongDelayEffect = () => {
             name="delayTimeRight"
           ></input>
           <label>
-          delay time right: <p>{pingPongDelaySettings.delayTimeRight} ms</p>
+            delay time right: <p>{pingPongDelaySettings.delayTimeRight} ms</p>
           </label>
         </section>
 
+        <input
+          type="checkbox"
+          value={pingPongDelaySettings.bypass}
+          onChange={handlePingPongDelay}
+          name="bypass"
+          id="pingPongDelayBypass"
+        ></input>
+        <label htmlFor="pingPongDelayBypass" className={styles.bypass}>
+          bypass
+        </label>
       </main>
-    </div>
+    </section>
   );
 };
 

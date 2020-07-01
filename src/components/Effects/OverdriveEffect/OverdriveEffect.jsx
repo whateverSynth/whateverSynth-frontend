@@ -12,7 +12,7 @@ const OverdriveEffect = () => {
   const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
@@ -23,7 +23,12 @@ const OverdriveEffect = () => {
             id="overdriveBypass"
           ></input>
           <h2>overdrive</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Overdrive')}>&#10060;</button>
+          <button
+            className={styles.buttonClose}
+            onClick={() => handleRemoveEffect('Overdrive')}
+          >
+            x
+          </button>
         </header>
 
         <section>
@@ -38,7 +43,7 @@ const OverdriveEffect = () => {
             name="outputGain"
           ></input>
           <label>
-          output gain: <p>{overdriveSettings.outputGain} db</p>
+            output gain: <p>{overdriveSettings.outputGain} db</p>
           </label>
         </section>
 
@@ -54,7 +59,7 @@ const OverdriveEffect = () => {
             name="drive"
           ></input>
           <label>
-          drive: <p>{Math.floor(overdriveSettings.drive * 100)} %</p>
+            drive: <p>{Math.floor(overdriveSettings.drive * 100)} %</p>
           </label>
         </section>
 
@@ -70,7 +75,7 @@ const OverdriveEffect = () => {
             name="curveAmount"
           ></input>
           <label>
-          curve amount:{' '}
+            curve amount:{' '}
             <p>{Math.floor(overdriveSettings.curveAmount * 100)} %</p>
           </label>
         </section>
@@ -87,13 +92,22 @@ const OverdriveEffect = () => {
             name="algorithmIndex"
           ></input>
           <label>
-          algorithm # <p>{overdriveSettings.algorithmIndex}</p>
+            algorithm # <p>{overdriveSettings.algorithmIndex}</p>
           </label>
         </section>
 
-
+        <input
+          type="checkbox"
+          value={overdriveSettings.bypass}
+          onChange={handleOverdrive}
+          name="bypass"
+          id="overdriveBypass"
+        ></input>
+        <label htmlFor="overdriveBypass" className={styles.bypass}>
+          bypass
+        </label>
       </main>
-    </div>
+    </section>
   );
 };
 

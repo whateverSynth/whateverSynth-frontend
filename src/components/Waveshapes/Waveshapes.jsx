@@ -21,7 +21,7 @@ const Waveshapes = () => {
         <input
           type="range"
           min="0"
-          max=".25"
+          max="0.25"
           value={gainSetting}
           step="0.01"
           id="gainSetting"

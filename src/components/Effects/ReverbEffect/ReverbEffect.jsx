@@ -12,7 +12,7 @@ const ReverbEffect = () => {
   const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
@@ -23,7 +23,12 @@ const ReverbEffect = () => {
             id="reverbBypass"
           ></input>
           <h2>reverb</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Convolver')}>&#10060;</button>
+          <button
+            className={styles.buttonClose}
+            onClick={() => handleRemoveEffect('Convolver')}
+          >
+            x
+          </button>
         </header>
         <section>
           <input
@@ -37,7 +42,7 @@ const ReverbEffect = () => {
             name="highCut"
           ></input>
           <label>
-          high cut: <p>{reverbSettings.highCut} Hz</p>
+            high cut: <p>{reverbSettings.highCut} Hz</p>
           </label>
         </section>
 
@@ -53,7 +58,7 @@ const ReverbEffect = () => {
             name="lowCut"
           ></input>
           <label>
-          low cut: <p>{reverbSettings.lowCut} Hz</p>
+            low cut: <p>{reverbSettings.lowCut} Hz</p>
           </label>
         </section>
 
@@ -69,7 +74,7 @@ const ReverbEffect = () => {
             name="dryLevel"
           ></input>
           <label>
-          dry level: <p>{Math.floor(reverbSettings.dryLevel * 100)} %</p>
+            dry level: <p>{Math.floor(reverbSettings.dryLevel * 100)} %</p>
           </label>
         </section>
 
@@ -85,7 +90,7 @@ const ReverbEffect = () => {
             name="wetLevel"
           ></input>
           <label>
-          wet level: <p>{Math.floor(reverbSettings.wetLevel * 100)} %</p>
+            wet level: <p>{Math.floor(reverbSettings.wetLevel * 100)} %</p>
           </label>
         </section>
 
@@ -101,7 +106,7 @@ const ReverbEffect = () => {
             name="level"
           ></input>
           <label>
-          level: <p>{Math.floor(reverbSettings.level * 100)} %</p>
+            level: <p>{Math.floor(reverbSettings.level * 100)} %</p>
           </label>
         </section>
 
@@ -112,10 +117,20 @@ const ReverbEffect = () => {
             <option value="reverb/room.wav">room</option>
             <option value="reverb/silo.wav">silo</option>
           </select>
- 
         </section>
+
+        <input
+          type="checkbox"
+          value={reverbSettings.bypass}
+          onChange={handleReverb}
+          name="bypass"
+          id="reverbBypass"
+        ></input>
+        <label htmlFor="reverbBypass" className={styles.bypass}>
+          bypass
+        </label>
       </main>
-    </div>
+    </section>
   );
 };
 

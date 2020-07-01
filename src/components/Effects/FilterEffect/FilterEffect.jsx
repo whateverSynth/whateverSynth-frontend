@@ -13,18 +13,23 @@ const FilterEffect = () => {
   const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
-        <input
-          type="checkbox"
-          value={filterSettings.bypass}
-          onChange={handleFilter}
-          name="bypass"
-          id="filterBypass"
-        ></input>
+          <input
+            type="checkbox"
+            value={filterSettings.bypass}
+            onChange={handleFilter}
+            name="bypass"
+            id="filterBypass"
+          ></input>
           <h2>filter</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Filter')}>&#10060;</button>
+          <button
+            className={styles.buttonClose}
+            onClick={() => handleRemoveEffect('Filter')}
+          >
+            x
+          </button>
         </header>
         <section>
           <input
@@ -38,7 +43,7 @@ const FilterEffect = () => {
             name="frequency"
           ></input>
           <label>
-          frequency: <p>{filterSettings.frequency}</p>
+            frequency: <p>{filterSettings.frequency}</p>
           </label>
         </section>
 
@@ -54,23 +59,32 @@ const FilterEffect = () => {
             name="Q"
           ></input>
           <label>
-          q: <p>{filterSettings.Q}</p>
+            q: <p>{filterSettings.Q}</p>
           </label>
         </section>
         <section>
-          <Slider name="freqQ" axis="xy" x={filterSettings.frequency} y={filterSettings.Q} xmin="20"
-            xmax="22050" ymin="0.001"
-            ymax="100" yreverse="true" styles={{
+          <Slider
+            name="freqQ"
+            axis="xy"
+            x={filterSettings.frequency}
+            y={filterSettings.Q}
+            xmin="20"
+            xmax="22050"
+            ymin="0.001"
+            ymax="100"
+            yreverse="true"
+            styles={{
               track: {
                 backgroundColor: 'black',
                 width: '6rem',
-                height: '6rem'
+                height: '6rem',
               },
               thumb: {
                 width: 12,
-                height: 12
-              }
-            }}/>
+                height: 12,
+              },
+            }}
+          />
         </section>
         <section>
           <input
@@ -83,13 +97,18 @@ const FilterEffect = () => {
             onChange={handleFilter}
             name="gain"
           ></input>
-          <label>gain: <p>{filterSettings.gain} db</p>
+          <label>
+            gain: <p>{filterSettings.gain} db</p>
           </label>
         </section>
 
         <section>
           <label htmlFor="filterType">type </label>
-          <select name="filterType" id="filterFilterType" onChange={handleFilter}>
+          <select
+            name="filterType"
+            id="filterFilterType"
+            onChange={handleFilter}
+          >
             <option value="highpass">highpass</option>
             <option value="lowpass">lowpass</option>
             <option value="bandpass">bandpass</option>
@@ -100,8 +119,19 @@ const FilterEffect = () => {
             <option value="allpass">allpass</option>
           </select>
         </section>
+
+        <input
+          type="checkbox"
+          value={filterSettings.bypass}
+          onChange={handleFilter}
+          name="bypass"
+          id="filterBypass"
+        ></input>
+        <label htmlFor="filterBypass" className={styles.bypass}>
+          bypass
+        </label>
       </main>
-    </div>
+    </section>
   );
 };
 
