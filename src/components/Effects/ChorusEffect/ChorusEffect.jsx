@@ -15,6 +15,13 @@ const ChorusEffect = () => {
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
+          <input
+            type="checkbox"
+            value={chorusSettings.bypass}
+            onChange={handleChorus}
+            name="bypass"
+            id="chorusBypass"
+          ></input>
           <h2>chorus</h2>
           <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Chorus')}>&#10060;</button>
         </header>
@@ -65,16 +72,6 @@ const ChorusEffect = () => {
           delay: <p>{Math.floor(chorusSettings.delay * 100)} %</p>
           </label>
         </section>
-        <input
-          type="checkbox"
-          value={chorusSettings.bypass}
-          onChange={handleChorus}
-          name="bypass"
-          id="chorusBypass"
-        ></input>
-        <label htmlFor="chorusBypass" className={styles.bypass}>
-          bypass
-        </label>
       </main>
     </div>
   );

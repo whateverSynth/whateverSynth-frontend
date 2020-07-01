@@ -13,11 +13,21 @@ const WahWahEffect = () => {
 
   return (
     <div className={styles.effectContainer}>
+            <main className={styles.Effects}>
       <header>
+        <input
+          type="checkbox"
+          value={wahWahSettings.bypass}
+          onChange={handleWahWah}
+          name="bypass"
+          id="wahWahBypass"
+        ></input>
+
         <h2>wah wah</h2>
+
         <button className={styles.buttonClose} onClick={() => handleRemoveEffect('WahWah')}>&#10060;</button>
       </header>
-      <main className={styles.Effects}>
+
         <input
           type="checkbox"
           value={wahWahSettings.automode}
@@ -108,17 +118,6 @@ const WahWahEffect = () => {
           sensitivity: <p>{wahWahSettings.sensitivity}</p>
           </label>
         </section>
-
-        <input
-          type="checkbox"
-          value={wahWahSettings.bypass}
-          onChange={handleWahWah}
-          name="bypass"
-          id="wahWahBypass"
-        ></input>
-        <label htmlFor="wahWahBypass" className={styles.bypass}>
-        bypass
-        </label>
       </main>
     </div>
   );

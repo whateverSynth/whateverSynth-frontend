@@ -15,6 +15,13 @@ const PannerEffect = () => {
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
+          <input
+            type="checkbox"
+            value={pannerSettings.bypass}
+            onChange={handlePanner}
+            name="bypass"
+            id="pannerBypass"
+          ></input>
           <h2>panner</h2>
           <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Panner')}>&#10060;</button>
         </header>
@@ -33,16 +40,8 @@ const PannerEffect = () => {
           <label>R</label>
         </section>
 
-        <input
-          type="checkbox"
-          value={pannerSettings.bypass}
-          onChange={handlePanner}
-          name="bypass"
-          id="pannerBypass"
-        ></input>
-        <label htmlFor="pannerBypass" className={styles.bypass}>
-        bypass
-        </label>
+
+
       </main>
     </div>
   );

@@ -15,6 +15,13 @@ const PhaserEffect = () => {
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
+          <input
+            type="checkbox"
+            value={phaserSettings.bypass}
+            onChange={handlePhaser}
+            name="bypass"
+            id="phaserBypass"
+          ></input>
           <h2>phaser</h2>
           <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Phaser')}>&#10060;</button>
         </header>
@@ -98,16 +105,8 @@ const PhaserEffect = () => {
           </label>
         </section>
 
-        <input
-          type="checkbox"
-          value={phaserSettings.bypass}
-          onChange={handlePhaser}
-          name="bypass"
-          id="phaserBypass"
-        ></input>
-        <label htmlFor="phaserBypass" className={styles.bypass}>
-        bypass
-        </label>
+
+
       </main>
     </div>
   );

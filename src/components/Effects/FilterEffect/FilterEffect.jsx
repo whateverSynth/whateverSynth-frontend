@@ -100,11 +100,6 @@ const FilterEffect = () => {
             <option value="allpass">allpass</option>
           </select>
         </section>
-
-
-        <label htmlFor="filterBypass" className={styles.bypass}>
-        bypass
-        </label>
       </main>
     </div>
   );

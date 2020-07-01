@@ -15,6 +15,13 @@ const ReverbEffect = () => {
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
+          <input
+            type="checkbox"
+            value={reverbSettings.bypass}
+            onChange={handleReverb}
+            name="bypass"
+            id="reverbBypass"
+          ></input>
           <h2>reverb</h2>
           <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Convolver')}>&#10060;</button>
         </header>
@@ -105,19 +112,8 @@ const ReverbEffect = () => {
             <option value="reverb/room.wav">room</option>
             <option value="reverb/silo.wav">silo</option>
           </select>
-          <label htmlFor="impulse">{reverbSettings.impulse} </label>
+ 
         </section>
-
-        <input
-          type="checkbox"
-          value={reverbSettings.bypass}
-          onChange={handleReverb}
-          name="bypass"
-          id="reverbBypass"
-        ></input>
-        <label htmlFor="reverbBypass" className={styles.bypass}>
-        bypass
-        </label>
       </main>
     </div>
   );

@@ -13,12 +13,18 @@ const CompressorEffect = () => {
 
   return (
     <div className={styles.effectContainer}>
-      <header>
-        <h2>compressor</h2>
-        <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Compressor')}>&#10060;</button>
-      </header>
       <main className={styles.Effects}>
-
+        <header>
+          <input
+            type="checkbox"
+            value={compressorSettings.bypass}
+            onChange={handleCompressor}
+            name="bypass"
+            id="compressorBypass"
+          ></input>
+          <h2>compressor</h2>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Compressor')}>&#10060;</button>
+        </header>
         <section>
           <input
             type="range"
@@ -125,19 +131,6 @@ const CompressorEffect = () => {
           ></input>
           <label htmlFor="compressorAutomakeup" className={styles.checkbox}>
           automakeup
-          </label>
-        </section>
-
-        <section>
-          <input
-            type="checkbox"
-            value={compressorSettings.bypass}
-            onChange={handleCompressor}
-            name="bypass"
-            id="compressorBypass"
-          ></input>
-          <label htmlFor="compressorBypass" className={styles.checkbox}>
-          bypass
           </label>
         </section>
       </main>
