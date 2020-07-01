@@ -254,7 +254,7 @@ export default function Synth() {
   }, [gainSetting]);
 
   //HANDLES CREATION & STORING OF OSCILLATORS
-  function playNote(key) {
+  const playNote = (key) => {
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       keyboardFrequencyMap[key],
@@ -264,24 +264,24 @@ export default function Synth() {
     activeOscillators[key] = osc;
     activeOscillators[key].connect(gain);
     activeOscillators[key].start();
-  }
+  };
 
-  function keyDown(event) {
+  const keyDown = (event) => {
     const key = (event.detail || event.which).toString();
     if (keyboardFrequencyMap[key] && !activeOscillators[key]) {
       playNote(key);
     }
-  }
+  };
 
-  function keyUp(event) {
+  const keyUp = (event) => {
     const key = (event.detail || event.which).toString();
     if (keyboardFrequencyMap[key] && activeOscillators[key]) {
       activeOscillators[key].stop();
       delete activeOscillators[key];
     }
-  }
+  };
 
-  function removeFocus(event) {
+  const removeFocus = (event) => {
     if (event.target.type === 'select-one') return;
     else {
       event.target.blur();
@@ -289,12 +289,12 @@ export default function Synth() {
         oscillator.stop();
       });
     }
-  }
+  };
 
   window.addEventListener('mouseup', removeFocus);
 
   //MIDI
-  function noteOn(noteNumber) {
+  const noteOn = (noteNumber) => {
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       frequencyFromNoteNumber(noteNumber),
@@ -304,9 +304,9 @@ export default function Synth() {
     activeOscillators[noteNumber] = osc;
     activeOscillators[noteNumber].connect(gain);
     activeOscillators[noteNumber].start();
-  }
+  };
 
-  function noteOff(noteNumber) {
+  const noteOff = (noteNumber) => {
     const position = activeNotes.indexOf(noteNumber);
     if (position !== -1) {
       activeNotes.splice(position, 1);
@@ -319,11 +319,11 @@ export default function Synth() {
       activeOscillators[noteNumber].stop();
       delete activeOscillators[noteNumber];
     }
-  }
+  };
 
-  function frequencyFromNoteNumber(note) {
+  const frequencyFromNoteNumber = (note) => {
     return 440 * Math.pow(2, (note - 69) / 12);
-  }
+  };
 
   if (navigator.requestMIDIAccess)
     navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
@@ -345,9 +345,9 @@ export default function Synth() {
     if (!haveAtLeastOneDevice) return;
   }
 
-  function onMIDIReject() {
+  const onMIDIReject = () => {
     alert('The MIDI system failed to start.');
-  }
+  };
 
   const MIDIMessageEventHandler = (event) => {
     switch (event.data[0] & 0xf0) {
