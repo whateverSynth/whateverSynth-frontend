@@ -59,15 +59,9 @@ const FilterEffect = () => {
                 width: '6rem',
                 height: '6rem'
               },
-              active: {
-                backgroundColor: 'red'
-              },
               thumb: {
-                width: 10,
-                height: 10
-              },
-              disabled: {
-                opacity: 0.5
+                width: 12,
+                height: 12
               }
             }}/>
         </section>

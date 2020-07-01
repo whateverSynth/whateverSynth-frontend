@@ -4,8 +4,14 @@
   border: 1px groove grey;
   padding: 0;
   background: rgba(0,0,0,0.25);
-  border-radius: 1rem;
 
+  &:first-of-type{
+    border-radius: 1rem 0 0 1rem;
+    
+    header{
+      border-radius: 1rem 0 0 0;
+    }
+  }
   * {background-color: transparent;}
 
   header {
@@ -14,7 +20,7 @@
     padding: 0;
     position: relative;
     display: flex;
-    border-radius: 1rem 0 0 0;
+
     h2 {
       margin: 0rem 0 0.25rem 0.5rem;
       font-size: 1.15rem;
@@ -25,11 +31,11 @@
       overflow: visible;
       top: 0;
       right: 0;
-      margin: .05rem .1rem;
-      padding: 0 .1rem .1rem .2rem;
-      border: 1px groove grey;
+      margin: 0 .05rem;
+      padding: 0 .2rem .1rem .25rem;
+      border: 2px outset grey;
       background-color: lightgrey;
-      font-size: .8rem;
+      font-size: .85rem;
 
     }
   }
