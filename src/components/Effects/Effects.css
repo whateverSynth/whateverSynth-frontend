@@ -11,27 +11,35 @@
   header {
     background-color: hsla(198,97%,56%,1.00);
     margin: 0;
+    padding: 0;
     position: relative;
     display: flex;
+    border-radius: 1rem 0 0 0;
     h2 {
       margin: 0rem 0 0.25rem 0.5rem;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       padding: 0.35rem 0.25rem 0 0;
     }
     button.buttonClose {
       position: absolute;
       overflow: visible;
-      top: 0rem;
+      top: 0;
       right: 0;
-      float: right;
-      border: 0;
-      background-color: transparent;
-      font-size: 18px;
+      margin: .05rem .1rem;
+      padding: 0 .1rem .1rem .2rem;
+      border: 1px groove grey;
+      background-color: lightgrey;
+      font-size: .8rem;
+
     }
   }
 
+  section{
+margin: 0 0.5rem;
+  }
+
   .Effects {
-    margin: 0rem 0 0.5rem 0.5rem;
+    margin: 0rem 0 0.5rem 0;
 
     label {
       font-size: 0.8rem;
@@ -47,6 +55,7 @@
       width: 6rem;
     }
     background-color: transparent;
+
     input[type='checkbox'] {
       -webkit-appearance: none;
       background-color: #00ff9f;
@@ -64,6 +73,10 @@
     }
 
     .checkbox {
+      margin-left: 0.5rem;
+    }
+
+    .activated {
       margin-left: 0.5rem;
     }
 
