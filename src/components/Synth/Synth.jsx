@@ -78,13 +78,10 @@ export default function Synth() {
     outputGain = audioCtx.createGain();
 
     canvas = document.createElement('canvas');
-    canvas.width = window.innerWidth - 1000;
-    canvas.height = window.innerHeight - 1000;
-    canvas.lineWidth = 3;
-    canvas.shadowBlur = 4;
-    canvas.shadowColor = 'white';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - 350;
+
     document.body.appendChild(canvas);
-    console.log(canvas);
 
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
@@ -337,6 +334,7 @@ export default function Synth() {
 
   return (
     <section className={styles.Container}>
+      <section className={styles.OScope}>{OScope}</section>
       <KeyboardEventHandler
         handleKeys={['all']}
         onKeyEvent={(key, e) => keyDown(e)}
@@ -349,7 +347,7 @@ export default function Synth() {
       />
 
       <h1>synthinator</h1>
-      <section className={styles.OScope}>{OScope}</section>
+
       <Keyboard />
       <Waveshapes />
       <Effects />

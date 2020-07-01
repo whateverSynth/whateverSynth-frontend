@@ -7,6 +7,9 @@
 .Container {
   display: grid;
   justify-content: center;
+  position: absolute;
+  top: 18rem;
+  left: 13rem;
 
   p {
     color: #00ff9f;
@@ -21,16 +24,23 @@
     border-width: 2px 2px 2px 2px;
     width: 15rem;
   }
+}
 
-  .OScope {
-    transform: rotate(20deg);
-    background-color: red;
-  }
+canvas {
+  background-color: hsla(198, 97%, 56%, 1);
+  width: 55rem;
+  margin-left: 12rem;
+  border-radius: 100%;
+  position: absolute;
+  top: 3rem;
 }
 
 h1 {
   color: #00ff9f;
   font-size: 2em;
+  position: absolute;
+  top: -18.5rem;
+  left: -6rem;
 }
 .Radio {
   display: flex;
