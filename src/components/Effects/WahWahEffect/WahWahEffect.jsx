@@ -16,7 +16,7 @@ const WahWahEffect = ({ id }) => {
   if(!wahwah) wahwah = { settings: defaultWahWahSettings };
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
@@ -29,7 +29,7 @@ const WahWahEffect = ({ id }) => {
 
           <h2>wah wah</h2>
 
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
         </header>
 
         <input
@@ -40,7 +40,7 @@ const WahWahEffect = ({ id }) => {
           id="automode"
         ></input>
         <label htmlFor="automode" className={styles.automode}>
-        automode
+          automode
         </label>
 
         <section>
@@ -123,7 +123,7 @@ const WahWahEffect = ({ id }) => {
           </label>
         </section>
       </main>
-    </div>
+    </section>
   );
 };
 

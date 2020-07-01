@@ -27,7 +27,7 @@ const ChorusEffect = ({ id }) => {
             id="chorusBypass"
           ></input>
           <h2>chorus</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
         </header>
         <section>
           <input

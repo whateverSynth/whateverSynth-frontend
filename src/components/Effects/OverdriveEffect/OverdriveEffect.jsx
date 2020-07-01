@@ -16,7 +16,7 @@ const OverdriveEffect = ({ id }) => {
   if(!overdrive) overdrive = { settings: defaultOverdriveSettings };
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
@@ -27,7 +27,7 @@ const OverdriveEffect = ({ id }) => {
             id="overdriveBypass"
           ></input>
           <h2>overdrive</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
         </header>
 
         <section>
@@ -95,9 +95,18 @@ const OverdriveEffect = ({ id }) => {
           </label>
         </section>
 
-
+        <input
+          type="checkbox"
+          value={overdriveSettings.bypass}
+          onChange={handleOverdrive}
+          name="bypass"
+          id="overdriveBypass"
+        ></input>
+        <label htmlFor="overdriveBypass" className={styles.bypass}>
+          bypass
+        </label>
       </main>
-    </div>
+    </section>
   );
 };
 

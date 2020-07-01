@@ -16,7 +16,7 @@ const TremoloEffect = ({ id }) => {
   if(!tremolo) tremolo = { settings: defaultTremoloSettings };
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
@@ -27,10 +27,8 @@ const TremoloEffect = ({ id }) => {
             id="tremoloBypass"
           ></input>
           <h2>tremolo</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
         </header>
-
-
 
         <section>
           <input
@@ -79,11 +77,8 @@ const TremoloEffect = ({ id }) => {
           stereo phase: <p>{tremolo?.settings.stereoPhase}°</p>
           </label>
         </section>
-
-
-
       </main>
-    </div>
+    </section>
   );
 };
 

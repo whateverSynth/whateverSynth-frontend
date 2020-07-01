@@ -7,12 +7,14 @@
 .Container {
   display: grid;
   justify-content: center;
+  position: absolute;
+  top: 12rem;
+  left: 13rem;
 
   p {
     color: #00ff9f;
     display: inline;
   }
-  
 
   select {
     -webkit-appearance: none;
@@ -24,9 +26,26 @@
   }
 }
 
+.keyboard {
+  height: 10rem;
+}
+
+canvas {
+  background-color: hsla(198, 97%, 56%, 1);
+  width: 40rem;
+  margin-left: 20rem;
+  border: 0.25rem solid #d600ff;
+  border-radius: 100%;
+  position: absolute;
+  top: 2.5rem;
+}
+
 h1 {
   color: #00ff9f;
   font-size: 2em;
+  position: absolute;
+  top: -13rem;
+  left: -6rem;
 }
 .Radio {
   display: flex;
@@ -34,6 +53,6 @@ h1 {
 }
 
 .effectsDrawer {
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
 }

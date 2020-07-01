@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useHandleAddEffect } from '../../hooks/EffectsProvider';
+import styles from './Effects.css';
 
 export default function Effects() {
   const [selectedEffect, setSelectedEffect] = useState('Bitcrusher');
   const handleAddEffect = useHandleAddEffect();
 
   return (
-    <section>
+    <section className={styles.addEffects}>
       <label htmlFor="effects">add effect </label>
       <select
         name="effects"

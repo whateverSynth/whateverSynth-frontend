@@ -7,7 +7,7 @@ const EffectsContext = createContext();
 
 export const EffectsProvider = ({ children }) => {
   const [waveshape, setWaveshape] = useState('sine');
-  const [gainSetting, setGainSetting] = useState(0.8);
+  const [gainSetting, setGainSetting] = useState(0.15);
 
   const [newEffects, setNewEffects] = useState([
 

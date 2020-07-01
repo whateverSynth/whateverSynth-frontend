@@ -16,7 +16,7 @@ const DelayEffect = ({ id }) => {
   if(!delay) delay = { settings: defaultDelaySettings };
   
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
@@ -27,7 +27,7 @@ const DelayEffect = ({ id }) => {
             id="delayBypass"
           ></input>
           <h2>delay</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
         </header>
         <section>
           <input
@@ -109,7 +109,7 @@ const DelayEffect = ({ id }) => {
           </label>
         </section>
       </main>
-    </div>
+    </section>
   );
 };
 

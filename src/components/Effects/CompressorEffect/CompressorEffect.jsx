@@ -16,7 +16,7 @@ const CompressorEffect = ({ id }) => {
   if(!compressor) compressor = { settings: defaultCompressorSettings };
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
@@ -27,7 +27,7 @@ const CompressorEffect = ({ id }) => {
             id="compressorBypass"
           ></input>
           <h2>compressor</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
         </header>
         <section>
           <input
@@ -134,11 +134,24 @@ const CompressorEffect = ({ id }) => {
             id="compressorAutomakeup"
           ></input>
           <label htmlFor="compressorAutomakeup" className={styles.checkbox}>
-          automakeup
+            automakeup
+          </label>
+        </section>
+
+        <section>
+          <input
+            type="checkbox"
+            value={compressorSettings.bypass}
+            onChange={handleCompressor}
+            name="bypass"
+            id="compressorBypass"
+          ></input>
+          <label htmlFor="compressorBypass" className={styles.checkbox}>
+            bypass
           </label>
         </section>
       </main>
-    </div>
+    </section>
   );
 };
 

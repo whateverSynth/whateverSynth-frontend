@@ -16,7 +16,7 @@ const ReverbEffect = ({ id }) => {
   if(!reverb) reverb = { settings: defaultReverbSettings };
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
@@ -27,7 +27,7 @@ const ReverbEffect = ({ id }) => {
             id="reverbBypass"
           ></input>
           <h2>reverb</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
         </header>
         <section>
           <input
@@ -116,10 +116,20 @@ const ReverbEffect = ({ id }) => {
             <option value="reverb/room.wav">room</option>
             <option value="reverb/silo.wav">silo</option>
           </select>
- 
         </section>
+
+        <input
+          type="checkbox"
+          value={reverbSettings.bypass}
+          onChange={handleReverb}
+          name="bypass"
+          id="reverbBypass"
+        ></input>
+        <label htmlFor="reverbBypass" className={styles.bypass}>
+          bypass
+        </label>
       </main>
-    </div>
+    </section>
   );
 };
 

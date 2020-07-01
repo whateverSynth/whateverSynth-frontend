@@ -25,11 +25,18 @@ import TremoloEffect from '../Effects/TremoloEffect/TremoloEffect';
 import WahWahEffect from '../Effects/WahWahEffect/WahWahEffect';
 import CompressorEffect from '../Effects/CompressorEffect/CompressorEffect';
 import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEffect';
+import Oscilloscope from 'oscilloscope';
 
 let audioCtx;
 let tuna;
-let gain;
+let inputGain;
+let outputGain;
 let tunaEffects = [];
+let scope;
+let OScope;
+let canvas;
+let midiAccess = null;
+let activeNotes = [];
 
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
@@ -45,8 +52,17 @@ export default function Synth() {
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     tuna = new Tuna(audioCtx);
-    gain = audioCtx.createGain();
-    gain.connect(audioCtx.destination);
+    inputGain = audioCtx.createGain();
+    outputGain = audioCtx.createGain();
+
+    canvas = document.createElement('canvas');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - 400;
+
+    document.body.appendChild(canvas);
+
+    inputGain.connect(outputGain);
+    outputGain.connect(audioCtx.destination);
   }, []);
 
   useEffect(() => {
@@ -56,24 +72,35 @@ export default function Synth() {
       return { id: effect.id, effect: new tuna[name](setting.settings) };
     });
 
-    gain.disconnect();
+    inputGain.disconnect();
 
     // MAKE CHAIN BY ITERATING OVER EFFECTS
-    if (tunaEffects.length === 0) gain.connect(audioCtx.destination);
-    else {
+    if (tunaEffects.length === 0) {
+      inputGain.connect(outputGain);
+      outputGain.connect(audioCtx.destination);
+      scope = new Oscilloscope(outputGain);
+      const context = canvas.getContext('2d');
+      context.strokeStyle = '#d600ff';
+      context.lineWidth = 2;
+      // console.log(context);
+
+      OScope = scope.animate(context);
+    } else {
       tunaEffects.forEach((effect, i) => {
         const realEffect = effect.effect;
         if (tunaEffects.length === 1) {
-          gain.connect(realEffect);
-          realEffect.connect(audioCtx.destination);
+          inputGain.connect(realEffect);
+          realEffect.connect(outputGain);
+          outputGain.connect(audioCtx.destination);
           return;
         } else if (i === 0) {
-          gain.connect(realEffect);
+          inputGain.connect(realEffect);
         } else if (i > 0 && i < tunaEffects.length - 1) {
           (tunaEffects[i - 1]).effect.connect(realEffect);
         } else if (i === tunaEffects.length - 1) {
           (tunaEffects[i - 1]).effect.connect(realEffect);
-          realEffect.connect(audioCtx.destination);
+          realEffect.connect(outputGain);
+          outputGain.connect(audioCtx.destination);
         }
       });
     }
@@ -91,11 +118,11 @@ export default function Synth() {
   }, [newEffectSettings]);
 
   useEffect(() => {
-    gain.gain.value = gainSetting; //defaults to 0.8
+    inputGain.gain.value = gainSetting; //defaults to 0.8
   }, [gainSetting]);
 
   //HANDLES CREATION & STORING OF OSCILLATORS
-  function playNote(key) {
+  const playNote = (key) => {
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       keyboardFrequencyMap[key],
@@ -103,26 +130,26 @@ export default function Synth() {
     );
     osc.type = waveshape;
     activeOscillators[key] = osc;
-    activeOscillators[key].connect(gain);
+    activeOscillators[key].connect(inputGain);
     activeOscillators[key].start();
-  }
+  };
 
-  function keyDown(event) {
+  const keyDown = (event) => {
     const key = (event.detail || event.which).toString();
     if (keyboardFrequencyMap[key] && !activeOscillators[key]) {
       playNote(key);
     }
-  }
+  };
 
-  function keyUp(event) {
+  const keyUp = (event) => {
     const key = (event.detail || event.which).toString();
     if (keyboardFrequencyMap[key] && activeOscillators[key]) {
       activeOscillators[key].stop();
       delete activeOscillators[key];
     }
-  }
+  };
 
-  function removeFocus(event) {
+  const removeFocus = (event) => {
     if (event.target.type === 'select-one') return;
     else {
       event.target.blur();
@@ -130,9 +157,81 @@ export default function Synth() {
         oscillator.stop();
       });
     }
-  }
+  };
 
   window.addEventListener('mouseup', removeFocus);
+
+  //MIDI
+  const noteOn = (noteNumber) => {
+    const osc = audioCtx.createOscillator();
+    osc.frequency.setValueAtTime(
+      frequencyFromNoteNumber(noteNumber),
+      audioCtx.currentTime
+    );
+    osc.type = waveshape;
+    activeOscillators[noteNumber] = osc;
+    activeOscillators[noteNumber].connect(inputGain);
+    activeOscillators[noteNumber].start();
+  };
+
+  const noteOff = (noteNumber) => {
+    const position = activeNotes.indexOf(noteNumber);
+    if (position !== -1) {
+      activeNotes.splice(position, 1);
+    }
+    if (activeNotes.length === 0) {
+      // shut off the envelope
+      activeOscillators[noteNumber].stop();
+      delete activeOscillators[noteNumber];
+    } else {
+      activeOscillators[noteNumber].stop();
+      delete activeOscillators[noteNumber];
+    }
+  };
+
+  const frequencyFromNoteNumber = (note) => {
+    return 440 * Math.pow(2, (note - 69) / 12);
+  };
+
+  if (navigator.requestMIDIAccess)
+    navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
+  else alert('No MIDI support present in your browser.');
+
+  function onMIDIInit(midi) {
+    midiAccess = midi;
+
+    let haveAtLeastOneDevice = false;
+    const inputs = midiAccess.inputs.values();
+    for (
+      let input = inputs.next();
+      input && !input.done;
+      input = inputs.next()
+    ) {
+      input.value.onmidimessage = MIDIMessageEventHandler;
+      haveAtLeastOneDevice = true;
+    }
+    if (!haveAtLeastOneDevice) return;
+  }
+
+  const onMIDIReject = () => {
+    alert('The MIDI system failed to start.');
+  };
+
+  const MIDIMessageEventHandler = (event) => {
+    switch (event.data[0] & 0xf0) {
+      case 0x90:
+        if (event.data[2] !== 0) {
+          // if velocity != 0, this is a note-on message
+          noteOn(event.data[1]);
+          return;
+        }
+        break;
+      // if velocity == 0, fall thru: it's a note-off.  MIDI's weird, y'all.
+      case 0x80:
+        noteOff(event.data[1]);
+        return;
+    }
+  };
 
   const effectNodes = localEffects.map((effect) => {
     if (effect.effect.name === 'Bitcrusher') return <BitcrusherEffect key={effect.id} id={effect.id} />;
@@ -152,6 +251,7 @@ export default function Synth() {
 
   return (
     <section className={styles.Container}>
+      <section className={styles.OScope}>{OScope}</section>
       <KeyboardEventHandler
         handleKeys={['all']}
         onKeyEvent={(key, e) => keyDown(e)}

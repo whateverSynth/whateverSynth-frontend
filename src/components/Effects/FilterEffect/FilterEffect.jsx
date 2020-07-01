@@ -17,7 +17,7 @@ const FilterEffect = ({ id }) => {
   if(!filter) filter = { settings: defaultFilterSettings };
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
@@ -28,7 +28,13 @@ const FilterEffect = ({ id }) => {
             id="filterBypass"
           ></input>
           <h2>filter</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
+          <button
+            className={styles.buttonClose}
+            onClick={() => handleRemoveEffect('Filter')}
+          >
+            x
+          </button>
         </header>
         <section>
           <input
@@ -65,16 +71,18 @@ const FilterEffect = ({ id }) => {
           <Slider name="freqQ" axis="xy" x={filter?.settings.frequency} y={filter?.settings.Q} xmin="20"
             xmax="22050" ymin="0.001"
             ymax="100" yreverse="true" styles={{
+
               track: {
                 backgroundColor: 'black',
                 width: '6rem',
-                height: '6rem'
+                height: '6rem',
               },
               thumb: {
                 width: 12,
-                height: 12
-              }
-            }}/>
+                height: 12,
+              },
+            }}
+          />
         </section>
         <section>
           <input
@@ -104,8 +112,19 @@ const FilterEffect = ({ id }) => {
             <option value="allpass">allpass</option>
           </select>
         </section>
+
+        <input
+          type="checkbox"
+          value={filterSettings.bypass}
+          onChange={handleFilter}
+          name="bypass"
+          id="filterBypass"
+        ></input>
+        <label htmlFor="filterBypass" className={styles.bypass}>
+          bypass
+        </label>
       </main>
-    </div>
+    </section>
   );
 };
 

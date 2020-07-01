@@ -16,7 +16,7 @@ const MoogFilterEffect = ({ id }) => {
   if(!moog) moog = { settings: defaultMoogSettings };
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
@@ -27,7 +27,7 @@ const MoogFilterEffect = ({ id }) => {
             id="moogFilterBypass"
           ></input>
           <h2>moog filter</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
         </header>
         <section>
           <input
@@ -77,8 +77,18 @@ const MoogFilterEffect = ({ id }) => {
           </label>
         </section>
 
+        <input
+          type="checkbox"
+          value={moogFilterSettings.bypass}
+          onChange={handleMoogFilter}
+          name="bypass"
+          id="moogFilterBypass"
+        ></input>
+        <label htmlFor="moogFilterBypass" className={styles.bypass}>
+          bypass
+        </label>
       </main>
-    </div>
+    </section>
   );
 };
 

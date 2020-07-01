@@ -16,7 +16,7 @@ const PhaserEffect = ({ id }) => {
   if(!phaser) phaser = { settings: defaultPhaserSettings };
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
@@ -27,7 +27,7 @@ const PhaserEffect = ({ id }) => {
             id="phaserBypass"
           ></input>
           <h2>phaser</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
         </header>
         <section>
           <input
@@ -109,7 +109,7 @@ const PhaserEffect = ({ id }) => {
           </label>
         </section>
       </main>
-    </div>
+    </section>
   );
 };
 

@@ -16,7 +16,7 @@ const PingPongDelayEffect = ({ id }) => {
   if(!pingpong) pingpong = { settings: defaultPingPongDelaySettings };
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
@@ -27,7 +27,7 @@ const PingPongDelayEffect = ({ id }) => {
             id="pingPongDelayBypass"
           ></input>
           <h2>ping pong delay</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
         </header>
         <section>
           <input
@@ -92,9 +92,8 @@ const PingPongDelayEffect = ({ id }) => {
           delay time right: <p>{pingpong?.settings.delayTimeRight} ms</p>
           </label>
         </section>
-
       </main>
-    </div>
+    </section>
   );
 };
 

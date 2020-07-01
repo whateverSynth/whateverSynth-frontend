@@ -16,7 +16,7 @@ const BitcrusherEffect = ({ id }) => {
   if(!bitcrusher) bitcrusher = { settings: defaultBitcrusherSettings };
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <input
@@ -27,7 +27,7 @@ const BitcrusherEffect = ({ id }) => {
             id="bitcrusherBypass"
           ></input>
           <h2>bitcrusher</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
         </header>
         <section>
           <input
@@ -76,8 +76,19 @@ const BitcrusherEffect = ({ id }) => {
           buffer size: <p>{bitcrusher?.settings.bufferSize}</p>
           </label>
         </section>
+
+        <input
+          type="checkbox"
+          value={bitcrusherSettings.bypass}
+          onChange={handleBitcrusher}
+          name="bypass"
+          id="bypass"
+        ></input>
+        <label htmlFor="bypass" className={styles.bypass}>
+          bypass
+        </label>
       </main>
-    </div>
+    </section>
   );
 };
 
