@@ -79,7 +79,7 @@ export default function Synth() {
 
     canvas = document.createElement('canvas');
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight - 350;
+    canvas.height = window.innerHeight - 400;
 
     document.body.appendChild(canvas);
 
@@ -348,7 +348,7 @@ export default function Synth() {
 
       <h1>synthinator</h1>
 
-      <Keyboard />
+      <Keyboard className={styles.keyboard} />
       <Waveshapes />
       <Effects />
       <div className={styles.effectsDrawer}>{effectNodes}</div>

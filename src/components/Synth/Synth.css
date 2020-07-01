@@ -8,7 +8,7 @@
   display: grid;
   justify-content: center;
   position: absolute;
-  top: 18rem;
+  top: 12rem;
   left: 13rem;
 
   p {
@@ -26,10 +26,14 @@
   }
 }
 
+.keyboard {
+  height: 10rem;
+}
+
 canvas {
   background-color: hsla(198, 97%, 56%, 1);
-  width: 55rem;
-  margin-left: 12rem;
+  width: 40rem;
+  margin-left: 20rem;
   border-radius: 100%;
   position: absolute;
   top: 3rem;
@@ -39,7 +43,7 @@ h1 {
   color: #00ff9f;
   font-size: 2em;
   position: absolute;
-  top: -18.5rem;
+  top: -13rem;
   left: -6rem;
 }
 .Radio {
