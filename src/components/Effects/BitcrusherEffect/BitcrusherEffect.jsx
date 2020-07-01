@@ -3,13 +3,16 @@ import {
   useBitcrusherSettings,
   useHandleBitcrusher,
   useHandleRemoveEffect,
+  useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
+import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
-const BitcrusherEffect = () => {
+const BitcrusherEffect = ({ id }) => {
   const bitcrusherSettings = useBitcrusherSettings();
   const handleBitcrusher = useHandleBitcrusher();
   const handleRemoveEffect = useHandleRemoveEffect();
+  const newEffectSettings = useNewEffectSettings();
 
   return (
     <div className={styles.effectContainer}>
@@ -23,7 +26,7 @@ const BitcrusherEffect = () => {
             id="bitcrusherBypass"
           ></input>
           <h2>bitcrusher</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Bitcrusher')}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
         </header>
         <section>
           <input
@@ -78,3 +81,7 @@ const BitcrusherEffect = () => {
 };
 
 export default BitcrusherEffect;
+
+BitcrusherEffect.propTypes = {
+  id: PropTypes.string,
+};

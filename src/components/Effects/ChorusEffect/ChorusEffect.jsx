@@ -3,13 +3,16 @@ import {
   useChorusSettings,
   useHandleChorus,
   useHandleRemoveEffect,
+  useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
+import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
-const ChorusEffect = () => {
+const ChorusEffect = ({ id }) => {
   const chorusSettings = useChorusSettings();
   const handleChorus = useHandleChorus();
   const handleRemoveEffect = useHandleRemoveEffect();
+  const newEffectSettings = useNewEffectSettings();
 
   return (
     <div className={styles.effectContainer}>
@@ -23,7 +26,7 @@ const ChorusEffect = () => {
             id="chorusBypass"
           ></input>
           <h2>chorus</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Chorus')}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
         </header>
         <section>
           <input
@@ -78,3 +81,7 @@ const ChorusEffect = () => {
 };
 
 export default ChorusEffect;
+
+ChorusEffect.propTypes = {
+  id: PropTypes.string,
+};

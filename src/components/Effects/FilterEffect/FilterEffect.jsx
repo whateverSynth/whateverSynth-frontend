@@ -3,28 +3,31 @@ import {
   useFilterSettings,
   useHandleFilter,
   useHandleRemoveEffect,
+  useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
+import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 import Slider from 'react-input-slider';
 
-const FilterEffect = () => {
+const FilterEffect = ({ id }) => {
   const filterSettings = useFilterSettings();
   const handleFilter = useHandleFilter();
   const handleRemoveEffect = useHandleRemoveEffect();
+  const newEffectSettings = useNewEffectSettings();
 
   return (
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
-        <input
-          type="checkbox"
-          value={filterSettings.bypass}
-          onChange={handleFilter}
-          name="bypass"
-          id="filterBypass"
-        ></input>
+          <input
+            type="checkbox"
+            value={filterSettings.bypass}
+            onChange={handleFilter}
+            name="bypass"
+            id="filterBypass"
+          ></input>
           <h2>filter</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Filter')}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
         </header>
         <section>
           <input
@@ -106,3 +109,7 @@ const FilterEffect = () => {
 };
 
 export default FilterEffect;
+
+FilterEffect.propTypes = {
+  id: PropTypes.string,
+};

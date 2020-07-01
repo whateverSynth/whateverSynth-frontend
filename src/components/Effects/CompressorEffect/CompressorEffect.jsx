@@ -3,13 +3,16 @@ import {
   useCompressorSettings,
   useHandleCompressor,
   useHandleRemoveEffect,
+  useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
+import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
-const CompressorEffect = () => {
+const CompressorEffect = ({ id }) => {
   const compressorSettings = useCompressorSettings();
   const handleCompressor = useHandleCompressor();
   const handleRemoveEffect = useHandleRemoveEffect();
+  const newEffectSettings = useNewEffectSettings();
 
   return (
     <div className={styles.effectContainer}>
@@ -23,7 +26,7 @@ const CompressorEffect = () => {
             id="compressorBypass"
           ></input>
           <h2>compressor</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Compressor')}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
         </header>
         <section>
           <input
@@ -139,3 +142,7 @@ const CompressorEffect = () => {
 };
 
 export default CompressorEffect;
+
+CompressorEffect.propTypes = {
+  id: PropTypes.string,
+};

@@ -3,13 +3,16 @@ import {
   useMoogSettings,
   useHandleMoogFilter,
   useHandleRemoveEffect,
+  useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
+import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
-const MoogFilterEffect = () => {
+const MoogFilterEffect = ({ id }) => {
   const moogFilterSettings = useMoogSettings();
   const handleMoogFilter = useHandleMoogFilter();
   const handleRemoveEffect = useHandleRemoveEffect();
+  const newEffectSettings = useNewEffectSettings();
 
   return (
     <div className={styles.effectContainer}>
@@ -23,7 +26,7 @@ const MoogFilterEffect = () => {
             id="moogFilterBypass"
           ></input>
           <h2>moog filter</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('MoogFilter')}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
         </header>
         <section>
           <input
@@ -79,3 +82,7 @@ const MoogFilterEffect = () => {
 };
 
 export default MoogFilterEffect;
+
+MoogFilterEffect.propTypes = {
+  id: PropTypes.string,
+};

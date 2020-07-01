@@ -3,13 +3,16 @@ import {
   useOverdriveSettings,
   useHandleOverdrive,
   useHandleRemoveEffect,
+  useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
+import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
-const OverdriveEffect = () => {
+const OverdriveEffect = ({ id }) => {
   const overdriveSettings = useOverdriveSettings();
   const handleOverdrive = useHandleOverdrive();
   const handleRemoveEffect = useHandleRemoveEffect();
+  const newEffectSettings = useNewEffectSettings();
 
   return (
     <div className={styles.effectContainer}>
@@ -23,7 +26,7 @@ const OverdriveEffect = () => {
             id="overdriveBypass"
           ></input>
           <h2>overdrive</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Overdrive')}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
         </header>
 
         <section>
@@ -98,3 +101,7 @@ const OverdriveEffect = () => {
 };
 
 export default OverdriveEffect;
+
+OverdriveEffect.propTypes = {
+  id: PropTypes.string,
+};

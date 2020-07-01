@@ -3,30 +3,33 @@ import {
   useWahWahSettings,
   useHandleWahWah,
   useHandleRemoveEffect,
+  useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
+import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
-const WahWahEffect = () => {
+const WahWahEffect = ({ id }) => {
   const wahWahSettings = useWahWahSettings();
   const handleWahWah = useHandleWahWah();
   const handleRemoveEffect = useHandleRemoveEffect();
+  const newEffectSettings = useNewEffectSettings();
 
   return (
     <div className={styles.effectContainer}>
-            <main className={styles.Effects}>
-      <header>
-        <input
-          type="checkbox"
-          value={wahWahSettings.bypass}
-          onChange={handleWahWah}
-          name="bypass"
-          id="wahWahBypass"
-        ></input>
+      <main className={styles.Effects}>
+        <header>
+          <input
+            type="checkbox"
+            value={wahWahSettings.bypass}
+            onChange={handleWahWah}
+            name="bypass"
+            id="wahWahBypass"
+          ></input>
 
-        <h2>wah wah</h2>
+          <h2>wah wah</h2>
 
-        <button className={styles.buttonClose} onClick={() => handleRemoveEffect('WahWah')}>&#10060;</button>
-      </header>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
+        </header>
 
         <input
           type="checkbox"
@@ -124,3 +127,7 @@ const WahWahEffect = () => {
 };
 
 export default WahWahEffect;
+
+WahWahEffect.propTypes = {
+  id: PropTypes.string,
+};

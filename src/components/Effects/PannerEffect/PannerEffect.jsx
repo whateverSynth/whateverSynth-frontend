@@ -3,13 +3,16 @@ import {
   usePannerSettings,
   useHandlePanner,
   useHandleRemoveEffect,
+  useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
+import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
-const PannerEffect = () => {
+const PannerEffect = ({ id }) => {
   const pannerSettings = usePannerSettings();
   const handlePanner = useHandlePanner();
   const handleRemoveEffect = useHandleRemoveEffect();
+  const newEffectSettings = useNewEffectSettings();
 
   return (
     <div className={styles.effectContainer}>
@@ -23,7 +26,7 @@ const PannerEffect = () => {
             id="pannerBypass"
           ></input>
           <h2>panner</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Panner')}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
         </header>
 
         <section>
@@ -48,3 +51,7 @@ const PannerEffect = () => {
 };
 
 export default PannerEffect;
+
+PannerEffect.propTypes = {
+  id: PropTypes.string,
+};

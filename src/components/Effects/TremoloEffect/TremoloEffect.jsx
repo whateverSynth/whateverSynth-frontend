@@ -3,13 +3,16 @@ import {
   useTremoloSettings,
   useHandleTremolo,
   useHandleRemoveEffect,
+  useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
+import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
-const TremoloEffect = () => {
+const TremoloEffect = ({ id }) => {
   const tremoloSettings = useTremoloSettings();
   const handleTremolo = useHandleTremolo();
   const handleRemoveEffect = useHandleRemoveEffect();
+  const newEffectSettings = useNewEffectSettings();
 
   return (
     <div className={styles.effectContainer}>
@@ -23,7 +26,7 @@ const TremoloEffect = () => {
             id="tremoloBypass"
           ></input>
           <h2>tremolo</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Tremolo')}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
         </header>
 
 
@@ -84,3 +87,7 @@ const TremoloEffect = () => {
 };
 
 export default TremoloEffect;
+
+TremoloEffect.propTypes = {
+  id: PropTypes.string,
+};

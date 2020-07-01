@@ -3,13 +3,16 @@ import {
   usePingPongDelaySettings,
   useHandlePingPongDelay,
   useHandleRemoveEffect,
+  useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
+import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
-const PingPongDelayEffect = () => {
+const PingPongDelayEffect = ({ id }) => {
   const pingPongDelaySettings = usePingPongDelaySettings();
   const handlePingPongDelay = useHandlePingPongDelay();
   const handleRemoveEffect = useHandleRemoveEffect();
+  const newEffectSettings = useNewEffectSettings();
 
   return (
     <div className={styles.effectContainer}>
@@ -23,7 +26,7 @@ const PingPongDelayEffect = () => {
             id="pingPongDelayBypass"
           ></input>
           <h2>ping pong delay</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('PingPongDelay')}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
         </header>
         <section>
           <input
@@ -95,3 +98,7 @@ const PingPongDelayEffect = () => {
 };
 
 export default PingPongDelayEffect;
+
+PingPongDelayEffect.propTypes = {
+  id: PropTypes.string,
+};

@@ -3,13 +3,16 @@ import {
   usePhaserSettings,
   useHandlePhaser,
   useHandleRemoveEffect,
+  useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
+import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
-const PhaserEffect = () => {
+const PhaserEffect = ({ id }) => {
   const phaserSettings = usePhaserSettings();
   const handlePhaser = useHandlePhaser();
   const handleRemoveEffect = useHandleRemoveEffect();
+  const newEffectSettings = useNewEffectSettings();
 
   return (
     <div className={styles.effectContainer}>
@@ -23,7 +26,7 @@ const PhaserEffect = () => {
             id="phaserBypass"
           ></input>
           <h2>phaser</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Phaser')}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
         </header>
         <section>
           <input
@@ -113,3 +116,7 @@ const PhaserEffect = () => {
 };
 
 export default PhaserEffect;
+
+PhaserEffect.propTypes = {
+  id: PropTypes.string,
+};

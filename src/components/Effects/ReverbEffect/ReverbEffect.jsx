@@ -3,13 +3,16 @@ import {
   useReverbSettings,
   useHandleReverb,
   useHandleRemoveEffect,
+  useNewEffectSettings
 } from '../../../hooks/EffectsProvider';
+import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 
-const ReverbEffect = () => {
+const ReverbEffect = ({ id }) => {
   const reverbSettings = useReverbSettings();
   const handleReverb = useHandleReverb();
   const handleRemoveEffect = useHandleRemoveEffect();
+  const newEffectSettings = useNewEffectSettings();
 
   return (
     <div className={styles.effectContainer}>
@@ -23,7 +26,7 @@ const ReverbEffect = () => {
             id="reverbBypass"
           ></input>
           <h2>reverb</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect('Convolver')}>&#10060;</button>
+          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>&#10060;</button>
         </header>
         <section>
           <input
@@ -120,3 +123,7 @@ const ReverbEffect = () => {
 };
 
 export default ReverbEffect;
+
+ReverbEffect.propTypes = {
+  id: PropTypes.string,
+};
