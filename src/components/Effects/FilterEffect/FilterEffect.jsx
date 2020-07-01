@@ -13,9 +13,16 @@ const FilterEffect = () => {
   const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
+          <input
+            type="checkbox"
+            value={filterSettings.bypass}
+            onChange={handleFilter}
+            name="bypass"
+            id="filterBypass"
+          ></input>
           <h2>filter</h2>
           <button
             className={styles.buttonClose}
@@ -72,15 +79,9 @@ const FilterEffect = () => {
                 width: '6rem',
                 height: '6rem',
               },
-              active: {
-                backgroundColor: 'red',
-              },
               thumb: {
-                width: 10,
-                height: 10,
-              },
-              disabled: {
-                opacity: 0.5,
+                width: 12,
+                height: 12,
               },
             }}
           />
@@ -130,7 +131,7 @@ const FilterEffect = () => {
           bypass
         </label>
       </main>
-    </div>
+    </section>
   );
 };
 

@@ -12,17 +12,24 @@ const CompressorEffect = () => {
   const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
-    <div className={styles.effectContainer}>
-      <header>
-        <h2>compressor</h2>
-        <button
-          className={styles.buttonClose}
-          onClick={() => handleRemoveEffect('Compressor')}
-        >
-          x
-        </button>
-      </header>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
+        <header>
+          <input
+            type="checkbox"
+            value={compressorSettings.bypass}
+            onChange={handleCompressor}
+            name="bypass"
+            id="compressorBypass"
+          ></input>
+          <h2>compressor</h2>
+          <button
+            className={styles.buttonClose}
+            onClick={() => handleRemoveEffect('Compressor')}
+          >
+            x
+          </button>
+        </header>
         <section>
           <input
             type="range"
@@ -145,7 +152,7 @@ const CompressorEffect = () => {
           </label>
         </section>
       </main>
-    </div>
+    </section>
   );
 };
 

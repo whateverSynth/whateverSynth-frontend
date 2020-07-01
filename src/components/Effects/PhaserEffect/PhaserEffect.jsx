@@ -12,9 +12,16 @@ const PhaserEffect = () => {
   const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
+          <input
+            type="checkbox"
+            value={phaserSettings.bypass}
+            onChange={handlePhaser}
+            name="bypass"
+            id="phaserBypass"
+          ></input>
           <h2>phaser</h2>
           <button
             className={styles.buttonClose}
@@ -114,7 +121,7 @@ const PhaserEffect = () => {
           bypass
         </label>
       </main>
-    </div>
+    </section>
   );
 };
 

@@ -47,6 +47,8 @@ let tunaEffects = [];
 let scope;
 let OScope;
 let canvas;
+let midiAccess = null;
+let activeNotes = [];
 
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
@@ -277,7 +279,7 @@ export default function Synth() {
   }, [gainSetting]);
 
   //HANDLES CREATION & STORING OF OSCILLATORS
-  function playNote(key) {
+  const playNote = (key) => {
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       keyboardFrequencyMap[key],
@@ -287,24 +289,24 @@ export default function Synth() {
     activeOscillators[key] = osc;
     activeOscillators[key].connect(inputGain);
     activeOscillators[key].start();
-  }
+  };
 
-  function keyDown(event) {
+  const keyDown = (event) => {
     const key = (event.detail || event.which).toString();
     if (keyboardFrequencyMap[key] && !activeOscillators[key]) {
       playNote(key);
     }
-  }
+  };
 
-  function keyUp(event) {
+  const keyUp = (event) => {
     const key = (event.detail || event.which).toString();
     if (keyboardFrequencyMap[key] && activeOscillators[key]) {
       activeOscillators[key].stop();
       delete activeOscillators[key];
     }
-  }
+  };
 
-  function removeFocus(event) {
+  const removeFocus = (event) => {
     if (event.target.type === 'select-one') return;
     else {
       event.target.blur();
@@ -312,9 +314,81 @@ export default function Synth() {
         oscillator.stop();
       });
     }
-  }
+  };
 
   window.addEventListener('mouseup', removeFocus);
+
+  //MIDI
+  const noteOn = (noteNumber) => {
+    const osc = audioCtx.createOscillator();
+    osc.frequency.setValueAtTime(
+      frequencyFromNoteNumber(noteNumber),
+      audioCtx.currentTime
+    );
+    osc.type = waveshape;
+    activeOscillators[noteNumber] = osc;
+    activeOscillators[noteNumber].connect(inputGain);
+    activeOscillators[noteNumber].start();
+  };
+
+  const noteOff = (noteNumber) => {
+    const position = activeNotes.indexOf(noteNumber);
+    if (position !== -1) {
+      activeNotes.splice(position, 1);
+    }
+    if (activeNotes.length === 0) {
+      // shut off the envelope
+      activeOscillators[noteNumber].stop();
+      delete activeOscillators[noteNumber];
+    } else {
+      activeOscillators[noteNumber].stop();
+      delete activeOscillators[noteNumber];
+    }
+  };
+
+  const frequencyFromNoteNumber = (note) => {
+    return 440 * Math.pow(2, (note - 69) / 12);
+  };
+
+  if (navigator.requestMIDIAccess)
+    navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
+  else alert('No MIDI support present in your browser.');
+
+  function onMIDIInit(midi) {
+    midiAccess = midi;
+
+    let haveAtLeastOneDevice = false;
+    const inputs = midiAccess.inputs.values();
+    for (
+      let input = inputs.next();
+      input && !input.done;
+      input = inputs.next()
+    ) {
+      input.value.onmidimessage = MIDIMessageEventHandler;
+      haveAtLeastOneDevice = true;
+    }
+    if (!haveAtLeastOneDevice) return;
+  }
+
+  const onMIDIReject = () => {
+    alert('The MIDI system failed to start.');
+  };
+
+  const MIDIMessageEventHandler = (event) => {
+    switch (event.data[0] & 0xf0) {
+      case 0x90:
+        if (event.data[2] !== 0) {
+          // if velocity != 0, this is a note-on message
+          noteOn(event.data[1]);
+          return;
+        }
+        break;
+      // if velocity == 0, fall thru: it's a note-off.  MIDI's weird, y'all.
+      case 0x80:
+        noteOff(event.data[1]);
+        return;
+    }
+  };
 
   const effectNodes = localEffects.map((effect) => {
     if (effect.name === 'Bitcrusher')

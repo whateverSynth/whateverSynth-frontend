@@ -12,9 +12,16 @@ const ReverbEffect = () => {
   const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
+          <input
+            type="checkbox"
+            value={reverbSettings.bypass}
+            onChange={handleReverb}
+            name="bypass"
+            id="reverbBypass"
+          ></input>
           <h2>reverb</h2>
           <button
             className={styles.buttonClose}
@@ -110,7 +117,6 @@ const ReverbEffect = () => {
             <option value="reverb/room.wav">room</option>
             <option value="reverb/silo.wav">silo</option>
           </select>
-          <label htmlFor="impulse">{reverbSettings.impulse} </label>
         </section>
 
         <input
@@ -124,7 +130,7 @@ const ReverbEffect = () => {
           bypass
         </label>
       </main>
-    </div>
+    </section>
   );
 };
 

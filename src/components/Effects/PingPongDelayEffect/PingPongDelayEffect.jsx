@@ -12,9 +12,16 @@ const PingPongDelayEffect = () => {
   const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
+          <input
+            type="checkbox"
+            value={pingPongDelaySettings.bypass}
+            onChange={handlePingPongDelay}
+            name="bypass"
+            id="pingPongDelayBypass"
+          ></input>
           <h2>ping pong delay</h2>
           <button
             className={styles.buttonClose}
@@ -100,7 +107,7 @@ const PingPongDelayEffect = () => {
           bypass
         </label>
       </main>
-    </div>
+    </section>
   );
 };
 

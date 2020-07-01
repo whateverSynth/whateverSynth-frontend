@@ -28,7 +28,7 @@ const Waveshapes = () => {
           onChange={handleGainSetting}
         ></input>
         <label className={styles.Gain}>
-          volume: <p>{Math.floor(gainSetting * 100)} </p>
+          volume: <p>{Math.floor(gainSetting * 100)}</p>
         </label>
       </section>
       <div className={styles.Radio}>

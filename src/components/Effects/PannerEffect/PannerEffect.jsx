@@ -15,6 +15,13 @@ const PannerEffect = () => {
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
+          <input
+            type="checkbox"
+            value={pannerSettings.bypass}
+            onChange={handlePanner}
+            name="bypass"
+            id="pannerBypass"
+          ></input>
           <h2>panner</h2>
           <button
             className={styles.buttonClose}

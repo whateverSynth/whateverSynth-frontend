@@ -12,9 +12,16 @@ const MoogFilterEffect = () => {
   const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
+          <input
+            type="checkbox"
+            value={moogFilterSettings.bypass}
+            onChange={handleMoogFilter}
+            name="bypass"
+            id="moogFilterBypass"
+          ></input>
           <h2>moog filter</h2>
           <button
             className={styles.buttonClose}
@@ -82,7 +89,7 @@ const MoogFilterEffect = () => {
           bypass
         </label>
       </main>
-    </div>
+    </section>
   );
 };
 

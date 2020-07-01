@@ -12,9 +12,16 @@ const DelayEffect = () => {
   const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
+          <input
+            type="checkbox"
+            value={delaySettings.bypass}
+            onChange={handleDelay}
+            name="bypass"
+            id="delayBypass"
+          ></input>
           <h2>delay</h2>
           <button
             className={styles.buttonClose}
@@ -102,19 +109,8 @@ const DelayEffect = () => {
             cutoff: <p>{delaySettings.cutoff} Hz</p>
           </label>
         </section>
-
-        <input
-          type="checkbox"
-          value={delaySettings.bypass}
-          onChange={handleDelay}
-          name="bypass"
-          id="delayBypass"
-        ></input>
-        <label htmlFor="delayBypass" className={styles.bypass}>
-          bypass
-        </label>
       </main>
-    </div>
+    </section>
   );
 };
 

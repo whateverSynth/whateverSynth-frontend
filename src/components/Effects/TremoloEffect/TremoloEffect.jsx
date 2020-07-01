@@ -12,17 +12,25 @@ const TremoloEffect = () => {
   const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
-    <div className={styles.effectContainer}>
-      <header>
-        <h2>tremolo</h2>
-        <button
-          className={styles.buttonClose}
-          onClick={() => handleRemoveEffect('Tremolo')}
-        >
-          x
-        </button>
-      </header>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
+        <header>
+          <input
+            type="checkbox"
+            value={tremoloSettings.bypass}
+            onChange={handleTremolo}
+            name="bypass"
+            id="tremoloBypass"
+          ></input>
+          <h2>tremolo</h2>
+          <button
+            className={styles.buttonClose}
+            onClick={() => handleRemoveEffect('Tremolo')}
+          >
+            x
+          </button>
+        </header>
+
         <section>
           <input
             type="range"
@@ -82,7 +90,7 @@ const TremoloEffect = () => {
           bypass
         </label>
       </main>
-    </div>
+    </section>
   );
 };
 

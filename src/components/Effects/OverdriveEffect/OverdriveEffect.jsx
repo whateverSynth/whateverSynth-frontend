@@ -12,9 +12,16 @@ const OverdriveEffect = () => {
   const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
-    <div className={styles.effectContainer}>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
+          <input
+            type="checkbox"
+            value={overdriveSettings.bypass}
+            onChange={handleOverdrive}
+            name="bypass"
+            id="overdriveBypass"
+          ></input>
           <h2>overdrive</h2>
           <button
             className={styles.buttonClose}
@@ -100,7 +107,7 @@ const OverdriveEffect = () => {
           bypass
         </label>
       </main>
-    </div>
+    </section>
   );
 };
 

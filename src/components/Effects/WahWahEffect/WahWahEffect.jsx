@@ -12,17 +12,27 @@ const WahWahEffect = () => {
   const handleRemoveEffect = useHandleRemoveEffect();
 
   return (
-    <div className={styles.effectContainer}>
-      <header>
-        <h2>wah wah</h2>
-        <button
-          className={styles.buttonClose}
-          onClick={() => handleRemoveEffect('WahWah')}
-        >
-          x
-        </button>
-      </header>
+    <section className={styles.effectContainer}>
       <main className={styles.Effects}>
+        <header>
+          <input
+            type="checkbox"
+            value={wahWahSettings.bypass}
+            onChange={handleWahWah}
+            name="bypass"
+            id="wahWahBypass"
+          ></input>
+
+          <h2>wah wah</h2>
+
+          <button
+            className={styles.buttonClose}
+            onClick={() => handleRemoveEffect('WahWah')}
+          >
+            x
+          </button>
+        </header>
+
         <input
           type="checkbox"
           value={wahWahSettings.automode}
@@ -125,7 +135,7 @@ const WahWahEffect = () => {
           bypass
         </label>
       </main>
-    </div>
+    </section>
   );
 };
 
