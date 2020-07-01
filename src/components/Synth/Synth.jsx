@@ -37,11 +37,16 @@ import TremoloEffect from '../Effects/TremoloEffect/TremoloEffect';
 import WahWahEffect from '../Effects/WahWahEffect/WahWahEffect';
 import CompressorEffect from '../Effects/CompressorEffect/CompressorEffect';
 import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEffect';
+import Oscilloscope from 'oscilloscope';
 
 let audioCtx;
 let tuna;
-let gain;
+let inputGain;
+let outputGain;
 let tunaEffects = [];
+let scope;
+let OScope;
+let canvas;
 
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
@@ -69,8 +74,17 @@ export default function Synth() {
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     tuna = new Tuna(audioCtx);
-    gain = audioCtx.createGain();
-    gain.connect(audioCtx.destination);
+    inputGain = audioCtx.createGain();
+    outputGain = audioCtx.createGain();
+
+    canvas = document.createElement('canvas');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - 400;
+
+    document.body.appendChild(canvas);
+
+    inputGain.connect(outputGain);
+    outputGain.connect(audioCtx.destination);
   }, []);
 
   useEffect(() => {
@@ -92,23 +106,29 @@ export default function Synth() {
       if (name === 'WahWah') return new tuna[name](wahWahSettings);
     });
 
-    gain.disconnect();
+    inputGain.disconnect();
 
     // MAKE CHAIN BY ITERATING OVER EFFECTS
-    if (tunaEffects.length === 0) gain.connect(audioCtx.destination);
-    else {
+    if (tunaEffects.length === 0) {
+      inputGain.connect(outputGain);
+      outputGain.connect(audioCtx.destination);
+      scope = new Oscilloscope(outputGain);
+      OScope = scope.animate(canvas.getContext('2d'));
+    } else {
       tunaEffects.forEach((effect, i) => {
         if (tunaEffects.length === 1) {
-          gain.connect(effect);
-          effect.connect(audioCtx.destination);
+          inputGain.connect(effect);
+          effect.connect(outputGain);
+          outputGain.connect(audioCtx.destination);
           return;
         } else if (i === 0) {
-          gain.connect(effect);
+          inputGain.connect(effect);
         } else if (i > 0 && i < tunaEffects.length - 1) {
           tunaEffects[i - 1].connect(effect);
         } else if (i === tunaEffects.length - 1) {
           tunaEffects[i - 1].connect(effect);
-          effect.connect(audioCtx.destination);
+          effect.connect(outputGain);
+          outputGain.connect(audioCtx.destination);
         }
       });
     }
@@ -248,7 +268,7 @@ export default function Synth() {
   }, [wahWahSettings]);
 
   useEffect(() => {
-    gain.gain.value = gainSetting; //defaults to 0.8
+    inputGain.gain.value = gainSetting; //defaults to 0.8
   }, [gainSetting]);
 
   //HANDLES CREATION & STORING OF OSCILLATORS
@@ -260,7 +280,7 @@ export default function Synth() {
     );
     osc.type = waveshape;
     activeOscillators[key] = osc;
-    activeOscillators[key].connect(gain);
+    activeOscillators[key].connect(inputGain);
     activeOscillators[key].start();
   }
 
@@ -314,6 +334,7 @@ export default function Synth() {
 
   return (
     <section className={styles.Container}>
+      <section className={styles.OScope}>{OScope}</section>
       <KeyboardEventHandler
         handleKeys={['all']}
         onKeyEvent={(key, e) => keyDown(e)}
@@ -329,7 +350,7 @@ export default function Synth() {
       <Keyboard />
       <Waveshapes />
       <Effects />
-      <ul>{effectNodes}</ul>
+      <div className={styles.effectsDrawer}>{effectNodes}</div>
     </section>
   );
 }

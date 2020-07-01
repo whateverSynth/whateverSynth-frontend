@@ -1,42 +1,84 @@
-.Effects {
-  margin-top: 0.5rem;
+.effectContainer {
+  position: relative;
+  display: block;
+  border: 1px groove grey;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 1rem;
 
-  input[type='range'] {
-    -webkit-appearance: none;
-    background-color: #00ff9f;
-    outline: none;
-    border: dotted #d600ff;
-    border-width: 2px 2px 2px 2px;
-    margin-top: 0.25rem;
+  * {
+    background-color: transparent;
   }
 
-  input[type='checkbox'] {
-    -webkit-appearance: none;
-    background-color: #00ff9f;
-    outline: none;
-    border: dotted #00ff9f;
-    border-width: 0.5rem;
+  header {
+    background-color: hsla(198, 97%, 56%, 1);
+    margin: 0;
+    padding: 0;
+    position: relative;
+    display: flex;
+    border-radius: 1rem 0 0 0;
+    h2 {
+      margin: 0rem 0 0.25rem 0.5rem;
+      font-size: 1.15rem;
+      padding: 0.35rem 0.25rem 0 0;
+    }
+    button.buttonClose {
+      position: absolute;
+      overflow: visible;
+      top: 0;
+      right: 0;
+      margin: 0.05rem 0.1rem;
+      padding: 0 0.1rem 0.1rem 0.2rem;
+      border: 1px groove grey;
+      background-color: lightgrey;
+      font-size: 0.8rem;
+    }
   }
 
-  input[type='checkbox']:checked {
-    -webkit-appearance: none;
-    background-color: #00ff9f;
-    outline: none;
-    border: dotted #d600ff;
-    border-width: 0.5rem;
+  section {
+    margin: 0 0.5rem;
   }
 
-  .checkbox {
-    margin-left: 0.5rem;
-  }
+  .Effects {
+    margin: 0rem 0 0.5rem 0;
 
-  h2,
-  button {
-    display: inline;
-  }
+    label {
+      font-size: 0.8rem;
+      padding: 0 0 0 6px;
+    }
+    input[type='range'] {
+      -webkit-appearance: none;
+      background-color: #00ff9f;
+      outline: none;
+      border: dotted #d600ff;
+      border-width: 2px 2px 2px 2px;
+      margin-top: 0.25rem;
+      width: 6rem;
+    }
+    background-color: transparent;
 
-  button {
-    position: absolute;
-    height: -0.5rem;
+    input[type='checkbox'] {
+      -webkit-appearance: none;
+      background-color: #00ff9f;
+      outline: none;
+      border: dotted #00ff9f;
+      border-width: 0.5rem;
+    }
+
+    input[type='checkbox']:checked {
+      -webkit-appearance: none;
+      background-color: #00ff9f;
+      outline: none;
+      border: dotted #d600ff;
+      border-width: 0.5rem;
+    }
+
+    .checkbox {
+      margin-left: 0.5rem;
+    }
+
+    .activated {
+      margin-left: 0.5rem;
+    }
   }
 }
