@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Synth.css';
-// import KeyboardEventHandler from 'react-keyboard-event-handler';
-import { keyboardFrequencyMap } from '../../utils/data';
 import DelayEffect from '../Effects/DelayEffect/DelayEffect';
 import Tuna from 'tunajs';
 import {
@@ -11,7 +9,6 @@ import {
   useGainSetting,
 } from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
-// import Keyboard from '../Keyboard/Keyboard';
 import ChorusEffect from '../Effects/ChorusEffect/ChorusEffect';
 import Effects from '../Effects/Effects';
 import BitcrusherEffect from '../Effects/BitcrusherEffect/BitcrusherEffect';
@@ -27,7 +24,7 @@ import CompressorEffect from '../Effects/CompressorEffect/CompressorEffect';
 import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEffect';
 import Oscilloscope from 'oscilloscope';
 
-import { Piano, KeyboardShortcuts, MidiNumbers, midiNumber } from 'react-piano';
+import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import 'react-piano/dist/styles.css';
 
 let audioCtx;
@@ -40,7 +37,6 @@ let OScope;
 let canvas;
 let midiAccess = null;
 let activeNotes = [];
-// let keyOff;
 
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
@@ -129,19 +125,6 @@ export default function Synth() {
     inputGain.gain.value = gainSetting; //defaults to 0.15
   }, [gainSetting]);
 
-  // HANDLES CREATION & STORING OF OSCILLATORS
-  // const playNote = (key) => {
-  //   const osc = audioCtx.createOscillator();
-  //   osc.frequency.setValueAtTime(
-  //     keyboardFrequencyMap[key],
-  //     audioCtx.currentTime
-  //   );
-  //   osc.type = waveshape;
-  //   activeOscillators[key] = osc;
-  //   activeOscillators[key].connect(inputGain);
-  //   activeOscillators[key].start();
-  // };
-
   const firstNote = MidiNumbers.fromNote('c3');
   const lastNote = MidiNumbers.fromNote('f5');
   const keyboardShortcuts = KeyboardShortcuts.create({
@@ -149,24 +132,6 @@ export default function Synth() {
     lastNote: lastNote,
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
-
-  // const keyDown = (event) => {
-  //   noteOn(event);
-  //   // console.log(event);
-  //   // const key = (event.detail || event.which).toString();
-  //   // if (keyboardFrequencyMap[key] && !activeOscillators[key]) {
-  //   //   playNote(key);
-  //   // }
-  // };
-
-  // const keyUp = (event) => {
-  //   noteOff(event);
-  //   // const key = (event.detail || event.which).toString();
-  //   // if (keyboardFrequencyMap[key] && activeOscillators[key]) {
-  //   //   activeOscillators[key].stop();
-  //   //   delete activeOscillators[key];
-  //   // }
-  // };
 
   const removeFocus = (event) => {
     if (event.target.type === 'select-one') return;
@@ -191,7 +156,6 @@ export default function Synth() {
     activeOscillators[noteNumber] = osc;
     activeOscillators[noteNumber].connect(inputGain);
     activeOscillators[noteNumber].start();
-    // console.log(noteNumber);
   };
 
   const noteOff = (noteNumber) => {
@@ -208,25 +172,6 @@ export default function Synth() {
       delete activeOscillators[noteNumber];
     }
   };
-
-  // const arr = new Uint8Array([128, 60, 64]);
-
-  // const keyDown = (event) => {
-  //   const key = event.detail || event.which;
-  //   console.log(event);
-  //   if (keyboardFrequencyMap[key] && !activeOscillators[key]) {
-  //     noteOn(key);
-  //     // console.log(key);
-  //   }
-  // };
-
-  // const keyUp = (event) => {
-  //   const key = event.detail || event.which;
-  //   if (keyboardFrequencyMap[key] && activeOscillators[key]) {
-  //     activeOscillators[key].stop();
-  //     delete activeOscillators[key];
-  //   }
-  // };
 
   const frequencyFromNoteNumber = (note) => {
     return 440 * Math.pow(2, (note - 69) / 12);
@@ -248,7 +193,6 @@ export default function Synth() {
     ) {
       input.value.onmidimessage = MIDIMessageEventHandler;
       haveAtLeastOneDevice = true;
-      // console.log(input.value.onmidimessage);
     }
     if (!haveAtLeastOneDevice) return;
   }
@@ -269,7 +213,6 @@ export default function Synth() {
       // if velocity == 0, fall thru: it's a note-off.  MIDI's weird, y'all.
       case 0x80:
         noteOff(event.data[1]);
-        console.log(event.data);
         return;
     }
   };
