@@ -74,8 +74,23 @@ const FilterEffect = ({ id }) => {
             onChange={(e) => handleEffectChange(e, id)}
             name="Q"
           ></input>
-          <label>
-          q: <p>{filter?.settings.Q}</p>
+          <label>q:
+            <Editable
+              text={filter?.settings.Q}
+              placeholder=""
+              type="input"
+            >
+              <input
+                name="Q"
+                type="number"
+                min="0.001"
+                max="100"
+                placeholder=""
+                value={filter?.settings.Q}
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
         <section>
@@ -106,7 +121,24 @@ const FilterEffect = ({ id }) => {
             onChange={(e) => handleEffectChange(e, id)}
             name="gain"
           ></input>
-          <label>gain: <p>{filter?.settings.gain} db</p>
+          <label>gain:
+            <Editable
+              text={filter?.settings.gain}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="gain"
+                type="number"
+                min="-40"
+                max="40"
+                placeholder="0"
+                value={filter?.settings.gain}
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
+            &nbsp;db
           </label>
         </section>
 
