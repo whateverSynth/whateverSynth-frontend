@@ -2,7 +2,8 @@ import React from 'react';
 import {
   useHandleEffectChange,
   useHandleRemoveEffect,
-  useNewEffectSettings
+  useNewEffectSettings,
+  useHandleFilterSlider
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
@@ -14,6 +15,7 @@ const FilterEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
+  const handleFilterSlider = useHandleFilterSlider();
   let filter = newEffectSettings.find(setting => setting.id === id);
   if(!filter) filter = { settings: defaultFilterSettings };
 
@@ -30,12 +32,7 @@ const FilterEffect = ({ id }) => {
           ></input>
           <h2>filter</h2>
           <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
-          <button
-            className={styles.buttonClose}
-            onClick={() => handleRemoveEffect(id)}
-          >
-            x
-          </button>
+
         </header>
         <section>
           <input
@@ -53,19 +50,19 @@ const FilterEffect = ({ id }) => {
               text={filter?.settings.frequency}
               placeholder=""
               type="input"
-              name="frequency"
             >
               <input
-                type="text"
                 name="frequency"
+                type="number"
+                min="20"
+                max="22050"
+                step="10"
                 placeholder=""
                 value={filter?.settings.frequency}
-                onChange={e => handleEffectChange(e.target.value, id)}
+                onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
             </Editable>
-
-          frequency: <p>{filter?.settings.frequency}</p>
           </label>
         </section>
 
@@ -80,14 +77,30 @@ const FilterEffect = ({ id }) => {
             onChange={(e) => handleEffectChange(e, id)}
             name="Q"
           ></input>
-          <label>
-          q: <p>{filter?.settings.Q}</p>
+          <label>q:
+            <Editable
+              text={filter?.settings.Q}
+              placeholder=""
+              type="input"
+            >
+              <input
+                name="Q"
+                type="number"
+                min="0.001"
+                max="100"
+                step="1"
+                placeholder=""
+                value={filter?.settings.Q}
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
         <section>
-          <Slider name="freqQ" axis="xy" x={filter?.settings.frequency} y={filter?.settings.Q} xmin="20"
-            xmax="22050" ymin="0.001"
-            ymax="100" yreverse="true" styles={{
+          <Slider name="freqGain" axis="xy" x={filter?.settings.frequency} y={filter?.settings.gain} xmin={20}
+            xmax={22050} ymin={-40}
+            ymax={40} yreverse="true" styles={{
 
               track: {
                 backgroundColor: 'black',
@@ -99,6 +112,7 @@ const FilterEffect = ({ id }) => {
                 height: 12,
               },
             }}
+            onChange={(e) => handleFilterSlider(e, id)}
           />
         </section>
         <section>
@@ -112,7 +126,25 @@ const FilterEffect = ({ id }) => {
             onChange={(e) => handleEffectChange(e, id)}
             name="gain"
           ></input>
-          <label>gain: <p>{filter?.settings.gain} db</p>
+          <label>gain:
+            <Editable
+              text={filter?.settings.gain}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="gain"
+                type="number"
+                min="-40"
+                max="40"
+                placeholder="0"
+                step="0.5"
+                value={filter?.settings.gain}
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
+            &nbsp;db
           </label>
         </section>
 
