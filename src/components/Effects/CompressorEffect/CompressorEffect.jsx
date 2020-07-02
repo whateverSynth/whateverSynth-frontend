@@ -137,19 +137,6 @@ const CompressorEffect = ({ id }) => {
             automakeup
           </label>
         </section>
-
-        <section>
-          <input
-            type="checkbox"
-            value={compressorSettings.bypass}
-            onChange={handleCompressor}
-            name="bypass"
-            id="compressorBypass"
-          ></input>
-          <label htmlFor="compressorBypass" className={styles.checkbox}>
-            bypass
-          </label>
-        </section>
       </main>
     </section>
   );

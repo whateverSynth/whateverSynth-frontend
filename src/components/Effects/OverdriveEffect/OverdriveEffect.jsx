@@ -94,17 +94,6 @@ const OverdriveEffect = ({ id }) => {
           algorithm # <p>{overdrive?.settings.algorithmIndex}</p>
           </label>
         </section>
-
-        <input
-          type="checkbox"
-          value={overdriveSettings.bypass}
-          onChange={handleOverdrive}
-          name="bypass"
-          id="overdriveBypass"
-        ></input>
-        <label htmlFor="overdriveBypass" className={styles.bypass}>
-          bypass
-        </label>
       </main>
     </section>
   );

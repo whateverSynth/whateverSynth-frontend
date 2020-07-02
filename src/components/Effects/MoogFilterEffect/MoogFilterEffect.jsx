@@ -76,17 +76,6 @@ const MoogFilterEffect = ({ id }) => {
           buffer size: <p>{moog?.settings.bufferSize}</p>
           </label>
         </section>
-
-        <input
-          type="checkbox"
-          value={moogFilterSettings.bypass}
-          onChange={handleMoogFilter}
-          name="bypass"
-          id="moogFilterBypass"
-        ></input>
-        <label htmlFor="moogFilterBypass" className={styles.bypass}>
-          bypass
-        </label>
       </main>
     </section>
   );

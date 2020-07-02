@@ -117,17 +117,6 @@ const ReverbEffect = ({ id }) => {
             <option value="reverb/silo.wav">silo</option>
           </select>
         </section>
-
-        <input
-          type="checkbox"
-          value={reverbSettings.bypass}
-          onChange={handleReverb}
-          name="bypass"
-          id="reverbBypass"
-        ></input>
-        <label htmlFor="reverbBypass" className={styles.bypass}>
-          bypass
-        </label>
       </main>
     </section>
   );
