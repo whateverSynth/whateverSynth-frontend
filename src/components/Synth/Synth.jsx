@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Synth.css';
-import KeyboardEventHandler from 'react-keyboard-event-handler';
+// import KeyboardEventHandler from 'react-keyboard-event-handler';
 import { keyboardFrequencyMap } from '../../utils/data';
 import DelayEffect from '../Effects/DelayEffect/DelayEffect';
 import Tuna from 'tunajs';
@@ -11,7 +11,7 @@ import {
   useGainSetting,
 } from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
-import Keyboard from '../Keyboard/Keyboard';
+// import Keyboard from '../Keyboard/Keyboard';
 import ChorusEffect from '../Effects/ChorusEffect/ChorusEffect';
 import Effects from '../Effects/Effects';
 import BitcrusherEffect from '../Effects/BitcrusherEffect/BitcrusherEffect';
@@ -27,6 +27,9 @@ import CompressorEffect from '../Effects/CompressorEffect/CompressorEffect';
 import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEffect';
 import Oscilloscope from 'oscilloscope';
 
+import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
+import 'react-piano/dist/styles.css';
+
 let audioCtx;
 let tuna;
 let inputGain;
@@ -37,6 +40,7 @@ let OScope;
 let canvas;
 let midiAccess = null;
 let activeNotes = [];
+// let keyOff;
 
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
@@ -68,7 +72,9 @@ export default function Synth() {
   useEffect(() => {
     tunaEffects = newEffects.map((effect) => {
       const name = effect.type;
-      const setting = newEffectSettings.find(setting => setting.id === effect.id);
+      const setting = newEffectSettings.find(
+        (setting) => setting.id === effect.id
+      );
       return { id: effect.id, effect: new tuna[name](setting.settings) };
     });
 
@@ -96,9 +102,9 @@ export default function Synth() {
         } else if (i === 0) {
           inputGain.connect(realEffect);
         } else if (i > 0 && i < tunaEffects.length - 1) {
-          (tunaEffects[i - 1]).effect.connect(realEffect);
+          tunaEffects[i - 1].effect.connect(realEffect);
         } else if (i === tunaEffects.length - 1) {
-          (tunaEffects[i - 1]).effect.connect(realEffect);
+          tunaEffects[i - 1].effect.connect(realEffect);
           realEffect.connect(outputGain);
           outputGain.connect(audioCtx.destination);
         }
@@ -109,8 +115,10 @@ export default function Synth() {
 
   //useEffect Effects
   useEffect(() => {
-    newEffectSettings.forEach(effectSetting => {
-      const chainIndex = tunaEffects.findIndex(effect => effect.id === effectSetting.id);
+    newEffectSettings.forEach((effectSetting) => {
+      const chainIndex = tunaEffects.findIndex(
+        (effect) => effect.id === effectSetting.id
+      );
       Object.entries(effectSetting.settings).forEach((setting) => {
         tunaEffects[chainIndex].effect[setting[0]] = setting[1];
       });
@@ -118,10 +126,10 @@ export default function Synth() {
   }, [newEffectSettings]);
 
   useEffect(() => {
-    inputGain.gain.value = gainSetting; //defaults to 0.8
+    inputGain.gain.value = gainSetting; //defaults to 0.15
   }, [gainSetting]);
 
-  //HANDLES CREATION & STORING OF OSCILLATORS
+  // HANDLES CREATION & STORING OF OSCILLATORS
   const playNote = (key) => {
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
@@ -134,20 +142,31 @@ export default function Synth() {
     activeOscillators[key].start();
   };
 
-  const keyDown = (event) => {
-    const key = (event.detail || event.which).toString();
-    if (keyboardFrequencyMap[key] && !activeOscillators[key]) {
-      playNote(key);
-    }
-  };
+  const firstNote = MidiNumbers.fromNote('c3');
+  const lastNote = MidiNumbers.fromNote('f5');
+  const keyboardShortcuts = KeyboardShortcuts.create({
+    firstNote: firstNote,
+    lastNote: lastNote,
+    keyboardConfig: KeyboardShortcuts.HOME_ROW,
+  });
 
-  const keyUp = (event) => {
-    const key = (event.detail || event.which).toString();
-    if (keyboardFrequencyMap[key] && activeOscillators[key]) {
-      activeOscillators[key].stop();
-      delete activeOscillators[key];
-    }
-  };
+  // const keyDown = (event) => {
+  //   noteOn(event);
+  //   // console.log(event);
+  //   // const key = (event.detail || event.which).toString();
+  //   // if (keyboardFrequencyMap[key] && !activeOscillators[key]) {
+  //   //   playNote(key);
+  //   // }
+  // };
+
+  // const keyUp = (event) => {
+  //   noteOff(event);
+  //   // const key = (event.detail || event.which).toString();
+  //   // if (keyboardFrequencyMap[key] && activeOscillators[key]) {
+  //   //   activeOscillators[key].stop();
+  //   //   delete activeOscillators[key];
+  //   // }
+  // };
 
   const removeFocus = (event) => {
     if (event.target.type === 'select-one') return;
@@ -172,6 +191,7 @@ export default function Synth() {
     activeOscillators[noteNumber] = osc;
     activeOscillators[noteNumber].connect(inputGain);
     activeOscillators[noteNumber].start();
+    // console.log(noteNumber);
   };
 
   const noteOff = (noteNumber) => {
@@ -189,6 +209,25 @@ export default function Synth() {
     }
   };
 
+  // const arr = new Uint8Array([128, 60, 64]);
+
+  // const keyDown = (event) => {
+  //   const key = event.detail || event.which;
+  //   console.log(event);
+  //   if (keyboardFrequencyMap[key] && !activeOscillators[key]) {
+  //     noteOn(key);
+  //     // console.log(key);
+  //   }
+  // };
+
+  // const keyUp = (event) => {
+  //   const key = event.detail || event.which;
+  //   if (keyboardFrequencyMap[key] && activeOscillators[key]) {
+  //     activeOscillators[key].stop();
+  //     delete activeOscillators[key];
+  //   }
+  // };
+
   const frequencyFromNoteNumber = (note) => {
     return 440 * Math.pow(2, (note - 69) / 12);
   };
@@ -199,9 +238,9 @@ export default function Synth() {
 
   function onMIDIInit(midi) {
     midiAccess = midi;
-
     let haveAtLeastOneDevice = false;
     const inputs = midiAccess.inputs.values();
+
     for (
       let input = inputs.next();
       input && !input.done;
@@ -209,6 +248,7 @@ export default function Synth() {
     ) {
       input.value.onmidimessage = MIDIMessageEventHandler;
       haveAtLeastOneDevice = true;
+      // console.log(input.value.onmidimessage);
     }
     if (!haveAtLeastOneDevice) return;
   }
@@ -229,48 +269,59 @@ export default function Synth() {
       // if velocity == 0, fall thru: it's a note-off.  MIDI's weird, y'all.
       case 0x80:
         noteOff(event.data[1]);
+        console.log(event.data);
         return;
     }
   };
 
   const effectNodes = localEffects.map((effect) => {
-    if (effect.effect.name === 'Bitcrusher') return <BitcrusherEffect key={effect.id} id={effect.id} />;
-    if (effect.effect.name === 'Compressor') return <CompressorEffect key={effect.id} id={effect.id} />;
-    if (effect.effect.name === 'Chorus') return <ChorusEffect key={effect.id} id={effect.id} />;
-    if (effect.effect.name === 'Delay') return <DelayEffect key={effect.id} id={effect.id} />;
-    if (effect.effect.name === 'Filter') return <FilterEffect key={effect.id} id={effect.id} />;
-    if (effect.effect.name === 'MoogFilter') return <MoogFilterEffect key={effect.id} id={effect.id} />;
-    if (effect.effect.name === 'Overdrive') return <OverdriveEffect key={effect.id} id={effect.id} />;
-    if (effect.effect.name === 'Panner') return <PannerEffect key={effect.id} id={effect.id} />;
-    if (effect.effect.name === 'Phaser') return <PhaserEffect key={effect.id} id={effect.id} />;
-    if (effect.effect.name === 'PingPongDelay') return <PingPongDelayEffect key={effect.id} id={effect.id} />;
-    if (effect.effect.name === 'Convolver') return <ReverbEffect key={effect.id} id={effect.id} />;
-    if (effect.effect.name === 'Tremolo') return <TremoloEffect key={effect.id} id={effect.id} />;
-    if (effect.effect.name === 'WahWah') return <WahWahEffect key={effect.id} id={effect.id} />;
+    if (effect.effect.name === 'Bitcrusher')
+      return <BitcrusherEffect key={effect.id} id={effect.id} />;
+    if (effect.effect.name === 'Compressor')
+      return <CompressorEffect key={effect.id} id={effect.id} />;
+    if (effect.effect.name === 'Chorus')
+      return <ChorusEffect key={effect.id} id={effect.id} />;
+    if (effect.effect.name === 'Delay')
+      return <DelayEffect key={effect.id} id={effect.id} />;
+    if (effect.effect.name === 'Filter')
+      return <FilterEffect key={effect.id} id={effect.id} />;
+    if (effect.effect.name === 'MoogFilter')
+      return <MoogFilterEffect key={effect.id} id={effect.id} />;
+    if (effect.effect.name === 'Overdrive')
+      return <OverdriveEffect key={effect.id} id={effect.id} />;
+    if (effect.effect.name === 'Panner')
+      return <PannerEffect key={effect.id} id={effect.id} />;
+    if (effect.effect.name === 'Phaser')
+      return <PhaserEffect key={effect.id} id={effect.id} />;
+    if (effect.effect.name === 'PingPongDelay')
+      return <PingPongDelayEffect key={effect.id} id={effect.id} />;
+    if (effect.effect.name === 'Convolver')
+      return <ReverbEffect key={effect.id} id={effect.id} />;
+    if (effect.effect.name === 'Tremolo')
+      return <TremoloEffect key={effect.id} id={effect.id} />;
+    if (effect.effect.name === 'WahWah')
+      return <WahWahEffect key={effect.id} id={effect.id} />;
   });
 
   return (
-    <><h1>synthinator</h1>
-    <section className={styles.Container}>
+    <>
+      <h1>synthinator</h1>
+      <section className={styles.Container}>
+        <section className={styles.OScope}>{OScope}</section>
 
-      <section className={styles.OScope}>{OScope}</section>
-      <KeyboardEventHandler
-        handleKeys={['all']}
-        onKeyEvent={(key, e) => keyDown(e)}
-      />
+        <Piano
+          className="PianoRetroTheme"
+          noteRange={{ first: firstNote, last: 64 }}
+          playNote={noteOn}
+          stopNote={noteOff}
+          width={1000}
+          keyboardShortcuts={keyboardShortcuts}
+        />
 
-      <KeyboardEventHandler
-        handleKeys={['all']}
-        handleEventType="keyup"
-        onKeyEvent={(key, e) => keyUp(e)}
-      />
-
-
-      <Keyboard />
-      <Waveshapes />
-      <Effects />
-      <div className={styles.effectsDrawer}>{effectNodes}</div>
-    </section>
+        <Waveshapes />
+        <Effects />
+        <div className={styles.effectsDrawer}>{effectNodes}</div>
+      </section>
     </>
   );
 }
