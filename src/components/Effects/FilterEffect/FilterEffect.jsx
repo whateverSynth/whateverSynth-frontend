@@ -30,12 +30,7 @@ const FilterEffect = ({ id }) => {
           ></input>
           <h2>filter</h2>
           <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
-          <button
-            className={styles.buttonClose}
-            onClick={() => handleRemoveEffect(id)}
-          >
-            x
-          </button>
+
         </header>
         <section>
           <input
@@ -53,19 +48,18 @@ const FilterEffect = ({ id }) => {
               text={filter?.settings.frequency}
               placeholder=""
               type="input"
-              name="frequency"
             >
               <input
-                type="text"
                 name="frequency"
+                type="number"
+                min="20"
+                max="22050"
                 placeholder=""
                 value={filter?.settings.frequency}
-                onChange={e => handleEffectChange(e.target.value, id)}
+                onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
             </Editable>
-
-          frequency: <p>{filter?.settings.frequency}</p>
           </label>
         </section>
 
