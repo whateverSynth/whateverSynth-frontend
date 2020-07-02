@@ -2,7 +2,8 @@ import React from 'react';
 import {
   useHandleEffectChange,
   useHandleRemoveEffect,
-  useNewEffectSettings
+  useNewEffectSettings,
+  useHandleFilterSlider
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
@@ -14,6 +15,7 @@ const FilterEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
+  const handleFilterSlider = useHandleFilterSlider();
   let filter = newEffectSettings.find(setting => setting.id === id);
   if(!filter) filter = { settings: defaultFilterSettings };
 
@@ -96,9 +98,9 @@ const FilterEffect = ({ id }) => {
           </label>
         </section>
         <section>
-          <Slider name="freqQ" axis="xy" x={filter?.settings.frequency} y={filter?.settings.Q} xmin="20"
-            xmax="22050" ymin="0.001"
-            ymax="100" yreverse="true" styles={{
+          <Slider name="freqGain" axis="xy" x={filter?.settings.frequency} y={filter?.settings.gain} xmin={20}
+            xmax={22050} ymin={-40}
+            ymax={40} yreverse="true" styles={{
 
               track: {
                 backgroundColor: 'black',
@@ -110,6 +112,7 @@ const FilterEffect = ({ id }) => {
                 height: 12,
               },
             }}
+            onChange={(e) => handleFilterSlider(e, id)}
           />
         </section>
         <section>

@@ -64,6 +64,13 @@ export const EffectsProvider = ({ children }) => {
     }
   };
 
+  const handleFilterSlider = (target, id) => {
+    const oldEffects = newEffectSettings.filter(effectSetting => effectSetting.id !== id);
+    let effectToUpdate = newEffectSettings.find(effectSetting => effectSetting.id === id);
+    effectToUpdate.settings = { ...effectToUpdate.settings, frequency: target.x, gain: target.y };
+    setNewEffectSettings([...oldEffects, effectToUpdate]);
+  };
+
   const handleCompressor = ({ target }, id) => {
     const oldEffects = newEffectSettings.filter(effectSetting => effectSetting.id !== id);
     let effectToUpdate = newEffectSettings.find(effectSetting => effectSetting.id === id);
@@ -106,6 +113,7 @@ export const EffectsProvider = ({ children }) => {
         handleAddEffect,
         handleRemoveEffect,
         handleEffectChange,
+        handleFilterSlider,
         handleCompressor,
         handleWahWah,
         newEffects,
@@ -156,6 +164,11 @@ export const useHandleRemoveEffect = () => {
 export const useHandleEffectChange = () => {
   const { handleEffectChange } = useContext(EffectsContext);
   return handleEffectChange;
+};
+
+export const useHandleFilterSlider = () => {
+  const { handleFilterSlider } = useContext(EffectsContext);
+  return handleFilterSlider;
 };
 
 export const useHandleCompressor = () => {
