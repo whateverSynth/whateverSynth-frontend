@@ -250,7 +250,9 @@ export default function Synth() {
   });
 
   return (
+    <><h1>synthinator</h1>
     <section className={styles.Container}>
+
       <section className={styles.OScope}>{OScope}</section>
       <KeyboardEventHandler
         handleKeys={['all']}
@@ -263,11 +265,12 @@ export default function Synth() {
         onKeyEvent={(key, e) => keyUp(e)}
       />
 
-      <h1>synthinator</h1>
+
       <Keyboard />
       <Waveshapes />
       <Effects />
       <div className={styles.effectsDrawer}>{effectNodes}</div>
     </section>
+    </>
   );
 }

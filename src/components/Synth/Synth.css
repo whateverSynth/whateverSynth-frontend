@@ -7,9 +7,9 @@
 .Container {
   display: grid;
   justify-content: center;
-  position: absolute;
-  top: 15rem;
-  left: 0;
+  position: relative;
+  margin: 0 auto;
+  top: 13.5rem;
 
   p {
     color: #00ff9f;
@@ -32,19 +32,21 @@
 
 canvas {
   background-color: hsla(198, 97%, 56%, 1);
-  width: 60%;
   border: 0.25rem solid #d600ff;
-  border-radius: 100%;
+  border-radius: 100% 100% 5rem 5rem;
   position: absolute;
-  top: 0.5rem;
-  right: 1rem;
+  top: 1.5rem;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  max-height: 13rem;
+  max-width: 100%;
 }
 
 h1 {
   color: #00ff9f;
   font-size: 1.4rem;
-  position: absolute;
-  top: -4rem;
+  position: relative;
+  top: 0;
   left: 1rem;
 }
 .Radio {
