@@ -9,7 +9,7 @@
   justify-content: center;
   position: relative;
   margin: 0 auto;
-  top: 13.5rem;
+  top: 20rem;
 
   p {
     color: #00ff9f;
@@ -35,10 +35,10 @@ canvas {
   border: 0.25rem solid #d600ff;
   border-radius: 100% 100% 5rem 5rem;
   position: absolute;
-  top: 1.5rem;
+  top: 2.5rem;
   left: 50%;
   transform: translate(-50%, 0%);
-  max-height: 13rem;
+  max-height: 20rem;
   max-width: 100%;
 }
 
