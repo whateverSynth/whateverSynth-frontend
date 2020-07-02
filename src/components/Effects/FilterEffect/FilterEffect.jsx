@@ -7,6 +7,7 @@ import {
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 import Slider from 'react-input-slider';
+import Editable from '../../global/Editable';
 import { defaultFilterSettings } from '../../../utils/data';
 
 const FilterEffect = ({ id }) => {
@@ -47,7 +48,23 @@ const FilterEffect = ({ id }) => {
             onChange={(e) => handleEffectChange(e, id)}
             name="frequency"
           ></input>
-          <label>
+          <label>frequency:
+            <Editable
+              text={filter?.settings.frequency}
+              placeholder=""
+              type="input"
+              name="frequency"
+            >
+              <input
+                type="text"
+                name="frequency"
+                placeholder=""
+                value={filter?.settings.frequency}
+                onChange={e => handleEffectChange(e.target.value, id)}
+                autoFocus
+              />
+            </Editable>
+
           frequency: <p>{filter?.settings.frequency}</p>
           </label>
         </section>
