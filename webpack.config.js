@@ -2,32 +2,31 @@ const HtmlPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const CopyPlugin = require('copy-webpack-plugin');
+const path = require('path');
 
 // eslint-disable-next-line
 module.exports = {
   entry: './src/index.js',
   output: {
     filename: 'bundle.[hash].js',
-    publicPath: '/'
+    publicPath: '/',
   },
   devServer: {
     port: 7891,
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlPlugin({ template: './src/index.html' }),
     new CleanWebpackPlugin(),
     new Dotenv({
-      systemvars: true
+      systemvars: true,
     }),
     new CopyPlugin({
-      patterns: [
-        { from: 'public' },
-      ]
-    })
+      patterns: [{ from: 'public' }],
+    }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
@@ -37,23 +36,24 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            cacheDirectory: true
-          }
-        }
+            cacheDirectory: true,
+          },
+        },
       },
       {
         test: /\.css$/,
+        exclude: /node_modules/,
         use: [
           {
-            loader: 'style-loader'
+            loader: 'style-loader',
           },
           {
             loader: 'css-loader',
             options: {
               sourceMap: true,
               modules: true,
-              importLoaders: 1
-            }
+              importLoaders: 1,
+            },
           },
           {
             loader: 'postcss-loader',
@@ -63,11 +63,41 @@ module.exports = {
                 require('postcss-import')(),
                 require('autoprefixer')(),
                 require('postcss-nested')(),
-                require('postcss-simple-vars')()
-              ]
-            }
-          }
-        ]
+                require('postcss-simple-vars')(),
+              ],
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        include: [path.resolve(__dirname, './node_modules/react-piano/dist/')],
+
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              modules: false,
+              importLoaders: 1,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              plugins: [
+                require('postcss-import')(),
+                require('autoprefixer')(),
+                require('postcss-nested')(),
+                require('postcss-simple-vars')(),
+              ],
+            },
+          },
+        ],
       },
       {
         test: /\.svg$/,
@@ -79,7 +109,7 @@ module.exports = {
           loader: 'url-loader',
           options: { limit: 1000 },
         },
-      }
-    ]
-  }
+      },
+    ],
+  },
 };
