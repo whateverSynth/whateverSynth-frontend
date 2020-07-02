@@ -54,6 +54,7 @@ const FilterEffect = ({ id }) => {
                 type="number"
                 min="20"
                 max="22050"
+                step="10"
                 placeholder=""
                 value={filter?.settings.frequency}
                 onChange={e => handleEffectChange(e, id)}
@@ -85,6 +86,7 @@ const FilterEffect = ({ id }) => {
                 type="number"
                 min="0.001"
                 max="100"
+                step="1"
                 placeholder=""
                 value={filter?.settings.Q}
                 onChange={e => handleEffectChange(e, id)}
@@ -133,6 +135,7 @@ const FilterEffect = ({ id }) => {
                 min="-40"
                 max="40"
                 placeholder="0"
+                step="0.5"
                 value={filter?.settings.gain}
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
