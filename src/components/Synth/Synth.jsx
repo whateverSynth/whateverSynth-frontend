@@ -27,7 +27,7 @@ import CompressorEffect from '../Effects/CompressorEffect/CompressorEffect';
 import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEffect';
 import Oscilloscope from 'oscilloscope';
 
-import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
+import { Piano, KeyboardShortcuts, MidiNumbers, midiNumber } from 'react-piano';
 import 'react-piano/dist/styles.css';
 
 let audioCtx;
@@ -130,17 +130,17 @@ export default function Synth() {
   }, [gainSetting]);
 
   // HANDLES CREATION & STORING OF OSCILLATORS
-  const playNote = (key) => {
-    const osc = audioCtx.createOscillator();
-    osc.frequency.setValueAtTime(
-      keyboardFrequencyMap[key],
-      audioCtx.currentTime
-    );
-    osc.type = waveshape;
-    activeOscillators[key] = osc;
-    activeOscillators[key].connect(inputGain);
-    activeOscillators[key].start();
-  };
+  // const playNote = (key) => {
+  //   const osc = audioCtx.createOscillator();
+  //   osc.frequency.setValueAtTime(
+  //     keyboardFrequencyMap[key],
+  //     audioCtx.currentTime
+  //   );
+  //   osc.type = waveshape;
+  //   activeOscillators[key] = osc;
+  //   activeOscillators[key].connect(inputGain);
+  //   activeOscillators[key].start();
+  // };
 
   const firstNote = MidiNumbers.fromNote('c3');
   const lastNote = MidiNumbers.fromNote('f5');
@@ -311,7 +311,7 @@ export default function Synth() {
 
         <Piano
           className="PianoRetroTheme"
-          noteRange={{ first: firstNote, last: 64 }}
+          noteRange={{ first: 45, last: 67 }}
           playNote={noteOn}
           stopNote={noteOff}
           width={1000}
