@@ -9,7 +9,7 @@
   justify-content: center;
   position: relative;
   margin: 0 auto;
-  top: 20rem;
+  top: 13rem;
 
   p {
     color: #00ff9f;
@@ -30,16 +30,18 @@
   height: 10rem;
 }
 
+
 canvas {
-  background-color: hsla(198, 97%, 56%, 1);
-  border: 0.25rem solid #d600ff;
-  border-radius: 100% 100% 5rem 5rem;
-  position: absolute;
+  background-color: hsla(154,98%,58%,1.00);
+  border: 1rem solid hsl(0, 0%, 0%);
+  border-radius: 100%;
+  position: relative;
   top: 2.5rem;
   left: 50%;
   transform: translate(-50%, 0%);
-  max-height: 20rem;
+  max-height: 12rem;
   max-width: 100%;
+  box-shadow: 0 0 0 15px hsla(240,4%,41%,1.00)
 }
 
 h1 {
