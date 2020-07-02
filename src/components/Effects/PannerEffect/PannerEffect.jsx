@@ -44,17 +44,6 @@ const PannerEffect = ({ id }) => {
           ></input>
           <label>R</label>
         </section>
-
-        <input
-          type="checkbox"
-          value={pannerSettings.bypass}
-          onChange={handlePanner}
-          name="bypass"
-          id="pannerBypass"
-        ></input>
-        <label htmlFor="pannerBypass" className={styles.bypass}>
-          bypass
-        </label>
       </main>
     </div>
   );

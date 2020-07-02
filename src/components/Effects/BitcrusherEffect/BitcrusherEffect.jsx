@@ -76,17 +76,6 @@ const BitcrusherEffect = ({ id }) => {
           buffer size: <p>{bitcrusher?.settings.bufferSize}</p>
           </label>
         </section>
-
-        <input
-          type="checkbox"
-          value={bitcrusherSettings.bypass}
-          onChange={handleBitcrusher}
-          name="bypass"
-          id="bypass"
-        ></input>
-        <label htmlFor="bypass" className={styles.bypass}>
-          bypass
-        </label>
       </main>
     </section>
   );

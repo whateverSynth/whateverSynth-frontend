@@ -31,7 +31,7 @@ const FilterEffect = ({ id }) => {
           <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
           <button
             className={styles.buttonClose}
-            onClick={() => handleRemoveEffect('Filter')}
+            onClick={() => handleRemoveEffect(id)}
           >
             x
           </button>
@@ -112,17 +112,6 @@ const FilterEffect = ({ id }) => {
             <option value="allpass">allpass</option>
           </select>
         </section>
-
-        <input
-          type="checkbox"
-          value={filterSettings.bypass}
-          onChange={handleFilter}
-          name="bypass"
-          id="filterBypass"
-        ></input>
-        <label htmlFor="filterBypass" className={styles.bypass}>
-          bypass
-        </label>
       </main>
     </section>
   );
