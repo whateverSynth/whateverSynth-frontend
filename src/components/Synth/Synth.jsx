@@ -55,8 +55,8 @@ export default function Synth() {
     outputGain = audioCtx.createGain();
 
     canvas = document.createElement('canvas');
-    canvas.width = 600;
-    canvas.height = 600;
+    canvas.width = 400;
+    canvas.height = 400;
 
     document.body.appendChild(canvas);
 
@@ -82,7 +82,7 @@ export default function Synth() {
       scope = new Oscilloscope(outputGain);
       const context = canvas.getContext('2d');
       context.strokeStyle = '#2BFDA2';
-      context.lineWidth = 12;
+      context.lineWidth = 15;
       // console.log(context);
 
       OScope = scope.animate(context);
