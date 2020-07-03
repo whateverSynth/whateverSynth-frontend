@@ -110,7 +110,24 @@ const CompressorEffect = ({ id }) => {
             name="attack"
           ></input>
           <label>
-          attack: <p>{compressor?.settings.attack}</p>
+          attack:
+            <Editable
+              text={compressor?.settings.attack}
+              placeholder=""
+              type="input"
+            >
+              <input
+                name="attack"
+                type="number"
+                min="0"
+                max="1000"
+                value={compressor?.settings.attack}
+                step="1"
+                placeholder=""
+                onChange={(e) => handleCompressor(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -126,7 +143,24 @@ const CompressorEffect = ({ id }) => {
             name="release"
           ></input>
           <label>
-          release: <p>{compressor?.settings.release}</p>
+          release:
+            <Editable
+              text={compressor?.settings.release}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="release"
+                type="number"
+                min="0"
+                max="1000"
+                value={compressor?.settings.release}
+                step="1"
+                placeholder="0"
+                onChange={(e) => handleCompressor(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -142,7 +176,24 @@ const CompressorEffect = ({ id }) => {
             name="ratio"
           ></input>
           <label>
-          ratio: <p>{compressor?.settings.ratio}</p>
+          ratio:
+            <Editable
+              text={compressor?.settings.ratio}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="ratio"
+                type="number"
+                min="1"
+                max="20"
+                value={compressor?.settings.ratio}
+                step="1"
+                placeholder="0"
+                onChange={(e) => handleCompressor(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -158,7 +209,24 @@ const CompressorEffect = ({ id }) => {
             name="knee"
           ></input>
           <label>
-          knee: <p>{compressor?.settings.knee}</p>
+          knee:
+            <Editable
+              text={compressor?.settings.knee}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="knee"
+                type="number"
+                min="0"
+                max="40"
+                value={compressor?.settings.knee}
+                step="1"
+                placeholder="0"
+                onChange={(e) => handleCompressor(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
