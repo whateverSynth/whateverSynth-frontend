@@ -43,7 +43,6 @@ export default function Synth() {
 
   const waveshape = useWaveshape();
   const gainSetting = useGainSetting();
-  
 
   // NEW EFFECT STATE
   const newEffects = useNewEffects();
