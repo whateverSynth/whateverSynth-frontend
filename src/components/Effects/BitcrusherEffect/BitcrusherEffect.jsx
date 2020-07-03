@@ -74,7 +74,6 @@ const BitcrusherEffect = ({ id }) => {
                 value={bitcrusher?.settings.bits}
                 step="1"
                 placeholder=""
-                value={bitcrusher?.settings.bits}
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />

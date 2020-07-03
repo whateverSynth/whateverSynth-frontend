@@ -42,7 +42,25 @@ const ChorusEffect = ({ id }) => {
             name="rate"
           ></input>
           <label>
-          rate: <p>{chorus?.settings.rate} Hz</p>
+          rate:
+            <Editable
+              text={chorus?.settings.rate}
+              placeholder=""
+              type="input"
+            >
+              <input
+                name="rate"
+                type="number"
+                min="0.01"
+                max="8"
+                value={chorus?.settings.rate}
+                step="0.01"
+                placeholder=""
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
+            <p> Hz</p>
           </label>
         </section>
 
@@ -58,7 +76,24 @@ const ChorusEffect = ({ id }) => {
             name="feedback"
           ></input>
           <label>
-          feedback: <p>{Math.floor(chorus?.settings.feedback * 100)} %</p>
+          feedback:
+            <Editable
+              text={(Math.floor(chorus?.settings.feedback * 100) + '%')}
+              placeholder=""
+              type="input"
+            >
+              <input
+                name="rate"
+                type="number"
+                min="0"
+                max="1"
+                value={chorus?.settings.feedback}
+                step="0.05"
+                placeholder=""
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -74,7 +109,24 @@ const ChorusEffect = ({ id }) => {
             name="delay"
           ></input>
           <label>
-          delay: <p>{Math.floor(chorus?.settings.delay * 100)} %</p>
+          delay:
+            <Editable
+              text={(Math.floor(chorus?.settings.delay * 100) + '%')}
+              placeholder=""
+              type="input"
+            >
+              <input
+                name="delay"
+                type="number"
+                min="0"
+                max="1"
+                value={chorus?.settings.delay}
+                step="0.1"
+                placeholder=""
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
       </main>
