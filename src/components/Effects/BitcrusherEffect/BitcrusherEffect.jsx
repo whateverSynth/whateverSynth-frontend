@@ -7,6 +7,7 @@ import {
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 import { defaultBitcrusherSettings } from '../../../utils/data';
+import Editable from '../../global/Editable';
 import { Knob } from 'react-rotary-knob';
 
 const BitcrusherEffect = ({ id }) => {
@@ -59,7 +60,26 @@ const BitcrusherEffect = ({ id }) => {
           />
 
           <label>
-          bits: <p>{bitcrusher?.settings.bits}</p>
+          bits:
+            <Editable
+              text={bitcrusher?.settings.bits}
+              placeholder=""
+              type="input"
+            >
+              <input
+                name="bits"
+                type="number"
+                min="1"
+                max="16"
+                value={bitcrusher?.settings.bits}
+                step="1"
+                placeholder=""
+                value={bitcrusher?.settings.bits}
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
+
           </label>
         </section>
 
@@ -75,7 +95,24 @@ const BitcrusherEffect = ({ id }) => {
             name="normfreq"
           ></input>
           <label>
-          norm freq: <p>{Math.floor(bitcrusher?.settings.normfreq * 100)} %</p>
+          norm freq:
+            <Editable
+              text={(Math.floor(bitcrusher?.settings.normfreq * 100) + '%')}
+              placeholder=""
+              type="input"
+            >
+              <input
+                name="normfreq"
+                type="number"
+                placeholder=""
+                min="0"
+                max="1"
+                value={(bitcrusher?.settings.normfreq)}
+                step="0.1"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -91,7 +128,27 @@ const BitcrusherEffect = ({ id }) => {
             name="bufferSize"
           ></input>
           <label>
-          buffer size: <p>{bitcrusher?.settings.bufferSize}</p>
+          buffer size:
+            <Editable
+              text={bitcrusher?.settings.bufferSize}
+              placeholder=""
+              type="input"
+            >
+              <input
+                name="bufferSize"
+                type="number"
+                min="256"
+                max="16384"
+                step="10"
+                placeholder=""
+                value={bitcrusher?.settings.bufferSize}
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
+
+
+
           </label>
         </section>
       </main>
