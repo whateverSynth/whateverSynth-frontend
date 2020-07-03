@@ -6,6 +6,7 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import Editable from '../../global/Editable';
 import { defaultCompressorSettings } from '../../../utils/data';
 
 const CompressorEffect = ({ id }) => {
@@ -41,7 +42,25 @@ const CompressorEffect = ({ id }) => {
             name="threshold"
           ></input>
           <label>
-          threshold: <p>{compressor?.settings.threshold} db</p>
+          threshold:
+            <Editable
+              text={compressor?.settings.threshold}
+              placeholder=""
+              type="input"
+            >
+              <input
+                name="threshold"
+                type="number"
+                min="-100"
+                max="0"
+                value={compressor?.settings.threshold}
+                step="1"
+                placeholder=""
+                onChange={(e) => handleCompressor(e, id)}
+                autoFocus
+              />
+            </Editable>
+            <p> db</p>
           </label>
         </section>
 
@@ -57,7 +76,25 @@ const CompressorEffect = ({ id }) => {
             name="makeupGain"
           ></input>
           <label>
-          makeup gain: <p>{compressor?.settings.makeupGain} db</p>
+          makeup gain:
+            <Editable
+              text={compressor?.settings.makeupGain}
+              placeholder=""
+              type="input"
+            >
+              <input
+                name="makeupGain"
+                type="number"
+                min="0"
+                max="20"
+                value={compressor?.settings.makeupGain}
+                step="1"
+                placeholder=""
+                onChange={(e) => handleCompressor(e, id)}
+                autoFocus
+              />
+            </Editable>
+            <p> db</p>
           </label>
         </section>
 
