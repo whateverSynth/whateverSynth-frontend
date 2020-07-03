@@ -33,15 +33,14 @@
 
 canvas {
   background-color: hsla(154,98%,58%,1.00);
-  border: 1rem solid hsl(0, 0%, 0%);
+  border: 1.4rem solid hsl(0, 0%, 0%);
   border-radius: 100%;
   position: absolute;
   top: 2.5rem;
   left: 50%;
   transform: translate(-50%, 0%);
-  max-height: 10rem;
-  max-width: 100%;
-  box-shadow: 0 0 0 15px hsla(240,4%,41%,1.00)
+  max-height: 9rem;
+  box-shadow: 0 0 0 .15rem hsla(218,4%,64%,1.00), 0 0 0 1rem hsla(240,4%,41%,1.00);
 }
 
 h1 {

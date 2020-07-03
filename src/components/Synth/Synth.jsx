@@ -55,8 +55,8 @@ export default function Synth() {
     outputGain = audioCtx.createGain();
 
     canvas = document.createElement('canvas');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight - 400;
+    canvas.width = 600;
+    canvas.height = 600;
 
     document.body.appendChild(canvas);
 
