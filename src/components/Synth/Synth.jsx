@@ -82,7 +82,7 @@ export default function Synth() {
       scope = new Oscilloscope(outputGain);
       const context = canvas.getContext('2d');
       context.strokeStyle = '#2BFDA2';
-      context.lineWidth = 15;
+      context.lineWidth = 5;
       // console.log(context);
 
       OScope = scope.animate(context);
