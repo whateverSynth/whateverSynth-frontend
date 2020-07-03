@@ -36,13 +36,14 @@ let OScope;
 let canvas;
 let midiAccess = null;
 let activeNotes = [];
+const activeOscillators = {};
 
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
 
   const waveshape = useWaveshape();
   const gainSetting = useGainSetting();
-  const activeOscillators = {};
+  
 
   // NEW EFFECT STATE
   const newEffects = useNewEffects();
@@ -132,18 +133,6 @@ export default function Synth() {
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
 
-  const removeFocus = (event) => {
-    if (event.target.type === 'select-one') return;
-    else {
-      event.target.blur();
-      Object.values(activeOscillators).forEach((oscillator) => {
-        oscillator.stop();
-      });
-    }
-  };
-
-  window.addEventListener('mouseup', removeFocus);
-
   //MIDI
   const noteOn = (noteNumber) => {
     const osc = audioCtx.createOscillator();
@@ -162,12 +151,13 @@ export default function Synth() {
     if (position !== -1) {
       activeNotes.splice(position, 1);
     }
+    console.log(activeOscillators);
     if (activeNotes.length === 0) {
       // shut off the envelope
-      activeOscillators[noteNumber].stop();
+      activeOscillators[noteNumber]?.stop();
       delete activeOscillators[noteNumber];
     } else {
-      activeOscillators[noteNumber].stop();
+      activeOscillators[noteNumber]?.stop();
       delete activeOscillators[noteNumber];
     }
   };
