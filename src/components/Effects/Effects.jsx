@@ -28,7 +28,12 @@ export default function Effects() {
         <option value="Tremolo">tremolo</option>
         <option value="WahWah">wahwah</option>
       </select>
-      <button onClick={() => handleAddEffect(selectedEffect)}>+</button>
+      <button
+        className={styles.addEffect}
+        onClick={() => handleAddEffect(selectedEffect)}
+      >
+        +
+      </button>
     </section>
   );
 }
