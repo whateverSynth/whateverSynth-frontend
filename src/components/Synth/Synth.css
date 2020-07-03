@@ -98,9 +98,10 @@ h1 {
   color: #00ff9f;
   font-size: 1.4rem;
   position: relative;
-  top: 0;
-  left: 1rem;
+  top: 1;
+  left: 0.5rem;
 }
+
 .Radio {
   display: flex;
   flex-direction: row;
@@ -109,22 +110,4 @@ h1 {
 .effectsDrawer {
   display: flex;
   flex-wrap: wrap;
-}
-
-/* PianoDarkTheme */
-
-.PianoDarkTheme .ReactPiano__Key--accidental {
-  background: #025d7d;
-  border: 1px solid #888;
-}
-.PianoDarkTheme .ReactPiano__Key--natural {
-  background: #013243;
-  border: 1px solid #888;
-  margin-right: 0;
-}
-.PianoDarkTheme .ReactPiano__Key--active.ReactPiano__Key--accidental {
-  background: #0396ca;
-}
-.PianoDarkTheme .ReactPiano__Key--active.ReactPiano__Key--natural {
-  background: #0396ca;
 }
