@@ -18,7 +18,7 @@
 
   select {
     -webkit-appearance: none;
-    background-color: #00ff9f;
+    background-color: hsl(157, 100%, 50%);
     outline: none;
     border: dotted #d600ff;
     border-width: 2px 2px 2px 2px;
@@ -32,7 +32,7 @@
 
 
 canvas {
-  background-color: hsla(154,98%,58%,1.00);
+  background-color: hsla(154,98%,38%,1.00);
   border: 1.4rem solid hsl(0, 0%, 0%);
   border-radius: 100%;
   position: absolute;

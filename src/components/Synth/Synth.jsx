@@ -81,8 +81,8 @@ export default function Synth() {
       outputGain.connect(audioCtx.destination);
       scope = new Oscilloscope(outputGain);
       const context = canvas.getContext('2d');
-      context.strokeStyle = '#d600ff';
-      context.lineWidth = 2;
+      context.strokeStyle = '#2BFDA2';
+      context.lineWidth = 12;
       // console.log(context);
 
       OScope = scope.animate(context);
