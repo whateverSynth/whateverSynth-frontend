@@ -45,7 +45,7 @@ const PhaserEffect = ({ id }) => {
           rate:
             <Editable
               text={(Math.floor(phaser?.settings.rate * 100) + ' Hz')}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -55,7 +55,7 @@ const PhaserEffect = ({ id }) => {
                 max="8"
                 value={phaser?.settings.rate}
                 step="0.01"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -79,7 +79,7 @@ const PhaserEffect = ({ id }) => {
           depth:
             <Editable
               text={(Math.floor(phaser?.settings.depth * 100) + '%')}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -89,7 +89,7 @@ const PhaserEffect = ({ id }) => {
                 max="1"
                 value={phaser?.settings.depth}
                 step="0.01"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -112,7 +112,7 @@ const PhaserEffect = ({ id }) => {
           feedback:
             <Editable
               text={(Math.floor(phaser?.settings.feedback * 100) + '%')}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -122,7 +122,7 @@ const PhaserEffect = ({ id }) => {
                 max="1"
                 value={phaser?.settings.feedback}
                 step="0.05"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />

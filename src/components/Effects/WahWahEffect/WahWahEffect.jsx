@@ -6,6 +6,7 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import Editable from '../../global/Editable';
 import { defaultWahWahSettings } from '../../../utils/data';
 
 const WahWahEffect = ({ id }) => {
@@ -55,7 +56,24 @@ const WahWahEffect = ({ id }) => {
             name="baseFrequency"
           ></input>
           <label>
-          base freq: <p>{wahwah?.settings.baseFrequency}</p>
+          base freq:
+            <Editable
+              text={wahwah?.settings.baseFrequency}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="baseFrequency"
+                type="number"
+                min="0"
+                max="1"
+                value={wahwah?.settings.baseFrequency}
+                step="0.01"
+                placeholder="0"
+                onChange={e => handleWahWah(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -71,7 +89,24 @@ const WahWahEffect = ({ id }) => {
             name="excursionOctaves"
           ></input>
           <label>
-          excursion octaves: <p>{wahwah?.settings.excursionOctaves}</p>
+          excursion octaves:
+            <Editable
+              text={wahwah?.settings.excursionOctaves}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="excursionOctaves"
+                type="number"
+                min="1"
+                max="6"
+                value={wahwah?.settings.excursionOctaves}
+                step="1"
+                placeholder="0"
+                onChange={e => handleWahWah(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -87,7 +122,24 @@ const WahWahEffect = ({ id }) => {
             name="sweep"
           ></input>
           <label>
-          sweep: <p>{Math.floor(wahwah?.settings.sweep * 100)} %</p>
+          sweep:
+            <Editable
+              text={(Math.floor(wahwah?.settings.sweep * 100) + '%')}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="sweep"
+                type="number"
+                min="0"
+                max="1"
+                value={wahwah?.settings.sweep}
+                step="0.05"
+                placeholder="0"
+                onChange={e => handleWahWah(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -103,7 +155,25 @@ const WahWahEffect = ({ id }) => {
             name="resonance"
           ></input>
           <label>
-          resonance: <p>{wahwah?.settings.resonance} %</p>
+          resonance:
+            <Editable
+              text={wahwah?.settings.resonance}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="resonance"
+                type="number"
+                min="1"
+                max="100"
+                value={wahwah?.settings.resonance}
+                step="0.1"
+                placeholder="0"
+                onChange={e => handleWahWah(e, id)}
+                autoFocus
+              />
+            </Editable>
+            <p>%</p>
           </label>
         </section>
 
@@ -119,7 +189,24 @@ const WahWahEffect = ({ id }) => {
             name="sensitivity"
           ></input>
           <label>
-          sensitivity: <p>{wahwah?.settings.sensitivity}</p>
+          sensitivity:
+            <Editable
+              text={(Math.floor(wahwah?.settings.sensitivity * 100) + '%')}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="sensitivity"
+                type="number"
+                min="-1"
+                max="1"
+                value={wahwah?.settings.sensitivity}
+                step="0.1"
+                placeholder="0"
+                onChange={e => handleWahWah(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
       </main>

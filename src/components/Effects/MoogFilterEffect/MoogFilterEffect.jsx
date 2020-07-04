@@ -45,7 +45,7 @@ const MoogFilterEffect = ({ id }) => {
           cutoff:
             <Editable
               text={(Math.floor(moog?.settings.cutoff * 100) + '%')}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -55,7 +55,7 @@ const MoogFilterEffect = ({ id }) => {
                 max="1"
                 value={moog?.settings.cutoff}
                 step="0.05"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -78,7 +78,7 @@ const MoogFilterEffect = ({ id }) => {
           resonance:
             <Editable
               text={moog?.settings.resonance}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -88,7 +88,7 @@ const MoogFilterEffect = ({ id }) => {
                 max="4"
                 value={moog?.settings.resonance}
                 step="0.5"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -111,7 +111,7 @@ const MoogFilterEffect = ({ id }) => {
           buffer size:
             <Editable
               text={moog?.settings.bufferSize}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -121,7 +121,7 @@ const MoogFilterEffect = ({ id }) => {
                 max="16384"
                 value={moog?.settings.bufferSize}
                 step="4"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />

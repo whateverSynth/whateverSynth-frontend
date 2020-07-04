@@ -48,7 +48,7 @@ const FilterEffect = ({ id }) => {
           <label>frequency:
             <Editable
               text={filter?.settings.frequency}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -57,7 +57,7 @@ const FilterEffect = ({ id }) => {
                 min="20"
                 max="22050"
                 step="10"
-                placeholder=""
+                placeholder="0"
                 value={filter?.settings.frequency}
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
@@ -80,7 +80,7 @@ const FilterEffect = ({ id }) => {
           <label>q:
             <Editable
               text={filter?.settings.Q}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -89,7 +89,7 @@ const FilterEffect = ({ id }) => {
                 min="0.001"
                 max="100"
                 step="1"
-                placeholder=""
+                placeholder="0"
                 value={filter?.settings.Q}
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus

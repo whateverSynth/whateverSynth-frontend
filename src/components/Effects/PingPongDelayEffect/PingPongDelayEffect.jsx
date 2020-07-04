@@ -45,7 +45,7 @@ const PingPongDelayEffect = ({ id }) => {
           wet level:
             <Editable
               text={(Math.floor(pingpong?.settings.wetLevel * 100) + '%')}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -55,7 +55,7 @@ const PingPongDelayEffect = ({ id }) => {
                 max="1"
                 value={pingpong?.settings.wetLevel}
                 step="0.1"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -78,7 +78,7 @@ const PingPongDelayEffect = ({ id }) => {
           feedback:
             <Editable
               text={(Math.floor(pingpong?.settings.feedback * 100) + '%')}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -88,7 +88,7 @@ const PingPongDelayEffect = ({ id }) => {
                 max="1"
                 value={pingpong?.settings.feedback}
                 step="0.05"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />

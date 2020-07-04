@@ -45,7 +45,7 @@ const DelayEffect = ({ id }) => {
             feedback:
             <Editable
               text={(Math.floor(delay?.settings.feedback * 100) + '%')}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -55,7 +55,7 @@ const DelayEffect = ({ id }) => {
                 max="1"
                 value={delay?.settings.feedback}
                 step="0.05"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -78,7 +78,7 @@ const DelayEffect = ({ id }) => {
           <label>
             time: <Editable
               text={delay?.settings.delayTime}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -88,7 +88,7 @@ const DelayEffect = ({ id }) => {
                 max="1000"
                 value={delay?.settings.delayTime}
                 step="1"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -112,7 +112,7 @@ const DelayEffect = ({ id }) => {
             wet level:
             <Editable
               text={(Math.floor(delay?.settings.wetLevel * 100) + '%')}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -122,7 +122,7 @@ const DelayEffect = ({ id }) => {
                 max="1"
                 value={delay?.settings.wetLevel}
                 step="0.1"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -145,7 +145,7 @@ const DelayEffect = ({ id }) => {
             dry level:
             <Editable
               text={(Math.floor(delay?.settings.dryLevel * 100) + '%')}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -155,7 +155,7 @@ const DelayEffect = ({ id }) => {
                 max="1"
                 value={delay?.settings.dryLevel}
                 step="0.1"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -178,7 +178,7 @@ const DelayEffect = ({ id }) => {
             cutoff:
             <Editable
               text={delay?.settings.cutoff}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -188,7 +188,7 @@ const DelayEffect = ({ id }) => {
                 max="22050"
                 value={delay?.settings.cutoff}
                 step="10"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />

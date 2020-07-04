@@ -45,7 +45,7 @@ const ReverbEffect = ({ id }) => {
           high cut:
             <Editable
               text={reverb?.settings.highCut}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -55,7 +55,7 @@ const ReverbEffect = ({ id }) => {
                 max="22050"
                 value={reverb?.settings.highCut}
                 step="100"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -79,7 +79,7 @@ const ReverbEffect = ({ id }) => {
           low cut:
             <Editable
               text={reverb?.settings.lowCut}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -89,7 +89,7 @@ const ReverbEffect = ({ id }) => {
                 max="22050"
                 value={reverb?.settings.lowCut}
                 step="100"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />

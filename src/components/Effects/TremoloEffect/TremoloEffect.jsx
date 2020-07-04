@@ -46,7 +46,7 @@ const TremoloEffect = ({ id }) => {
           intensity:
             <Editable
               text={(Math.floor(tremolo?.settings.intensity * 100) + '%')}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -56,7 +56,7 @@ const TremoloEffect = ({ id }) => {
                 max="1"
                 value={tremolo?.settings.intensity}
                 step="0.01"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -79,7 +79,7 @@ const TremoloEffect = ({ id }) => {
           rate:
             <Editable
               text={tremolo?.settings.rate}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -89,7 +89,7 @@ const TremoloEffect = ({ id }) => {
                 max="8"
                 value={tremolo?.settings.rate}
                 step="0.01"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />

@@ -45,7 +45,7 @@ const CompressorEffect = ({ id }) => {
           threshold:
             <Editable
               text={compressor?.settings.threshold}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -55,7 +55,7 @@ const CompressorEffect = ({ id }) => {
                 max="0"
                 value={compressor?.settings.threshold}
                 step="1"
-                placeholder=""
+                placeholder="0"
                 onChange={(e) => handleCompressor(e, id)}
                 autoFocus
               />
@@ -79,7 +79,7 @@ const CompressorEffect = ({ id }) => {
           makeup gain:
             <Editable
               text={compressor?.settings.makeupGain}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -89,7 +89,7 @@ const CompressorEffect = ({ id }) => {
                 max="20"
                 value={compressor?.settings.makeupGain}
                 step="1"
-                placeholder=""
+                placeholder="0"
                 onChange={(e) => handleCompressor(e, id)}
                 autoFocus
               />
@@ -113,7 +113,7 @@ const CompressorEffect = ({ id }) => {
           attack:
             <Editable
               text={compressor?.settings.attack}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -123,7 +123,7 @@ const CompressorEffect = ({ id }) => {
                 max="1000"
                 value={compressor?.settings.attack}
                 step="1"
-                placeholder=""
+                placeholder="0"
                 onChange={(e) => handleCompressor(e, id)}
                 autoFocus
               />

@@ -67,7 +67,7 @@ const BitcrusherEffect = ({ id }) => {
             bits:
             <Editable
               text={bitcrusher?.settings.bits}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -77,7 +77,7 @@ const BitcrusherEffect = ({ id }) => {
                 max="16"
                 value={bitcrusher?.settings.bits}
                 step="1"
-                placeholder=""
+                placeholder="0"
                 onChange={(e) => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -100,13 +100,13 @@ const BitcrusherEffect = ({ id }) => {
             norm freq:
             <Editable
               text={Math.floor(bitcrusher?.settings.normfreq * 100) + '%'}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
                 name="normfreq"
                 type="number"
-                placeholder=""
+                placeholder="0"
                 min="0"
                 max="1"
                 value={bitcrusher?.settings.normfreq}
@@ -133,7 +133,7 @@ const BitcrusherEffect = ({ id }) => {
             buffer size:
             <Editable
               text={bitcrusher?.settings.bufferSize}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -142,7 +142,7 @@ const BitcrusherEffect = ({ id }) => {
                 min="256"
                 max="16384"
                 step="10"
-                placeholder=""
+                placeholder="0"
                 value={bitcrusher?.settings.bufferSize}
                 onChange={(e) => handleEffectChange(e, id)}
                 autoFocus

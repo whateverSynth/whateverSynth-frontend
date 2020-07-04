@@ -46,7 +46,7 @@ const OverdriveEffect = ({ id }) => {
           output gain:
             <Editable
               text={overdrive?.settings.outputGain}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -56,7 +56,7 @@ const OverdriveEffect = ({ id }) => {
                 max="1000"
                 value={overdrive?.settings.outputGain}
                 step="1"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -80,7 +80,7 @@ const OverdriveEffect = ({ id }) => {
           drive:
             <Editable
               text={(Math.floor(overdrive?.settings.drive * 100) + '%')}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -90,7 +90,7 @@ const OverdriveEffect = ({ id }) => {
                 max="1"
                 value={overdrive?.settings.drive}
                 step="0.01"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -113,7 +113,7 @@ const OverdriveEffect = ({ id }) => {
           curve amount:
             <Editable
               text={(Math.floor(overdrive?.settings.curveAmount * 100) + '%')}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -123,7 +123,7 @@ const OverdriveEffect = ({ id }) => {
                 max="1"
                 value={overdrive?.settings.curveAmount}
                 step="0.1"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -143,10 +143,10 @@ const OverdriveEffect = ({ id }) => {
             name="algorithmIndex"
           ></input>
           <label>
-          algorithm # 
+          algorithm #
             <Editable
               text={overdrive?.settings.algorithmIndex}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -156,7 +156,7 @@ const OverdriveEffect = ({ id }) => {
                 max="5"
                 value={overdrive?.settings.algorithmIndex}
                 step="1"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />

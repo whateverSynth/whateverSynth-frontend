@@ -45,7 +45,7 @@ const ChorusEffect = ({ id }) => {
           rate:
             <Editable
               text={chorus?.settings.rate}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -55,7 +55,7 @@ const ChorusEffect = ({ id }) => {
                 max="8"
                 value={chorus?.settings.rate}
                 step="0.01"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -79,7 +79,7 @@ const ChorusEffect = ({ id }) => {
           feedback:
             <Editable
               text={(Math.floor(chorus?.settings.feedback * 100) + '%')}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -89,7 +89,7 @@ const ChorusEffect = ({ id }) => {
                 max="1"
                 value={chorus?.settings.feedback}
                 step="0.05"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
@@ -112,7 +112,7 @@ const ChorusEffect = ({ id }) => {
           delay:
             <Editable
               text={(Math.floor(chorus?.settings.delay * 100) + '%')}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -122,7 +122,7 @@ const ChorusEffect = ({ id }) => {
                 max="1"
                 value={chorus?.settings.delay}
                 step="0.1"
-                placeholder=""
+                placeholder="0"
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
