@@ -44,14 +44,14 @@ const PhaserEffect = ({ id }) => {
           <label>
           rate:
             <Editable
-              text={(Math.floor(phaser?.settings.rate * 100))}
+              text={(Math.floor(phaser?.settings.rate * 100) + ' Hz')}
               placeholder=""
               type="input"
             >
               <input
                 name="rate"
                 type="number"
-                min="0.01"
+                min="0.05"
                 max="8"
                 value={phaser?.settings.rate}
                 step="0.01"
@@ -60,7 +60,7 @@ const PhaserEffect = ({ id }) => {
                 autoFocus
               />
             </Editable>
-            <p> Hz</p>
+
           </label>
         </section>
 
