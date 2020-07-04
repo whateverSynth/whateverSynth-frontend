@@ -143,7 +143,7 @@ const OverdriveEffect = ({ id }) => {
             name="algorithmIndex"
           ></input>
           <label>
-          algorithm #
+          algorithm # 
             <Editable
               text={overdrive?.settings.algorithmIndex}
               placeholder=""
