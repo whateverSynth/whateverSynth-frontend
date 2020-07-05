@@ -87,6 +87,11 @@
   }
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 input[type='checkbox'] {
   margin: 0.5rem 0 0.1rem;
   -webkit-appearance: none;
