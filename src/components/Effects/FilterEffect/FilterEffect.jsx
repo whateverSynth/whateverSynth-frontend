@@ -43,7 +43,7 @@ const FilterEffect = ({ id }) => {
 
                 track: {
                   backgroundColor: 'black',
-                  width: '6rem',
+                  width: '9rem',
                   height: '6rem',
                 },
                 thumb: {
