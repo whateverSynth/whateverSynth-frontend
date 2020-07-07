@@ -2,6 +2,8 @@
   background-color: #001eff;
   font-family: 'Press Start 2P', cursive;
   color: #d600ff;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -moz-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .Container {
@@ -61,7 +63,7 @@
       hsla(154, 98%, 58%, 1) 0%,
       hsla(154, 98%, 78%, 1) 100%
     );
-    border: 0;
+    outline-width: 0;
   }
   p {
     color: #00ff9f;
