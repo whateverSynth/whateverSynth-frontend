@@ -6,6 +6,7 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import Editable from '../../global/Editable';
 import { defaultPhaserSettings } from '../../../utils/data';
 
 const PhaserEffect = ({ id }) => {
@@ -41,7 +42,25 @@ const PhaserEffect = ({ id }) => {
             name="rate"
           ></input>
           <label>
-          rate: <p>{phaser?.settings.rate} Hz</p>
+          rate:
+            <Editable
+              text={(Math.floor(phaser?.settings.rate * 100) + ' Hz')}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="rate"
+                type="number"
+                min="0.05"
+                max="8"
+                value={phaser?.settings.rate}
+                step="0.01"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
+
           </label>
         </section>
 
@@ -57,7 +76,24 @@ const PhaserEffect = ({ id }) => {
             name="depth"
           ></input>
           <label>
-          depth: <p>{Math.floor(phaser?.settings.depth * 100)} %</p>
+          depth:
+            <Editable
+              text={(Math.floor(phaser?.settings.depth * 100) + '%')}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="depth"
+                type="number"
+                min="0"
+                max="1"
+                value={phaser?.settings.depth}
+                step="0.01"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -73,7 +109,24 @@ const PhaserEffect = ({ id }) => {
             name="feedback"
           ></input>
           <label>
-          feedback: <p>{Math.floor(phaser?.settings.feedback * 100)} %</p>
+          feedback:
+            <Editable
+              text={(Math.floor(phaser?.settings.feedback * 100) + '%')}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="feedback"
+                type="number"
+                min="0"
+                max="1"
+                value={phaser?.settings.feedback}
+                step="0.05"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -89,7 +142,25 @@ const PhaserEffect = ({ id }) => {
             name="stereoPhase"
           ></input>
           <label>
-          stereo phase: <p>{phaser?.settings.stereoPhase}°</p>
+          stereo phase:
+            <Editable
+              text={phaser?.settings.stereoPhase}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="stereoPhase"
+                type="number"
+                min="0"
+                max="180"
+                value={phaser?.settings.stereoPhase}
+                step="1"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
+            <p>°</p>
           </label>
         </section>
 
@@ -105,7 +176,25 @@ const PhaserEffect = ({ id }) => {
             name="baseModulationFrequency"
           ></input>
           <label>
-          base mod freq: <p>{phaser?.settings.baseModulationFrequency} Hz</p>
+          base mod freq:
+            <Editable
+              text={phaser?.settings.baseModulationFrequency}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="baseModulationFrequency"
+                type="number"
+                min="500"
+                max="1500"
+                value={phaser?.settings.baseModulationFrequency}
+                step="10"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
+            <p> Hz</p>
           </label>
         </section>
       </main>

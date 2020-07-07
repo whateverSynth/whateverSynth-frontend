@@ -32,23 +32,54 @@ const FilterEffect = ({ id }) => {
           ></input>
           <h2>filter</h2>
           <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
-
         </header>
+
+
         <section>
-          <input
-            type="range"
-            min="20"
-            max="22050"
-            value={filter?.settings.frequency}
-            step="10"
-            id="filterFrequencyRange"
-            onChange={(e) => handleEffectChange(e, id)}
-            name="frequency"
-          ></input>
-          <label>frequency:
+          <div className={styles.row}>
+            <Slider name="freqGain" axis="xy" x={filter?.settings.frequency} y={filter?.settings.gain} xmin={20}
+              xmax={22050} ymin={-40}
+              ymax={40} yreverse="true" styles={{
+
+                track: {
+                  backgroundColor: 'black',
+                  width: '9rem',
+                  height: '6rem',
+                },
+                thumb: {
+                  width: 12,
+                  height: 12,
+                },
+              }}
+              onChange={(e) => handleFilterSlider(e, id)}
+            />
+            <label>gain
+              <br/>
+              <Editable
+                text={filter?.settings.gain}
+                placeholder="0"
+                type="input"
+              >
+                <input
+                  name="gain"
+                  type="number"
+                  min="-40"
+                  max="40"
+                  placeholder="0"
+                  step="0.5"
+                  value={filter?.settings.gain}
+                  onChange={e => handleEffectChange(e, id)}
+                  autoFocus
+                />
+              </Editable>
+              <p> db</p>
+            </label>
+          </div>
+
+          <label>freq&nbsp;
             <Editable
               text={filter?.settings.frequency}
-              placeholder=""
+              placeholder="0"
               type="input"
             >
               <input
@@ -56,98 +87,49 @@ const FilterEffect = ({ id }) => {
                 type="number"
                 min="20"
                 max="22050"
-                step="10"
-                placeholder=""
                 value={filter?.settings.frequency}
-                onChange={e => handleEffectChange(e, id)}
-                autoFocus
-              />
-            </Editable>
-          </label>
-        </section>
-
-        <section>
-          <input
-            type="range"
-            min="0.001"
-            max="100"
-            value={filter?.settings.Q}
-            step="0.001"
-            id="filterQ"
-            onChange={(e) => handleEffectChange(e, id)}
-            name="Q"
-          ></input>
-          <label>q:
-            <Editable
-              text={filter?.settings.Q}
-              placeholder=""
-              type="input"
-            >
-              <input
-                name="Q"
-                type="number"
-                min="0.001"
-                max="100"
-                step="1"
-                placeholder=""
-                value={filter?.settings.Q}
-                onChange={e => handleEffectChange(e, id)}
-                autoFocus
-              />
-            </Editable>
-          </label>
-        </section>
-        <section>
-          <Slider name="freqGain" axis="xy" x={filter?.settings.frequency} y={filter?.settings.gain} xmin={20}
-            xmax={22050} ymin={-40}
-            ymax={40} yreverse="true" styles={{
-
-              track: {
-                backgroundColor: 'black',
-                width: '6rem',
-                height: '6rem',
-              },
-              thumb: {
-                width: 12,
-                height: 12,
-              },
-            }}
-            onChange={(e) => handleFilterSlider(e, id)}
-          />
-        </section>
-        <section>
-          <input
-            type="range"
-            min="-40"
-            max="40"
-            value={filter?.settings.wetLevel}
-            step="1"
-            id="filterGainRange"
-            onChange={(e) => handleEffectChange(e, id)}
-            name="gain"
-          ></input>
-          <label>gain:
-            <Editable
-              text={filter?.settings.gain}
-              placeholder="0"
-              type="input"
-            >
-              <input
-                name="gain"
-                type="number"
-                min="-40"
-                max="40"
+                step="10"
+                id="filterGainRange"
                 placeholder="0"
-                step="0.5"
-                value={filter?.settings.gain}
                 onChange={e => handleEffectChange(e, id)}
                 autoFocus
               />
             </Editable>
-            &nbsp;db
           </label>
         </section>
-
+        <section>
+          <section>
+            <input
+              type="range"
+              min="0.001"
+              max="100"
+              value={filter?.settings.Q}
+              step="0.001"
+              id="filterQ"
+              onChange={(e) => handleEffectChange(e, id)}
+              name="Q"
+            ></input>
+            <label>q:
+              <Editable
+                text={filter?.settings.Q}
+                placeholder=""
+                type="input"
+              >
+                <input
+                  name="Q"
+                  type="number"
+                  min="0.001"
+                  max="100"
+                  step="1"
+                  placeholder=""
+                  value={filter?.settings.Q}
+                  onChange={e => handleEffectChange(e, id)}
+                  autoFocus
+                />
+              </Editable>
+            </label>
+          </section>
+        </section>
         <section>
           <label htmlFor="filterType">type </label>
           <select name="filterType" id="filterFilterType" onChange={(e) => handleEffectChange(e, id)}>

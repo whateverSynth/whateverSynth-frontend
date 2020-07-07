@@ -6,6 +6,7 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import Editable from '../../global/Editable';
 import { defaultReverbSettings } from '../../../utils/data';
 
 const ReverbEffect = ({ id }) => {
@@ -35,13 +36,31 @@ const ReverbEffect = ({ id }) => {
             min="20"
             max="22050"
             value={reverb?.settings.highCut}
-            step="1"
+            step="100"
             id="reverbHighCutRange"
             onChange={(e) => handleEffectChange(e, id)}
             name="highCut"
           ></input>
           <label>
-          high cut: <p>{reverb?.settings.highCut} Hz</p>
+          high cut:
+            <Editable
+              text={reverb?.settings.highCut}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="highCut"
+                type="number"
+                min="20"
+                max="22050"
+                value={reverb?.settings.highCut}
+                step="100"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
+            <p> Hz</p>
           </label>
         </section>
 
@@ -57,7 +76,25 @@ const ReverbEffect = ({ id }) => {
             name="lowCut"
           ></input>
           <label>
-          low cut: <p>{reverb?.settings.lowCut} Hz</p>
+          low cut:
+            <Editable
+              text={reverb?.settings.lowCut}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="lowCut"
+                type="number"
+                min="20"
+                max="22050"
+                value={reverb?.settings.lowCut}
+                step="100"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
+            <p> Hz</p>
           </label>
         </section>
 
@@ -73,7 +110,24 @@ const ReverbEffect = ({ id }) => {
             name="dryLevel"
           ></input>
           <label>
-          dry level: <p>{Math.floor(reverb?.settings.dryLevel * 100)} %</p>
+          dry:
+            <Editable
+              text={(Math.floor(reverb?.settings.dryLevel * 100) + '%')}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="dryLevel"
+                type="number"
+                min="0"
+                max="1"
+                value={reverb?.settings.dryLevel}
+                step="0.1"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -89,7 +143,24 @@ const ReverbEffect = ({ id }) => {
             name="wetLevel"
           ></input>
           <label>
-          wet level: <p>{Math.floor(reverb?.settings.wetLevel * 100)} %</p>
+          wet:
+            <Editable
+              text={(Math.floor(reverb?.settings.wetLevel * 100) + '%')}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="wetLevel"
+                type="number"
+                min="0"
+                max="1"
+                value={reverb?.settings.wetLevel}
+                step="0.1"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -105,7 +176,24 @@ const ReverbEffect = ({ id }) => {
             name="level"
           ></input>
           <label>
-          level: <p>{Math.floor(reverb?.settings.level * 100)} %</p>
+          level:
+            <Editable
+              text={(Math.floor(reverb?.settings.level * 100) + '%')}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="level"
+                type="number"
+                min="0"
+                max="1"
+                value={reverb?.settings.level}
+                step="0.1"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 

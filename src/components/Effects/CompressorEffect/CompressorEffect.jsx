@@ -6,6 +6,7 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import Editable from '../../global/Editable';
 import { defaultCompressorSettings } from '../../../utils/data';
 
 const CompressorEffect = ({ id }) => {
@@ -41,7 +42,25 @@ const CompressorEffect = ({ id }) => {
             name="threshold"
           ></input>
           <label>
-          threshold: <p>{compressor?.settings.threshold} db</p>
+          threshold:
+            <Editable
+              text={compressor?.settings.threshold}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="threshold"
+                type="number"
+                min="-100"
+                max="0"
+                value={compressor?.settings.threshold}
+                step="1"
+                placeholder="0"
+                onChange={(e) => handleCompressor(e, id)}
+                autoFocus
+              />
+            </Editable>
+            <p> db</p>
           </label>
         </section>
 
@@ -57,7 +76,25 @@ const CompressorEffect = ({ id }) => {
             name="makeupGain"
           ></input>
           <label>
-          makeup gain: <p>{compressor?.settings.makeupGain} db</p>
+          makeup gain:
+            <Editable
+              text={compressor?.settings.makeupGain}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="makeupGain"
+                type="number"
+                min="0"
+                max="20"
+                value={compressor?.settings.makeupGain}
+                step="1"
+                placeholder="0"
+                onChange={(e) => handleCompressor(e, id)}
+                autoFocus
+              />
+            </Editable>
+            <p> db</p>
           </label>
         </section>
 
@@ -73,7 +110,24 @@ const CompressorEffect = ({ id }) => {
             name="attack"
           ></input>
           <label>
-          attack: <p>{compressor?.settings.attack}</p>
+          attack:
+            <Editable
+              text={compressor?.settings.attack}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="attack"
+                type="number"
+                min="0"
+                max="1000"
+                value={compressor?.settings.attack}
+                step="1"
+                placeholder="0"
+                onChange={(e) => handleCompressor(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -89,7 +143,24 @@ const CompressorEffect = ({ id }) => {
             name="release"
           ></input>
           <label>
-          release: <p>{compressor?.settings.release}</p>
+          release:
+            <Editable
+              text={compressor?.settings.release}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="release"
+                type="number"
+                min="0"
+                max="1000"
+                value={compressor?.settings.release}
+                step="1"
+                placeholder="0"
+                onChange={(e) => handleCompressor(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -105,7 +176,24 @@ const CompressorEffect = ({ id }) => {
             name="ratio"
           ></input>
           <label>
-          ratio: <p>{compressor?.settings.ratio}</p>
+          ratio:
+            <Editable
+              text={compressor?.settings.ratio}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="ratio"
+                type="number"
+                min="1"
+                max="20"
+                value={compressor?.settings.ratio}
+                step="1"
+                placeholder="0"
+                onChange={(e) => handleCompressor(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -121,7 +209,24 @@ const CompressorEffect = ({ id }) => {
             name="knee"
           ></input>
           <label>
-          knee: <p>{compressor?.settings.knee}</p>
+          knee:
+            <Editable
+              text={compressor?.settings.knee}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="knee"
+                type="number"
+                min="0"
+                max="40"
+                value={compressor?.settings.knee}
+                step="1"
+                placeholder="0"
+                onChange={(e) => handleCompressor(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 

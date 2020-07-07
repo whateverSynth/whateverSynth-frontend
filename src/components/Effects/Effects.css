@@ -44,6 +44,7 @@
       font-size: 1.15rem;
       padding: 0.35rem 0.25rem 0 0;
     }
+
     button.buttonClose {
       position: absolute;
       overflow: visible;
@@ -86,6 +87,11 @@
   }
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 input[type='checkbox'] {
   margin: 0.5rem 0 0.1rem;
   -webkit-appearance: none;
@@ -97,9 +103,14 @@ input[type='checkbox'] {
   width: 1rem;
   height: 1rem;
 }
+
 input[type='checkbox']:checked {
   -webkit-appearance: none;
   background-color: hsla(157, 100%, 64%, 1);
   outline: none;
   border: solid hsla(157, 100%, 68%, 1);
+}
+
+button {
+  outline: none;
 }

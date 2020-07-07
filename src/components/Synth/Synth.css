@@ -61,6 +61,7 @@
       hsla(154, 98%, 58%, 1) 0%,
       hsla(154, 98%, 78%, 1) 100%
     );
+    border: 0;
   }
   p {
     color: #00ff9f;
@@ -73,7 +74,7 @@
     outline: none;
     border: dotted #d600ff;
     border-width: 2px 2px 2px 2px;
-    width: 15rem;
+    min-width: 5rem;
   }
 }
 

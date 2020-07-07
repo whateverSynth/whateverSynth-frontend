@@ -2,25 +2,25 @@ import React from 'react';
 import {
   useHandleEffectChange,
   useHandleRemoveEffect,
-  useNewEffectSettings
+  useNewEffectSettings,
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 import { defaultBitcrusherSettings } from '../../../utils/data';
+import Editable from '../../global/Editable';
 import { Knob } from 'react-rotary-knob';
 
 const BitcrusherEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
   const handleRemoveEffect = useHandleRemoveEffect();
   const newEffectSettings = useNewEffectSettings();
-  let bitcrusher = newEffectSettings.find(setting => setting.id === id);
-  if(!bitcrusher) bitcrusher = { settings: defaultBitcrusherSettings };
+  let bitcrusher = newEffectSettings.find((setting) => setting.id === id);
+  if (!bitcrusher) bitcrusher = { settings: defaultBitcrusherSettings };
 
   return (
     <section className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
-
           <input
             type="checkbox"
             value={bitcrusher?.settings.bypass}
@@ -29,7 +29,12 @@ const BitcrusherEffect = ({ id }) => {
             id="bitcrusherBypass"
           ></input>
           <h2>bitcrusher</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
+          <button
+            className={styles.buttonClose}
+            onClick={() => handleRemoveEffect(id)}
+          >
+            x
+          </button>
         </header>
         <section>
           <input
@@ -59,7 +64,24 @@ const BitcrusherEffect = ({ id }) => {
           />
 
           <label>
-          bits: <p>{bitcrusher?.settings.bits}</p>
+            bits:
+            <Editable
+              text={bitcrusher?.settings.bits}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="bits"
+                type="number"
+                min="1"
+                max="16"
+                value={bitcrusher?.settings.bits}
+                step="1"
+                placeholder="0"
+                onChange={(e) => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -75,7 +97,24 @@ const BitcrusherEffect = ({ id }) => {
             name="normfreq"
           ></input>
           <label>
-          norm freq: <p>{Math.floor(bitcrusher?.settings.normfreq * 100)} %</p>
+            norm freq:
+            <Editable
+              text={Math.floor(bitcrusher?.settings.normfreq * 100) + '%'}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="normfreq"
+                type="number"
+                placeholder="0"
+                min="0"
+                max="1"
+                value={bitcrusher?.settings.normfreq}
+                step="0.1"
+                onChange={(e) => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -91,7 +130,24 @@ const BitcrusherEffect = ({ id }) => {
             name="bufferSize"
           ></input>
           <label>
-          buffer size: <p>{bitcrusher?.settings.bufferSize}</p>
+            buffer size:
+            <Editable
+              text={bitcrusher?.settings.bufferSize}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="bufferSize"
+                type="number"
+                min="256"
+                max="16384"
+                step="10"
+                placeholder="0"
+                value={bitcrusher?.settings.bufferSize}
+                onChange={(e) => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
       </main>

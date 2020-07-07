@@ -6,6 +6,7 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import Editable from '../../global/Editable';
 import { defaultOverdriveSettings } from '../../../utils/data';
 
 const OverdriveEffect = ({ id }) => {
@@ -42,7 +43,25 @@ const OverdriveEffect = ({ id }) => {
             name="outputGain"
           ></input>
           <label>
-          output gain: <p>{overdrive?.settings.outputGain} db</p>
+          output gain:
+            <Editable
+              text={overdrive?.settings.outputGain}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="outputGain"
+                type="number"
+                min="1"
+                max="1000"
+                value={overdrive?.settings.outputGain}
+                step="1"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
+            <p> db</p>
           </label>
         </section>
 
@@ -58,7 +77,24 @@ const OverdriveEffect = ({ id }) => {
             name="drive"
           ></input>
           <label>
-          drive: <p>{Math.floor(overdrive?.settings.drive * 100)} %</p>
+          drive:
+            <Editable
+              text={(Math.floor(overdrive?.settings.drive * 100) + '%')}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="overdrive"
+                type="number"
+                min="0"
+                max="1"
+                value={overdrive?.settings.drive}
+                step="0.01"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -74,8 +110,24 @@ const OverdriveEffect = ({ id }) => {
             name="curveAmount"
           ></input>
           <label>
-          curve amount:{' '}
-            <p>{Math.floor(overdrive?.settings.curveAmount * 100)} %</p>
+          curve amount:
+            <Editable
+              text={(Math.floor(overdrive?.settings.curveAmount * 100) + '%')}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="curveAmount"
+                type="number"
+                min="0"
+                max="1"
+                value={overdrive?.settings.curveAmount}
+                step="0.1"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -91,7 +143,24 @@ const OverdriveEffect = ({ id }) => {
             name="algorithmIndex"
           ></input>
           <label>
-          algorithm # <p>{overdrive?.settings.algorithmIndex}</p>
+          algorithm #
+            <Editable
+              text={overdrive?.settings.algorithmIndex}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="algorithmIndex"
+                type="number"
+                min="0"
+                max="5"
+                value={overdrive?.settings.algorithmIndex}
+                step="1"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
       </main>

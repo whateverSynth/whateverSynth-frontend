@@ -6,6 +6,7 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import Editable from '../../global/Editable';
 import { defaultDelaySettings } from '../../../utils/data';
 
 const DelayEffect = ({ id }) => {
@@ -14,7 +15,7 @@ const DelayEffect = ({ id }) => {
   const newEffectSettings = useNewEffectSettings();
   let delay = newEffectSettings.find(setting => setting.id === id);
   if(!delay) delay = { settings: defaultDelaySettings };
-  
+
   return (
     <section className={styles.effectContainer}>
       <main className={styles.Effects}>
@@ -41,7 +42,25 @@ const DelayEffect = ({ id }) => {
             name="feedback"
           ></input>
           <label>
-            feedback: <p>{Math.floor(delay?.settings.feedback * 100)} %</p>
+            feedback:
+            <Editable
+              text={(Math.floor(delay?.settings.feedback * 100) + '%')}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="feedback"
+                type="number"
+                min="0"
+                max="1"
+                value={delay?.settings.feedback}
+                step="0.05"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
+
           </label>
         </section>
 
@@ -57,7 +76,24 @@ const DelayEffect = ({ id }) => {
             name="delayTime"
           ></input>
           <label>
-            time: <p>{delay?.settings.delayTime} ms</p>
+            time: <Editable
+              text={delay?.settings.delayTime}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="delayTime"
+                type="number"
+                min="1"
+                max="1000"
+                value={delay?.settings.delayTime}
+                step="1"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
+            <p> ms</p>
           </label>
         </section>
 
@@ -73,7 +109,24 @@ const DelayEffect = ({ id }) => {
             name="wetLevel"
           ></input>
           <label>
-            wet level: <p>{Math.floor(delay?.settings.wetLevel * 100)} %</p>
+            wet level:
+            <Editable
+              text={(Math.floor(delay?.settings.wetLevel * 100) + '%')}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="delayTime"
+                type="number"
+                min="0"
+                max="1"
+                value={delay?.settings.wetLevel}
+                step="0.1"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -89,7 +142,24 @@ const DelayEffect = ({ id }) => {
             name="dryLevel"
           ></input>
           <label>
-            dry level: <p>{Math.floor(delay?.settings.dryLevel * 100)} %</p>
+            dry level:
+            <Editable
+              text={(Math.floor(delay?.settings.dryLevel * 100) + '%')}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="dryLevel"
+                type="number"
+                min="0"
+                max="1"
+                value={delay?.settings.dryLevel}
+                step="0.1"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
           </label>
         </section>
 
@@ -105,7 +175,25 @@ const DelayEffect = ({ id }) => {
             name="cutoff"
           ></input>
           <label>
-            cutoff: <p>{delay?.settings.cutoff} Hz</p>
+            cutoff:
+            <Editable
+              text={delay?.settings.cutoff}
+              placeholder="0"
+              type="input"
+            >
+              <input
+                name="cutoff"
+                type="number"
+                min="20"
+                max="22050"
+                value={delay?.settings.cutoff}
+                step="10"
+                placeholder="0"
+                onChange={e => handleEffectChange(e, id)}
+                autoFocus
+              />
+            </Editable>
+            <p> Hz</p>
           </label>
         </section>
       </main>
