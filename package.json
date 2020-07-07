@@ -25,6 +25,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "envelope-generator": "^3.0.0",
     "kleur": "4.0.2",
     "oscilloscope": "^1.2.0",
     "react": "16.13.1",
