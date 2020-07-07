@@ -37,11 +37,12 @@ let canvas;
 let midiAccess = null;
 let activeNotes = [];
 const activeOscillators = {};
+let waveshape;
 
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
+  waveshape = useWaveshape();
 
-  const waveshape = useWaveshape();
   const gainSetting = useGainSetting();
 
   // NEW EFFECT STATE
