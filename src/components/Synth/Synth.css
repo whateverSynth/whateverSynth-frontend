@@ -90,16 +90,15 @@ html {
 }
 
 canvas {
-  background-color: hsla(154, 98%, 38%, 1);
-  border: 1.4rem solid hsl(0, 0%, 0%);
-  border-radius: 100%;
+  background-color: hsl(197, 80%, 50%);
+  border: .8rem solid #bd00ff;
+  width: 40vw;
   position: absolute;
   top: 2.5rem;
   left: 50%;
   transform: translate(-50%, 0%);
   max-height: 9rem;
-  box-shadow: 0 0 0 0.15rem hsla(218, 4%, 64%, 1),
-    0 0 0 1rem hsla(240, 4%, 41%, 1);
+  border-radius: .4em;
 }
 
 h1 {
