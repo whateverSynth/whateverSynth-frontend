@@ -158,7 +158,6 @@ export default function Synth() {
 
   //MIDI
   const noteOn = (noteNumber) => {
-    console.log(noteNumber);
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       frequencyFromNoteNumber(noteNumber),
@@ -175,7 +174,6 @@ export default function Synth() {
     if (position !== -1) {
       activeNotes.splice(position, 1);
     }
-    console.log(activeOscillators);
     if (activeNotes.length === 0) {
       // shut off the envelope
       activeOscillators[noteNumber]?.stop();
@@ -194,7 +192,6 @@ export default function Synth() {
     switch (event.data[0] & 0xf0) {
       case 0x90:
         if (event.data[2] !== 0) {
-          // console.log('ON')
           // if velocity != 0, this is a note-on message
           noteOn(event.data[1]);
           return;
