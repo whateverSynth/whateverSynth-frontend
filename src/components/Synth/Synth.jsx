@@ -62,6 +62,30 @@ export default function Synth() {
 
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
+
+    if (navigator.requestMIDIAccess)
+      navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
+    else alert('No MIDI support present in your browser.');
+
+    function onMIDIInit(midi) {
+      midiAccess = midi;
+      let haveAtLeastOneDevice = false;
+      const inputs = midiAccess.inputs.values();
+
+      for (
+        let input = inputs.next();
+        input && !input.done;
+        input = inputs.next()
+      ) {
+        input.value.onmidimessage = MIDIMessageEventHandler;
+        haveAtLeastOneDevice = true;
+      }
+      if (!haveAtLeastOneDevice) return;
+    }
+
+    const onMIDIReject = () => {
+      alert('The MIDI system failed to start.');
+    };
   }, []);
 
   useEffect(() => {
@@ -150,7 +174,6 @@ export default function Synth() {
     if (position !== -1) {
       activeNotes.splice(position, 1);
     }
-    console.log(activeOscillators);
     if (activeNotes.length === 0) {
       // shut off the envelope
       activeOscillators[noteNumber]?.stop();
@@ -163,30 +186,6 @@ export default function Synth() {
 
   const frequencyFromNoteNumber = (note) => {
     return 440 * Math.pow(2, (note - 69) / 12);
-  };
-
-  if (navigator.requestMIDIAccess)
-    navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
-  else alert('No MIDI support present in your browser.');
-
-  function onMIDIInit(midi) {
-    midiAccess = midi;
-    let haveAtLeastOneDevice = false;
-    const inputs = midiAccess.inputs.values();
-
-    for (
-      let input = inputs.next();
-      input && !input.done;
-      input = inputs.next()
-    ) {
-      input.value.onmidimessage = MIDIMessageEventHandler;
-      haveAtLeastOneDevice = true;
-    }
-    if (!haveAtLeastOneDevice) return;
-  }
-
-  const onMIDIReject = () => {
-    alert('The MIDI system failed to start.');
   };
 
   const MIDIMessageEventHandler = (event) => {
