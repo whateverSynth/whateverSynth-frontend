@@ -62,6 +62,30 @@ export default function Synth() {
 
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
+
+    if (navigator.requestMIDIAccess)
+      navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
+    else alert('No MIDI support present in your browser.');
+
+    function onMIDIInit(midi) {
+      midiAccess = midi;
+      let haveAtLeastOneDevice = false;
+      const inputs = midiAccess.inputs.values();
+
+      for (
+        let input = inputs.next();
+        input && !input.done;
+        input = inputs.next()
+      ) {
+        input.value.onmidimessage = MIDIMessageEventHandler;
+        haveAtLeastOneDevice = true;
+      }
+      if (!haveAtLeastOneDevice) return;
+    }
+
+    const onMIDIReject = () => {
+      alert('The MIDI system failed to start.');
+    };
   }, []);
 
   useEffect(() => {
@@ -134,6 +158,7 @@ export default function Synth() {
 
   //MIDI
   const noteOn = (noteNumber) => {
+    console.log(noteNumber);
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       frequencyFromNoteNumber(noteNumber),
@@ -165,34 +190,11 @@ export default function Synth() {
     return 440 * Math.pow(2, (note - 69) / 12);
   };
 
-  if (navigator.requestMIDIAccess)
-    navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
-  else alert('No MIDI support present in your browser.');
-
-  function onMIDIInit(midi) {
-    midiAccess = midi;
-    let haveAtLeastOneDevice = false;
-    const inputs = midiAccess.inputs.values();
-
-    for (
-      let input = inputs.next();
-      input && !input.done;
-      input = inputs.next()
-    ) {
-      input.value.onmidimessage = MIDIMessageEventHandler;
-      haveAtLeastOneDevice = true;
-    }
-    if (!haveAtLeastOneDevice) return;
-  }
-
-  const onMIDIReject = () => {
-    alert('The MIDI system failed to start.');
-  };
-
   const MIDIMessageEventHandler = (event) => {
     switch (event.data[0] & 0xf0) {
       case 0x90:
         if (event.data[2] !== 0) {
+          // console.log('ON')
           // if velocity != 0, this is a note-on message
           noteOn(event.data[1]);
           return;
