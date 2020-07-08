@@ -10,13 +10,15 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -moz-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-
+#root{
+  display: inline-flex;
+}
 .Container {
   display: grid;
   justify-content: center;
   position: relative;
   margin: 0 auto;
-  top: 13rem;
+  top: 1rem;
 
   div[class$='NoteLabelContainer'] {
     flex: 1;
@@ -47,8 +49,8 @@ canvas {
   background-color: hsl(197, 80%, 50%);
   border: .8rem solid #bd00ff;
   width: 40vw;
-  position: absolute;
-  top: 2.5rem;
+  position: relative;
+  top: 0;
   left: 50%;
   transform: translate(-50%, 0%);
   max-height: 9rem;
