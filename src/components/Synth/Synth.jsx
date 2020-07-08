@@ -59,7 +59,10 @@ export default function Synth() {
     canvas = document.createElement('canvas');
     canvas.height = 400;
 
-    document.body.appendChild(canvas);
+    const root = document.getElementById('root');
+    const logo = root.firstChild;
+    logo.insertAdjacentElement('afterEnd', canvas);
+
 
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
@@ -159,7 +162,7 @@ export default function Synth() {
 
   //MIDI
   const noteOn = (noteNumber) => {
-    
+
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       frequencyFromNoteNumber(noteNumber),
@@ -200,7 +203,7 @@ export default function Synth() {
           const newNodes = [...activeNotes];
           setNewActiveNotes(newNodes);
           return;
-        } 
+        }
         break;
       // if velocity == 0, fall thru: it's a note-off.  MIDI's weird, y'all.
       case 0x80:
