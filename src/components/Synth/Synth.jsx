@@ -245,7 +245,7 @@ export default function Synth() {
       <section className={styles.Container}>
         <section className={styles.OScope}>{OScope}</section>
         
-        <div style={{ 'min-width' : '0' }}>
+        <div style={{ 'minWidth' : '0' }}>
           <DimensionsProvider>
             {({ containerWidth }) => (
               <Piano
