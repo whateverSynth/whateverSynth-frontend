@@ -37,11 +37,13 @@ let canvas;
 let midiAccess = null;
 let activeNotes = [];
 const activeOscillators = {};
+let waveshape;
 
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
+  const [newActiveNotes, setNewActiveNotes] = useState([]);
+  waveshape = useWaveshape();
 
-  const waveshape = useWaveshape();
   const gainSetting = useGainSetting();
 
   // NEW EFFECT STATE
@@ -105,8 +107,8 @@ export default function Synth() {
       outputGain.connect(audioCtx.destination);
       scope = new Oscilloscope(outputGain);
       const context = canvas.getContext('2d');
-      context.strokeStyle = '#2BFDA2';
-      context.lineWidth = 5;
+      context.strokeStyle = '#00ff9f';
+      context.lineWidth = 3;
       // console.log(context);
 
       OScope = scope.animate(context);
@@ -158,6 +160,7 @@ export default function Synth() {
 
   //MIDI
   const noteOn = (noteNumber) => {
+
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       frequencyFromNoteNumber(noteNumber),
@@ -170,6 +173,7 @@ export default function Synth() {
   };
 
   const noteOff = (noteNumber) => {
+
     const position = activeNotes.indexOf(noteNumber);
     if (position !== -1) {
       activeNotes.splice(position, 1);
@@ -193,13 +197,15 @@ export default function Synth() {
       case 0x90:
         if (event.data[2] !== 0) {
           // if velocity != 0, this is a note-on message
-          noteOn(event.data[1]);
+          activeNotes.push(event.data[1]);
+          const newNodes = [...activeNotes];
+          setNewActiveNotes(newNodes);
           return;
         }
         break;
       // if velocity == 0, fall thru: it's a note-off.  MIDI's weird, y'all.
       case 0x80:
-        noteOff(event.data[1]);
+        setNewActiveNotes(activeNotes.filter(note => note !== event.data[1]));
         return;
     }
   };
@@ -242,6 +248,7 @@ export default function Synth() {
         <Piano
           className="PianoRetroTheme"
           noteRange={{ first: 45, last: 67 }}
+          activeNotes={newActiveNotes}
           playNote={noteOn}
           stopNote={noteOff}
           width={1000}
