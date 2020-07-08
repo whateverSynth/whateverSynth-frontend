@@ -40,7 +40,7 @@ let activeNotes = [];
 const activeOscillators = {};
 let waveshape;
 
-export default function Synth(props) {
+export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
   const [newActiveNotes, setNewActiveNotes] = useState([]);
   waveshape = useWaveshape();
@@ -259,7 +259,6 @@ export default function Synth(props) {
                 stopNote={noteOff}
                 width={containerWidth}
                 keyboardShortcuts={keyboardShortcuts}
-                {...props}
               />
             )}
           </DimensionsProvider>
