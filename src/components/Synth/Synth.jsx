@@ -24,7 +24,7 @@ import CompressorEffect from '../Effects/CompressorEffect/CompressorEffect';
 import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEffect';
 import Oscilloscope from 'oscilloscope';
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
-
+import '../../../public/rawStyles/piano.css';
 
 let audioCtx;
 let tuna;
@@ -62,7 +62,6 @@ export default function Synth() {
     const root = document.getElementById('root');
     const logo = root.firstChild;
     logo.insertAdjacentElement('afterEnd', canvas);
-
 
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
@@ -162,7 +161,6 @@ export default function Synth() {
 
   //MIDI
   const noteOn = (noteNumber) => {
-
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       frequencyFromNoteNumber(noteNumber),
@@ -175,7 +173,6 @@ export default function Synth() {
   };
 
   const noteOff = (noteNumber) => {
-
     const position = activeNotes.indexOf(noteNumber);
     if (position !== -1) {
       activeNotes.splice(position, 1);
@@ -207,7 +204,7 @@ export default function Synth() {
         break;
       // if velocity == 0, fall thru: it's a note-off.  MIDI's weird, y'all.
       case 0x80:
-        setNewActiveNotes(activeNotes.filter(note => note !== event.data[1]));
+        setNewActiveNotes(activeNotes.filter((note) => note !== event.data[1]));
         return;
     }
   };

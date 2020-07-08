@@ -41,7 +41,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: /public/,
+        exclude: [/node_modules/, /public/],
         use: [
           {
             loader: 'style-loader',
