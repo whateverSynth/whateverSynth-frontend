@@ -7,6 +7,7 @@ import {
   useNewEffects,
   useNewEffectSettings,
   useGainSetting,
+  useEnvelopeSettings
 } from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
 import ChorusEffect from '../Effects/ChorusEffect/ChorusEffect';
@@ -24,7 +25,7 @@ import CompressorEffect from '../Effects/CompressorEffect/CompressorEffect';
 import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEffect';
 import Oscilloscope from 'oscilloscope';
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
-// import EnvelopeGen from 'envelope-generator';
+import EnvelopeGen from 'envelope-generator';
 import 'react-piano/dist/styles.css';
 import Envelope from '../Envelope/Envelope';
 
@@ -42,6 +43,7 @@ let midiAccess = null;
 let activeNotes = [];
 
 const activeOscillators = {};
+const activeEnvelopes = {};
 let waveshape;
 
 export default function Synth() {
@@ -50,6 +52,7 @@ export default function Synth() {
   waveshape = useWaveshape();
 
   const gainSetting = useGainSetting();
+  const envelopeSettings = useEnvelopeSettings();
 
   // NEW EFFECT STATE
   const newEffects = useNewEffects();
@@ -61,21 +64,11 @@ export default function Synth() {
     inputGain = audioCtx.createGain();
     outputGain = audioCtx.createGain();
     // settings = {
-    //   curve: 'linear',
-    //   attackCurve: 'linear',
-    //   decayCurve: 'linear',
-    //   releaseCurve: 'linear',
-    //   initialValueCurve: Float32Array,
-    //   releaseValueCurve: Float32Array,
-    //   sampleRate: 44100,
-    //   delayTime: 2,
-    //   startLevel: 0,
-    //   maxLevel: 1,
     //   attackTime: 0.1,
-    //   holdTime: 0,
-    //   decayTime: 24,
-    //   sustainLevel: 12,
-    //   releaseTime: 1,
+    //   decayTime: 3,
+    //   sustainLevel: 0.4,
+    //   releaseTime: 0.1,
+    //   maxLevel: 0.5
     // };
 
     canvas = document.createElement('canvas');
@@ -86,7 +79,9 @@ export default function Synth() {
 
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
-
+    
+    // env = new EnvelopeGen(audioCtx, settings);
+    // env.connect(inputGain.gain);
     // env.start(audioCtx.currentTime);
 
     if (navigator.requestMIDIAccess)
@@ -189,18 +184,27 @@ export default function Synth() {
     osc.frequency.setValueAtTime(
       frequencyFromNoteNumber(noteNumber),
       audioCtx.currentTime
-    );
+    );   
+
+    // ENVELOPE
+    let maxLevelSet;
+    if(Object.keys(activeEnvelopes).length > 0) {
+      Object.keys(activeEnvelopes).forEach(osc => {
+        activeEnvelopes[osc].settings.maxLevel = .15 / (Object.keys(activeOscillators).length + 1);
+        maxLevelSet = .15 / (Object.keys(activeOscillators).length + 1);
+      });
+    } else maxLevelSet = 0.15;
+
+    const env = new EnvelopeGen(audioCtx, { ...envelopeSettings, maxLevel: maxLevelSet });
+    activeEnvelopes[noteNumber] = env;
+
+    activeEnvelopes[noteNumber].connect(inputGain.gain);
+    activeEnvelopes[noteNumber].start(audioCtx.currentTime);
+
     osc.type = waveshape;
     activeOscillators[noteNumber] = osc;
     activeOscillators[noteNumber].connect(inputGain);
     activeOscillators[noteNumber].start();
-    // osc.start(audioCtx.currentTime);
-    // env = new EnvelopeGen(audioCtx, settings);
-    // env.connect(inputGain.gain);
-    // env.start(audioCtx.currentTime);
-    // let stopAt = env.getReleaseCompleteTime();
-    // env.release(audioCtx.currentTime + 1);
-    // env.stop(stopAt);
   };
 
   const noteOff = (noteNumber) => {
@@ -210,14 +214,22 @@ export default function Synth() {
       activeNotes.splice(position, 1);
     }
     if (activeNotes.length === 0) {
+
       // shut off the envelope
-      // let stopAt = env.getReleaseCompleteTime();
-      // env.release(audioCtx.currentTime + 1);
-      // env.stop(stopAt);
-      activeOscillators[noteNumber]?.stop();
+      activeEnvelopes[noteNumber].release(audioCtx.currentTime + 1);
+      let stopAt = activeEnvelopes[noteNumber].getReleaseCompleteTime();
+      activeEnvelopes[noteNumber].stop(stopAt);
+
+      activeOscillators[noteNumber]?.stop(stopAt);
+      delete activeEnvelopes[noteNumber];
       delete activeOscillators[noteNumber];
     } else {
-      activeOscillators[noteNumber]?.stop();
+      activeEnvelopes[noteNumber].release(audioCtx.currentTime + 1);
+      let stopAt = activeEnvelopes[noteNumber].getReleaseCompleteTime();
+      activeEnvelopes[noteNumber].stop(stopAt);
+      
+      activeOscillators[noteNumber]?.stop(stopAt);
+      delete activeEnvelopes[noteNumber];
       delete activeOscillators[noteNumber];
     }
   };

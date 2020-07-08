@@ -22,21 +22,11 @@ const EffectsContext = createContext();
 export const EffectsProvider = ({ children }) => {
   const [waveshape, setWaveshape] = useState('sine');
   const [envelopeSettings, setEnvelopeSettings] = useState({
-    curve: 'linear',
-    attackCurve: 'linear',
-    decayCurve: 'linear',
-    releaseCurve: 'linear',
-    initialValueCurve: Float32Array,
-    releaseValueCurve: Float32Array,
-    sampleRate: 44100,
-    delayTime: 0,
-    startLevel: 0,
-    maxLevel: 1,
     attackTime: 0.1,
-    holdTime: 0,
-    decayTime: 0,
-    sustainLevel: 0.5,
-    releaseTime: 1,
+    decayTime: 2,
+    sustainLevel: 0.4,
+    releaseTime: 0.1,
+    startLevel: 0,
   });
   const [gainSetting, setGainSetting] = useState(0.15);
 
@@ -49,7 +39,7 @@ export const EffectsProvider = ({ children }) => {
   };
 
   const handleEnvelopeSettings = ({ target }) => {
-    setEnvelopeSettings({ ...envelopeSettings, [target.name]: target.value });
+    setEnvelopeSettings({ ...envelopeSettings, [target.name]: Number(target.value) });
   };
 
   const handleGainSetting = ({ target }) => {
