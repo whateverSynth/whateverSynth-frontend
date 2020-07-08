@@ -61,8 +61,8 @@ export default function Synth() {
 
     const root = document.getElementById('root');
     const logo = root.firstChild;
-    logo.insertAdjacentElement('beforeBegin', canvas);
-    
+    logo.insertAdjacentElement('afterEnd', canvas);
+
 
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
