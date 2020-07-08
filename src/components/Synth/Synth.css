@@ -70,6 +70,32 @@ html {
     );
     outline-width: 0;
   }
+
+  div[class$='accidental'] + div[class$='natural'] {
+    transform: translateX(0);
+  }
+
+  div[class$='accidental'] + div[class$='natural'] + div[class$='accidental'] + div[class$='natural'] + div[class$='accidental'] {
+    transform: translateX(-.5rem);
+  }
+
+   div[class$='accidental'] + div[class$='natural'] + div[class$='natural'] + div[class$='accidental'] {
+    transform: translateX(.5rem);
+  }
+
+  div[class$='natural'] + div[class$='natural'] + div[class$='accidental'] + div[class$='natural'] + div[class$='accidental']
+  {
+    transform: translateX(-0.2rem);
+  }
+
+  div[class$='natural'] + div[class$='accidental'] {
+    transform: translateX(0);
+  }
+
+  div[class$='natural'] + div[class$='natural'] {
+    transform: translateX(0);
+  }
+
   p {
     color: #00ff9f;
     display: inline;
