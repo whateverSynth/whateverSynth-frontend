@@ -51,6 +51,16 @@ export default function Synth() {
   const newEffects = useNewEffects();
   const newEffectSettings = useNewEffectSettings();
 
+  // HIDDEN COMPONENTS
+  const [canvasVisibility, setCanvasVisibility] = useState(true);
+  const [pianoVisibility, setPianoVisibility] = useState(true);
+  const [keyboardShortcutsVisibility, setKeyboardShortcutsVisibility] = useState(false);
+  const [effectsDrawerVisibility, setEffectsDrawerVisibility] = useState(true);
+  const handleCanvasVisibilityClick = () => setCanvasVisibility(visibility => !visibility);
+  const handlePianoVisibilityClick = () => setPianoVisibility(visibility => !visibility);
+  const handleKeyboardShortcutsVisibilityClick = () => setKeyboardShortcutsVisibility(visibility => !visibility);
+  const handleEffectsDrawerVisibilityClick = () => setEffectsDrawerVisibility(visibility => !visibility);
+
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     tuna = new Tuna(audioCtx);
@@ -61,8 +71,11 @@ export default function Synth() {
     canvas.height = 400;
 
     const root = document.getElementById('root');
-    const logo = root.firstChild;
-    logo.insertAdjacentElement('afterEnd', canvas);
+    const header = root.firstChild;
+    const logo = header.firstChild;
+    const canvasContainer = header.lastChild;
+    canvasContainer.appendChild(canvas);
+
 
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
@@ -241,15 +254,21 @@ export default function Synth() {
 
   return (
     <>
-      <h1>synthinator</h1>
+      <header>
+        <h1>synthinator</h1>
+        <div className={styles.CanvasMinimizer} onClick={handleCanvasVisibilityClick}>Toggle OScope</div>
+        <section className={`${styles.OScope} ${!canvasVisibility && styles.hidden}`}>{OScope}</section>
+      </header>
       <section className={styles.Container}>
-        <section className={styles.OScope}>{OScope}</section>
-        
+
+
         <div style={{ 'min-width' : '0' }}>
+          <div className={styles.PianoMinimizer} onClick={handlePianoVisibilityClick}>Toggle Piano</div>
+          <div className={styles.KeyboardShortcutsVisibilityToggle} onClick={handleKeyboardShortcutsVisibilityClick}>Toggle Keyboard Shortcuts</div>
           <DimensionsProvider>
             {({ containerWidth }) => (
               <Piano
-                className="PianoRetroTheme"
+                className={`$'PianoRetroTheme' ${!pianoVisibility && styles.hidden}`}
                 noteRange={{ first: 45, last: 67 }}
                 activeNotes={newActiveNotes}
                 playNote={noteOn}
@@ -261,8 +280,10 @@ export default function Synth() {
           </DimensionsProvider>
         </div>
         <Waveshapes />
-        <Effects />
-        <div className={styles.effectsDrawer}>{effectNodes}</div>
+        <div className={styles.EffectsDrawerMinimizer} onClick={handleEffectsDrawerVisibilityClick}>Toggle Effects</div>
+        <Effects className={`${!effectsDrawerVisibility && styles.hidden}`}></Effects>
+
+        <div className={`${styles.effectsDrawer} ${!effectsDrawerVisibility && styles.hidden}`}>{effectNodes}</div>
       </section>
     </>
   );
