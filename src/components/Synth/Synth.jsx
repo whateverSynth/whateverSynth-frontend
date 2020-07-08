@@ -25,6 +25,7 @@ import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEff
 import Oscilloscope from 'oscilloscope';
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import 'react-piano/dist/styles.css';
+import DimensionsProvider from '../../hooks/DimensionsProvider';
 
 let audioCtx;
 let tuna;
@@ -39,7 +40,7 @@ let activeNotes = [];
 const activeOscillators = {};
 let waveshape;
 
-export default function Synth() {
+export default function Synth(props) {
   const [localEffects, setLocalEffects] = useState([]);
   const [newActiveNotes, setNewActiveNotes] = useState([]);
   waveshape = useWaveshape();
@@ -246,17 +247,23 @@ export default function Synth() {
       <h1>synthinator</h1>
       <section className={styles.Container}>
         <section className={styles.OScope}>{OScope}</section>
-
-        <Piano
-          className="PianoRetroTheme"
-          noteRange={{ first: 45, last: 67 }}
-          activeNotes={newActiveNotes}
-          playNote={noteOn}
-          stopNote={noteOff}
-          width={1000}
-          keyboardShortcuts={keyboardShortcuts}
-        />
-
+        
+        <div style={{ 'min-width' : '0' }}>
+          <DimensionsProvider>
+            {({ containerWidth }) => (
+              <Piano
+                className="PianoRetroTheme"
+                noteRange={{ first: 45, last: 67 }}
+                activeNotes={newActiveNotes}
+                playNote={noteOn}
+                stopNote={noteOff}
+                width={containerWidth}
+                keyboardShortcuts={keyboardShortcuts}
+                {...props}
+              />
+            )}
+          </DimensionsProvider>
+        </div>
         <Waveshapes />
         <Effects />
         <div className={styles.effectsDrawer}>{effectNodes}</div>
