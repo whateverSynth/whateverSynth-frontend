@@ -61,22 +61,27 @@
   /* Don't render extra margin on the last natural note */
   margin-right: 0;
 }
-
+/* moves asharps */
 .ReactPiano__Key--accidental + .ReactPiano__Key--natural + .ReactPiano__Key--accidental + .ReactPiano__Key--natural + .ReactPiano__Key--accidental {
-  transform: translateX(-.92rem);
+  transform: translateX(-.9vw);
 }
-
+/* Moves c-sharps and f-sharps */
  .ReactPiano__Key--natural + .ReactPiano__Key--natural + .ReactPiano__Key--accidental {
-  transform: translateX(.52rem);
+  transform: translateX(1vw);
 }
-
-.ReactPiano__Key--natural + .ReactPiano__Key--natural + .ReactPiano__Key--accidental + .ReactPiano__Key--natural + .ReactPiano__Key--accidental
+/* moves g-sharp */
+.ReactPiano__Key--natural + .ReactPiano__Key--natural + .ReactPiano__Key--accidental + .ReactPiano__Key--natural + .ReactPiano__Key--accidental + .ReactPiano__Key--natural + .ReactPiano__Key--natural + .ReactPiano__Key--accidental + .ReactPiano__Key--natural + .ReactPiano__Key--accidental
 {
-  transform: translateX(-0.2rem);
+  transform: translateX(-0.2vw);
 }
-
+/* moves d-sharps */
+.ReactPiano__Key--accidental + .ReactPiano__Key--natural + .ReactPiano__Key--natural + .ReactPiano__Key--accidental + .ReactPiano__Key--natural + .ReactPiano__Key--accidental
+{
+  transform: translateX(-0.7vw);
+}
+/* moves lowest c-sharp */
 .ReactPiano__Key--natural + .ReactPiano__Key--accidental {
-  transform: translateX(-0.8rem);
+  transform: translateX(-1vw);
 }
 /*
  * Styles of "active" or pressed-down keys
