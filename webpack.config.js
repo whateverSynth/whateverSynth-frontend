@@ -3,7 +3,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
-
 // eslint-disable-next-line
 module.exports = {
   entry: './src/index.js',
@@ -42,7 +41,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /public/],
         use: [
           {
             loader: 'style-loader',
@@ -71,8 +70,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: [path.resolve(__dirname, './node_modules/react-piano/dist/')],
-
+        include: [path.resolve(__dirname, './public/rawStyles/')],
         use: [
           {
             loader: 'style-loader',
