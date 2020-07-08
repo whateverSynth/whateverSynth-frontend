@@ -24,7 +24,7 @@ import CompressorEffect from '../Effects/CompressorEffect/CompressorEffect';
 import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEffect';
 import Oscilloscope from 'oscilloscope';
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
-// import Envelope from 'envelope-generator';
+// import EnvelopeGen from 'envelope-generator';
 import 'react-piano/dist/styles.css';
 import Envelope from '../Envelope/Envelope';
 
@@ -66,16 +66,15 @@ export default function Synth() {
     //   initialValueCurve: Float32Array,
     //   releaseValueCurve: Float32Array,
     //   sampleRate: 44100,
-    //   delayTime: 0,
+    //   delayTime: 2,
     //   startLevel: 0,
     //   maxLevel: 1,
     //   attackTime: 0.1,
     //   holdTime: 0,
-    //   decayTime: 0,
-    //   sustainLevel: 0.5,
+    //   decayTime: 24,
+    //   sustainLevel: 12,
     //   releaseTime: 1,
     // };
-    // env = new Envelope(audioCtx, settings);
 
     canvas = document.createElement('canvas');
     canvas.width = 450;
@@ -84,13 +83,9 @@ export default function Synth() {
     document.body.appendChild(canvas);
 
     inputGain.connect(outputGain);
-
-    // outputGain.connect(env);
-    // env.connect(audioCtx.destination);
-
-    inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
-    // env.connect(outputGain.gain);
+
+    // env.start(audioCtx.currentTime);
 
     if (navigator.requestMIDIAccess)
       navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
@@ -197,7 +192,12 @@ export default function Synth() {
     activeOscillators[noteNumber].connect(inputGain);
     activeOscillators[noteNumber].start();
     // osc.start(audioCtx.currentTime);
+    // env = new EnvelopeGen(audioCtx, settings);
+    // env.connect(inputGain.gain);
     // env.start(audioCtx.currentTime);
+    // let stopAt = env.getReleaseCompleteTime();
+    // env.release(audioCtx.currentTime + 1);
+    // env.stop(stopAt);
   };
 
   const noteOff = (noteNumber) => {
@@ -213,9 +213,6 @@ export default function Synth() {
       activeOscillators[noteNumber]?.stop();
       delete activeOscillators[noteNumber];
     } else {
-      // let stopAt = env.getReleaseCompleteTime();
-      // env.release(audioCtx.currentTime + 1);
-      // env.stop(stopAt);
       activeOscillators[noteNumber]?.stop();
       delete activeOscillators[noteNumber];
     }
