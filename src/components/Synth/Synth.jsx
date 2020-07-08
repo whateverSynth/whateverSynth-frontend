@@ -56,6 +56,9 @@ export default function Synth() {
   const [pianoVisibility, setPianoVisibility] = useState(true);
   const [keyboardShortcutsVisibility, setKeyboardShortcutsVisibility] = useState(false);
   const [effectsDrawerVisibility, setEffectsDrawerVisibility] = useState(true);
+  const [canvasMinimizerVisibility, setCanvasMinimizerVisibility] = useState(false);
+  const [pianoMinimizerVisibility, setPianoMinimizerVisibility] = useState(false);
+  const [effectsDrawerMinimizerVisibility, setEffectsDrawerMinimizerVisibility] = useState(false);
   const handleCanvasVisibilityClick = () => setCanvasVisibility(visibility => !visibility);
   const handlePianoVisibilityClick = () => setPianoVisibility(visibility => !visibility);
   const handleKeyboardShortcutsVisibilityClick = () => setKeyboardShortcutsVisibility(visibility => !visibility);
@@ -255,20 +258,22 @@ export default function Synth() {
   return (
     <>
       <header>
-        <h1>synthinator</h1>
-        <div className={styles.CanvasMinimizer} onClick={handleCanvasVisibilityClick}>Toggle OScope</div>
+        <div className={styles.Menu}>
+          <h1>synthinator</h1>
+          <div className={styles.KeyboardShortcutsVisibilityToggle}> <button className={styles.buttonMinimize} onClick={handleKeyboardShortcutsVisibilityClick}>?</button></div>
+        </div>
+        <div className={styles.CanvasPanel}><button className={styles.buttonMinimize} onClick={handleCanvasVisibilityClick}>_</button></div>
         <section className={`${styles.OScope} ${!canvasVisibility && styles.hidden}`}>{OScope}</section>
       </header>
-      <section className={styles.Container}>
+      <section className={styles.Container} onMouseEnter={() => setPianoMinimizerVisibility(true)}
+        onMouseLeave={() => setPianoMinimizerVisibility(false)}>
+        <div className={styles.PianoHoverControls}><button className={styles.buttonMinimize} onClick={handlePianoVisibilityClick}>_</button></div>
+        <div style={{ 'min-width' : '0' }} className={`${!pianoVisibility && styles.hidden}`}>
 
-
-        <div style={{ 'min-width' : '0' }}>
-          <div className={styles.PianoMinimizer} onClick={handlePianoVisibilityClick}>Toggle Piano</div>
-          <div className={styles.KeyboardShortcutsVisibilityToggle} onClick={handleKeyboardShortcutsVisibilityClick}>Toggle Keyboard Shortcuts</div>
           <DimensionsProvider>
             {({ containerWidth }) => (
               <Piano
-                className={`$'PianoRetroTheme' ${!pianoVisibility && styles.hidden}`}
+                className='PianoRetroTheme'
                 noteRange={{ first: 45, last: 67 }}
                 activeNotes={newActiveNotes}
                 playNote={noteOn}
@@ -280,10 +285,11 @@ export default function Synth() {
           </DimensionsProvider>
         </div>
         <Waveshapes />
-        <div className={styles.EffectsDrawerMinimizer} onClick={handleEffectsDrawerVisibilityClick}>Toggle Effects</div>
-        <Effects className={`${!effectsDrawerVisibility && styles.hidden}`}></Effects>
-
-        <div className={`${styles.effectsDrawer} ${!effectsDrawerVisibility && styles.hidden}`}>{effectNodes}</div>
+        <div className={styles.EffectsDrawerMinimizer} ><button className={styles.buttonMinimize} onClick={handleEffectsDrawerVisibilityClick}>_</button></div>
+        <div className={`${!effectsDrawerVisibility && styles.hidden}`}>
+          <Effects />
+          <div className={`${styles.effectsDrawer} ${!effectsDrawerVisibility && styles.hidden}`}>{effectNodes}</div>
+        </div>
       </section>
     </>
   );

@@ -10,9 +10,29 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -moz-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
 #root{
   display: inline-flex;
 }
+.Menu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttonResize {
+  position: absolute;
+  z-index: 2;
+  right: 1rem;
+}
+
+.buttonMinimize {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+}
+
 .Container {
   display: grid;
   justify-content: center;
