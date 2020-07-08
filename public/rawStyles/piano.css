@@ -15,7 +15,6 @@
  */
 .ReactPiano__Key--accidental {
   background: #555;
-  border-radius: 0 0 4px 4px;
   cursor: pointer;
   height: 66%;
   /* Overlay on top of natural keys */
@@ -23,12 +22,10 @@
   /* Use absolute positioning along with inline styles specified in JS to put keys in correct locations. */
   position: absolute;
   top: 0;
-  border: 1px solid hsla(289, 96%, 17%, 0.5);
+  border: 0 solid hsla(289, 96%, 17%, 0.5);
   border-top: 1px solid transparent;
   border-radius: 0 0 3px 3px;
-  box-shadow: -1px -1px 2px hsla(0, 0%, 100%, 0.2) inset,
-    0 -5px 3px 3px hsla(289, 96%, 26%, 0.6) inset,
-    0 2px 4px hsla(289, 96%, 27%, 0.5);
+  box-shadow: -1px -1px 2px hsla(0, 0%, 100%, 0.2) inset, 0 -5px 1px 2px hsla(289, 96%, 26%, 0.4) inset, 0 2px 4px hsla(289, 96%, 27%, 0.5);
   background: linear-gradient(
     45deg,
     hsla(289, 96%, 57%, 1) 0%,
@@ -57,7 +54,7 @@
    * This causes inline styles to be ignored.
    */
   flex: 1;
-  margin-right: 1px;
+  margin-right: 0px;
 }
 
 .ReactPiano__Key--natural:last-child {
@@ -65,13 +62,12 @@
   margin-right: 0;
 }
 
-
 .ReactPiano__Key--accidental + .ReactPiano__Key--natural + .ReactPiano__Key--accidental + .ReactPiano__Key--natural + .ReactPiano__Key--accidental {
-  transform: translateX(-.5rem);
+  transform: translateX(-.92rem);
 }
 
  .ReactPiano__Key--natural + .ReactPiano__Key--natural + .ReactPiano__Key--accidental {
-  transform: translateX(.5rem);
+  transform: translateX(.52rem);
 }
 
 .ReactPiano__Key--natural + .ReactPiano__Key--natural + .ReactPiano__Key--accidental + .ReactPiano__Key--natural + .ReactPiano__Key--accidental
@@ -80,11 +76,7 @@
 }
 
 .ReactPiano__Key--natural + .ReactPiano__Key--accidental {
-  transform: translateX(0);
-}
-
-.ReactPiano__Key--natural + .ReactPiano__Key--natural {
-  transform: translateX(0);
+  transform: translateX(-0.8rem);
 }
 /*
  * Styles of "active" or pressed-down keys

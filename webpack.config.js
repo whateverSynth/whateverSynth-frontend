@@ -71,7 +71,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: [path.resolve(__dirname, './node_modules/react-piano/dist/')],
+        include: [path.resolve(__dirname, './public/rawStyles')],
 
         use: [
           {
