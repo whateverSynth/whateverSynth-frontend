@@ -21,6 +21,23 @@ const EffectsContext = createContext();
 
 export const EffectsProvider = ({ children }) => {
   const [waveshape, setWaveshape] = useState('sine');
+  const [envelopeSettings, setEnvelopeSettings] = useState({
+    curve: 'linear',
+    attackCurve: 'linear',
+    decayCurve: 'linear',
+    releaseCurve: 'linear',
+    initialValueCurve: Float32Array,
+    releaseValueCurve: Float32Array,
+    sampleRate: 44100,
+    delayTime: 0,
+    startLevel: 0,
+    maxLevel: 1,
+    attackTime: 0.1,
+    holdTime: 0,
+    decayTime: 0,
+    sustainLevel: 0.5,
+    releaseTime: 1,
+  });
   const [gainSetting, setGainSetting] = useState(0.15);
 
   const [newEffects, setNewEffects] = useState([]);
@@ -29,6 +46,10 @@ export const EffectsProvider = ({ children }) => {
 
   const handleWaveshape = ({ target }) => {
     setWaveshape(target.value);
+  };
+
+  const handleEnvelopeSettings = ({ target }) => {
+    setEnvelopeSettings({ ...envelopeSettings, [target.name]: target.value });
   };
 
   const handleGainSetting = ({ target }) => {
@@ -220,8 +241,10 @@ export const EffectsProvider = ({ children }) => {
     <EffectsContext.Provider
       value={{
         waveshape,
+        envelopeSettings,
         gainSetting,
         handleWaveshape,
+        handleEnvelopeSettings,
         handleGainSetting,
         handleAddEffect,
         handleRemoveEffect,
@@ -247,6 +270,11 @@ export const useWaveshape = () => {
   return waveshape;
 };
 
+export const useEnvelopeSettings = () => {
+  const { envelopeSettings } = useContext(EffectsContext);
+  return envelopeSettings;
+};
+
 export const useGainSetting = () => {
   const { gainSetting } = useContext(EffectsContext);
   return gainSetting;
@@ -256,6 +284,11 @@ export const useGainSetting = () => {
 export const useHandleWaveshape = () => {
   const { handleWaveshape } = useContext(EffectsContext);
   return handleWaveshape;
+};
+
+export const useHandleEnvelopeSettings = () => {
+  const { handleEnvelopeSettings } = useContext(EffectsContext);
+  return handleEnvelopeSettings;
 };
 
 export const useHandleGainSetting = () => {
