@@ -49,7 +49,7 @@ export const EffectsProvider = ({ children }) => {
   };
 
   const handleEnvelopeSettings = ({ target }) => {
-    setEnvelopeSettings(target.value);
+    setEnvelopeSettings({ ...envelopeSettings, [target.name]: target.value });
   };
 
   const handleGainSetting = ({ target }) => {

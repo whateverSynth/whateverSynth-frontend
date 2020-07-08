@@ -24,8 +24,9 @@ import CompressorEffect from '../Effects/CompressorEffect/CompressorEffect';
 import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEffect';
 import Oscilloscope from 'oscilloscope';
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
-import Envelope from 'envelope-generator';
+// import Envelope from 'envelope-generator';
 import 'react-piano/dist/styles.css';
+import Envelope from '../Envelope/Envelope';
 
 let audioCtx;
 let tuna;
@@ -36,8 +37,8 @@ let scope;
 // let OScope;
 let canvas;
 let midiAccess = null;
-let env;
-let settings;
+// let env;
+// let settings;
 let activeNotes = [];
 
 const activeOscillators = {};
@@ -57,24 +58,24 @@ export default function Synth() {
     tuna = new Tuna(audioCtx);
     inputGain = audioCtx.createGain();
     outputGain = audioCtx.createGain();
-    settings = {
-      curve: 'linear',
-      attackCurve: 'linear',
-      decayCurve: 'linear',
-      releaseCurve: 'linear',
-      initialValueCurve: Float32Array,
-      releaseValueCurve: Float32Array,
-      sampleRate: 44100,
-      delayTime: 0,
-      startLevel: 0,
-      maxLevel: 1,
-      attackTime: 0.1,
-      holdTime: 0,
-      decayTime: 0,
-      sustainLevel: 0.5,
-      releaseTime: 1,
-    };
-    env = new Envelope(audioCtx, settings);
+    // settings = {
+    //   curve: 'linear',
+    //   attackCurve: 'linear',
+    //   decayCurve: 'linear',
+    //   releaseCurve: 'linear',
+    //   initialValueCurve: Float32Array,
+    //   releaseValueCurve: Float32Array,
+    //   sampleRate: 44100,
+    //   delayTime: 0,
+    //   startLevel: 0,
+    //   maxLevel: 1,
+    //   attackTime: 0.1,
+    //   holdTime: 0,
+    //   decayTime: 0,
+    //   sustainLevel: 0.5,
+    //   releaseTime: 1,
+    // };
+    // env = new Envelope(audioCtx, settings);
 
     canvas = document.createElement('canvas');
     canvas.width = 450;
@@ -83,8 +84,13 @@ export default function Synth() {
     document.body.appendChild(canvas);
 
     inputGain.connect(outputGain);
+
+    // outputGain.connect(env);
+    // env.connect(audioCtx.destination);
+
+    inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
-    env.connect(outputGain.gain);
+    // env.connect(outputGain.gain);
 
     if (navigator.requestMIDIAccess)
       navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
@@ -191,7 +197,7 @@ export default function Synth() {
     activeOscillators[noteNumber].connect(inputGain);
     activeOscillators[noteNumber].start();
     // osc.start(audioCtx.currentTime);
-    env.start(audioCtx.currentTime);
+    // env.start(audioCtx.currentTime);
   };
 
   const noteOff = (noteNumber) => {
@@ -201,15 +207,15 @@ export default function Synth() {
     }
     if (activeNotes.length === 0) {
       // shut off the envelope
-      let stopAt = env.getReleaseCompleteTime();
-      env.release(audioCtx.currentTime + 1);
-      env.stop(stopAt);
+      // let stopAt = env.getReleaseCompleteTime();
+      // env.release(audioCtx.currentTime + 1);
+      // env.stop(stopAt);
       activeOscillators[noteNumber]?.stop();
       delete activeOscillators[noteNumber];
     } else {
-      let stopAt = env.getReleaseCompleteTime();
-      env.release(audioCtx.currentTime + 1);
-      env.stop(stopAt);
+      // let stopAt = env.getReleaseCompleteTime();
+      // env.release(audioCtx.currentTime + 1);
+      // env.stop(stopAt);
       activeOscillators[noteNumber]?.stop();
       delete activeOscillators[noteNumber];
     }
@@ -276,6 +282,7 @@ export default function Synth() {
           width={1000}
           keyboardShortcuts={keyboardShortcuts}
         />
+        <Envelope />
 
         <Waveshapes />
         <Effects />
