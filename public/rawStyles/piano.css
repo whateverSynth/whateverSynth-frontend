@@ -87,7 +87,6 @@
  * Styles of "active" or pressed-down keys
  */
 
-
 .ReactPiano__Key--active.ReactPiano__Key--accidental {
   /* Slight height reduction for "pushed-down" effect */
   height: 65%;
@@ -182,4 +181,9 @@
   z-index: 4;
   top: -2rem;
   right: 1rem;
+}
+
+span span p {
+  display: inline;
+  line-height: 1.5rem;
 }
