@@ -165,10 +165,19 @@
 }
 
 .is-open {
-  float: right;
+  position: absolute;
+  right: 1rem;
+  z-index: 4;
+  background: transparent;
+  top: -2rem;
+}
+
+.Collapsible {
+margin-top: 2rem;
+  position: relative;
 }
 
 .is-closed {
-  text-align: right;
-  margin: 0 auto;
+  position: relative;
+  z-index: 4;
 }
