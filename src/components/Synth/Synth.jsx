@@ -25,6 +25,7 @@ import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEff
 import Oscilloscope from 'oscilloscope';
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import DimensionsProvider from '../../hooks/DimensionsProvider';
+import Collapsible from 'react-collapsible';
 import '../../../public/rawStyles/piano.css';
 
 let audioCtx;
@@ -51,18 +52,8 @@ export default function Synth() {
   const newEffects = useNewEffects();
   const newEffectSettings = useNewEffectSettings();
 
-  // HIDDEN COMPONENTS
-  const [canvasVisibility, setCanvasVisibility] = useState(true);
-  const [pianoVisibility, setPianoVisibility] = useState(true);
-  const [keyboardShortcutsVisibility, setKeyboardShortcutsVisibility] = useState(false);
-  const [effectsDrawerVisibility, setEffectsDrawerVisibility] = useState(true);
-  const [canvasMinimizerVisibility, setCanvasMinimizerVisibility] = useState(false);
-  const [pianoMinimizerVisibility, setPianoMinimizerVisibility] = useState(false);
-  const [effectsDrawerMinimizerVisibility, setEffectsDrawerMinimizerVisibility] = useState(false);
-  const handleCanvasVisibilityClick = () => setCanvasVisibility(visibility => !visibility);
-  const handlePianoVisibilityClick = () => setPianoVisibility(visibility => !visibility);
+
   const handleKeyboardShortcutsVisibilityClick = () => setKeyboardShortcutsVisibility(visibility => !visibility);
-  const handleEffectsDrawerVisibilityClick = () => setEffectsDrawerVisibility(visibility => !visibility);
 
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -262,20 +253,18 @@ export default function Synth() {
       <header>
         <div className={styles.Menu}>
           <h1>synthinator</h1>
-          <div className={styles.KeyboardShortcutsVisibilityToggle}> <button className={styles.buttonMinimize} onClick={handleKeyboardShortcutsVisibilityClick}>?</button></div>
+          <button className={styles.buttonMinimize} onClick={handleKeyboardShortcutsVisibilityClick}>?</button>
         </div>
-        <section className={styles.Panel}>
-          <div className={styles.Container}><button className={styles.buttonMinimize} onClick={handleCanvasVisibilityClick}>_</button></div>
-          <div className={`${styles.OScope} ${!canvasVisibility && styles.hidden}`}>{OScope}</div>
-        </section>
+        <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open="true">
+          <div className={`${styles.OScope}`}>{OScope}</div>
+        </Collapsible>
       </header>
-      <section className={styles.Container} onMouseEnter={() => setPianoMinimizerVisibility(true)}
-        onMouseLeave={() => setPianoMinimizerVisibility(false)}>
-        <div className={styles.PianoHoverControls}><button className={styles.buttonMinimize} onClick={handlePianoVisibilityClick}>_</button></div>
-        <div style={{ 'min-width' : '0' }} className={`${!pianoVisibility && styles.hidden}`}>
-
+      <div style={{ 'min-width' : '0' }}>
+        <Collapsible trigger="Piano" triggerWhenOpen="_" open="true">
           <DimensionsProvider>
+
             {({ containerWidth }) => (
+
               <Piano
                 className='PianoRetroTheme'
                 noteRange={{ first: 45, last: 67 }}
@@ -287,14 +276,16 @@ export default function Synth() {
               />
             )}
           </DimensionsProvider>
-        </div>
+        </Collapsible>
+      </div>
+      <Collapsible trigger="Instrument" triggerWhenOpen="_" open="true">
         <Waveshapes />
-        <div className={styles.EffectsDrawerMinimizer} ><button className={styles.buttonMinimize} onClick={handleEffectsDrawerVisibilityClick}>_</button></div>
-        <div className={`${!effectsDrawerVisibility && styles.hidden}`}>
-          <Effects />
-          <div className={`${styles.effectsDrawer} ${!effectsDrawerVisibility && styles.hidden}`}>{effectNodes}</div>
-        </div>
-      </section>
+      </Collapsible>
+
+      <Collapsible trigger="Effects" triggerWhenOpen="_" open="true">
+        <Effects />
+        <div className={`${styles.effectsDrawer}`}>{effectNodes}</div>
+      </Collapsible>
     </>
   );
 }
