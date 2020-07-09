@@ -9,7 +9,9 @@
   /* Used for flexbox layout of the child .ReactPiano__NoteLabelContainer elements */
   display: flex;
 }
-
+.VisibilityOn{
+  background-color: #2BFDA2;
+}
 /*
  * Styles of accidental notes (flat or sharp)
  */

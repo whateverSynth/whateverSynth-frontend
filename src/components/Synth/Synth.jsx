@@ -266,7 +266,7 @@ export default function Synth() {
       <header>
         <div className={styles.Menu}>
           <h1>synthinator</h1>
-          <button className={styles.buttonMinimize} onClick={handleKeyboardShortcutsVisibilityClick}>?</button>
+          <button className={styles.buttonMinimize} onClick={handleKeyboardShortcutsVisibilityClick} className={`${keyboardShortcutsVisibility ? 'VisibilityOn' : ''}`}>?</button>
         </div>
         <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open="true">
           <div className={`${styles.OScope}`}>{OScope}</div>
