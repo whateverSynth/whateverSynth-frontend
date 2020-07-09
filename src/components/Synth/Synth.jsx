@@ -152,10 +152,22 @@ export default function Synth() {
         (effect) => effect.id === effectSetting.id
       );
       Object.entries(effectSetting.settings).forEach((setting) => {
+        // REVERB IMPULSE CHANGE
+        if(setting[0] === 'impulse' && tunaEffects[chainIndex].effect[setting[0]] !== setting[1]) {
+          const ajaxRequest = new XMLHttpRequest();
+          ajaxRequest.open('GET', setting[1], true);
+          ajaxRequest.responseType = 'arraybuffer';
+          ajaxRequest.onload = function() {
+            let audioData = ajaxRequest.response;
+            audioCtx.decodeAudioData(audioData, function(buffer) {
+              tunaEffects[chainIndex].effect.convolver.buffer = buffer;
+            }, function(e){'Error decoding audio data' + e.err;});
+          };
+          ajaxRequest.send();
+        }
         tunaEffects[chainIndex].effect[setting[0]] = setting[1];
       });
     });
-    console.log(tunaEffects);
   }, [newEffectSettings]);
 
   useEffect(() => {
