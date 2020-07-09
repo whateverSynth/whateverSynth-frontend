@@ -241,7 +241,7 @@ export default function Synth() {
 
   return (
     <>
-      <h1>synthinator</h1>
+      <h1>whateverSynth</h1>
       <section className={styles.Container}>
         <section className={styles.OScope}>{OScope}</section>
         
