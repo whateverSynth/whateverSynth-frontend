@@ -25,6 +25,7 @@ import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEff
 import Oscilloscope from 'oscilloscope';
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import DimensionsProvider from '../../hooks/DimensionsProvider';
+import Collapsible from 'react-collapsible';
 import '../../../public/rawStyles/piano.css';
 
 let audioCtx;
@@ -51,6 +52,9 @@ export default function Synth() {
   const newEffects = useNewEffects();
   const newEffectSettings = useNewEffectSettings();
 
+
+  const handleKeyboardShortcutsVisibilityClick = () => setKeyboardShortcutsVisibility(visibility => !visibility);
+
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     tuna = new Tuna(audioCtx);
@@ -61,8 +65,13 @@ export default function Synth() {
     canvas.height = 400;
 
     const root = document.getElementById('root');
-    const logo = root.firstChild;
-    logo.insertAdjacentElement('afterEnd', canvas);
+    const header = root.firstChild;
+    const logo = header.firstChild;
+
+    const panel = header.lastChild;
+    const panelCanvas = panel.lastChild;
+    panelCanvas.appendChild(canvas);
+
 
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
@@ -242,15 +251,23 @@ export default function Synth() {
 
   return (
     <>
-      <h1>synthinator</h1>
-      <section className={styles.Container}>
-        <section className={styles.OScope}>{OScope}</section>
-        
-        <div style={{ 'minWidth' : '0' }}>
+      <header>
+        <div className={styles.Menu}>
+          <h1>synthinator</h1>
+          <button className={styles.buttonMinimize} onClick={handleKeyboardShortcutsVisibilityClick}>?</button>
+        </div>
+        <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open="true">
+          <div className={`${styles.OScope}`}>{OScope}</div>
+        </Collapsible>
+      </header>
+      <div style={{ 'min-width' : '0' }}>
+        <Collapsible trigger="Piano" triggerWhenOpen="_" open="true">
           <DimensionsProvider>
+
             {({ containerWidth }) => (
+
               <Piano
-                className="PianoRetroTheme"
+                className='PianoRetroTheme'
                 noteRange={{ first: 45, last: 67 }}
                 activeNotes={newActiveNotes}
                 playNote={noteOn}
@@ -260,11 +277,16 @@ export default function Synth() {
               />
             )}
           </DimensionsProvider>
-        </div>
+        </Collapsible>
+      </div>
+      <Collapsible trigger="Instrument" triggerWhenOpen="_" open="true">
         <Waveshapes />
+      </Collapsible>
+
+      <Collapsible trigger="Effects" triggerWhenOpen="_" open="true">
         <Effects />
-        <div className={styles.effectsDrawer}>{effectNodes}</div>
-      </section>
+        <div className={`${styles.effectsDrawer}`}>{effectNodes}</div>
+      </Collapsible>
     </>
   );
 }

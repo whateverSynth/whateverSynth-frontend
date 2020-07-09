@@ -163,3 +163,12 @@
 .ReactPiano__NoteLabel--natural.ReactPiano__NoteLabel--active {
   color: #f8e8d5;
 }
+
+.is-open {
+  float: right;
+}
+
+.is-closed {
+  text-align: right;
+  margin: 0 auto;
+}
