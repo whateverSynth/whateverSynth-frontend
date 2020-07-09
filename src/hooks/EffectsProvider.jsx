@@ -134,10 +134,12 @@ export const EffectsProvider = ({ children }) => {
         [prop]: !effectToUpdate.settings.bypass,
       };
       setNewEffectSettings([...oldEffects, effectToUpdate]);
+    } else if (prop === 'impulse'){
+      console.log(target.value);
     } else {
       effectToUpdate.settings = {
         ...effectToUpdate.settings,
-        [prop]: target.value,
+        [prop]: isNaN(target.value) ? target.value : Number(target.value),
       };
       setNewEffectSettings([...oldEffects, effectToUpdate]);
     }
