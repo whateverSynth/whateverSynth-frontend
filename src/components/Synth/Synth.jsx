@@ -106,18 +106,7 @@ export default function Synth() {
     
   }, []);
 
-  useEventListener('keydown', changeSettings);
-  // useEventListener('keyup', ifOctaveChange);
-
-  // function ifOctaveChange(e) {
-  //   // console.log(newActiveNotes);
-
-  //   // Object.keys(activeOscillators).forEach(osc => {
-  //   //   if(osc < firstNote || osc > lastNote) {
-  //   //     noteOff(osc);
-  //   //   }
-  //   // });
-  // }
+  useEventListener('keydown', (e) => changeSettings(e.keyCode));
 
   useEffect(() => {
     tunaEffects = newEffects.map((effect) => {
@@ -228,9 +217,8 @@ export default function Synth() {
     }
   };
 
-  function changeSettings(e) {
-    const x = e.keyCode;
-    console.log(e.keyCode);
+  function changeSettings(code) {
+    const x = code;
     if(x === 88 && octave < 5) {
       setNewActiveNotes([]);
       setOctave(octave => octave + 1);
@@ -301,6 +289,11 @@ export default function Synth() {
         </div>
         <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open="true">
           <div className={`${styles.OScope}`}>{OScope}</div>
+          <div>
+          Octave:
+            <button onClick={(e) => changeSettings(Number(e.target.value))} value={90}>-</button>
+            <button onClick={(e) => changeSettings(Number(e.target.value))} value={88}>+</button>
+          </div>
         </Collapsible>
       </header>
       <div style={{ 'min-width' : '0' }}>
