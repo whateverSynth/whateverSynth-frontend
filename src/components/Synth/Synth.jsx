@@ -187,6 +187,83 @@ export default function Synth() {
       delete activeOscillators[noteNumber];
     }
   };
+  const [pitchBend, setPitchBend] = useState(0);
+  document.addEventListener('keydown', pitchKeyPressDown);
+  // document.addEventListener('keydown', pitchUp);
+  document.addEventListener('keyup', pitchNormal);
+
+  useEffect(() => {
+    // console.log(pitchBend);
+    Object.values(activeOscillators).forEach((osc) => {
+      osc.frequency.value += pitchBend;
+
+      console.log(osc.frequency.value);
+    });
+  }, [pitchBend]);
+
+  function pitchKeyPressDown(e) {
+    var x = e.keyCode;
+    switch (x) {
+      case 49:
+        setPitchBend(-20);
+        break;
+      case 50:
+        setPitchBend(20);
+        break;
+    }
+    // console.log(x);
+  }
+
+  function pitchNormal(e) {
+    var x = e.keyCode;
+    switch (x) {
+      case 49:
+        setPitchBend(20);
+        break;
+      case 50:
+        setPitchBend(-20);
+        break;
+    }
+    // console.log(x);
+  }
+
+  // function pitchKeyPressDown(e) {
+  //   var x = e.keyCode;
+  //   if (x === 49) {
+  //     setPitchBend(-20);
+  //   } else if (x === 50) {
+  //     setPitchBend(20);
+  //   }
+
+  //   // console.log(x);
+  // }
+
+  // function pitchNormal(e) {
+  //   var x = e.keyCode;
+  //   if (x === 49) {
+  //     setPitchBend(20);
+  //   } else if (x === 50) {
+  //     setPitchBend(-20);
+  //   }
+
+  //   // console.log(x);
+  // }
+
+  // function pitchUp(e) {
+  //   var x = e.keyCode;
+  //   switch (x) {
+  //     case 50:
+  //       setPitchBend(20);
+  //       break;
+  //   }
+  //   // console.log(x);
+  // }
+
+  // if (event.keyCode === 49) {
+  //   setPitchBend(20);
+  // } else {
+  //   setPitchBend(0);
+  // }
 
   const frequencyFromNoteNumber = (note) => {
     return 440 * Math.pow(2, (note - 69) / 12);
@@ -244,8 +321,8 @@ export default function Synth() {
       <h1>synthinator</h1>
       <section className={styles.Container}>
         <section className={styles.OScope}>{OScope}</section>
-        
-        <div style={{ 'minWidth' : '0' }}>
+
+        <div style={{ minWidth: '0' }}>
           <DimensionsProvider>
             {({ containerWidth }) => (
               <Piano
