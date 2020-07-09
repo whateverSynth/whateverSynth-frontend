@@ -163,3 +163,21 @@
 .ReactPiano__NoteLabel--natural.ReactPiano__NoteLabel--active {
   color: #f8e8d5;
 }
+
+.is-open {
+  position: absolute;
+  right: 1rem;
+  z-index: 4;
+  background: transparent;
+  top: -2rem;
+}
+
+.Collapsible {
+margin-top: 2rem;
+  position: relative;
+}
+
+.is-closed {
+  position: relative;
+  z-index: 4;
+}
