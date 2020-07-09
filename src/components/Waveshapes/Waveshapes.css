@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: space-between;
   margin: 1rem auto;
-  width: 974px;
+  width: 90vw;
   input[type='range'] {
     -webkit-appearance: none;
     background-color: #00ff9f;

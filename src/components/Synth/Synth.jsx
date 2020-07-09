@@ -24,7 +24,9 @@ import CompressorEffect from '../Effects/CompressorEffect/CompressorEffect';
 import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEffect';
 import Oscilloscope from 'oscilloscope';
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
-import 'react-piano/dist/styles.css';
+import DimensionsProvider from '../../hooks/DimensionsProvider';
+import '../../../public/rawStyles/piano.css';
+import useEventListener from '@use-it/event-listener';
 
 let audioCtx;
 let tuna;
@@ -37,16 +39,57 @@ let canvas;
 let midiAccess = null;
 let activeNotes = [];
 const activeOscillators = {};
+let waveshape;
 
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
+  const [newActiveNotes, setNewActiveNotes] = useState([]);
+  const [pitchBend, setPitchBend] = useState(0);
+  waveshape = useWaveshape();
 
-  const waveshape = useWaveshape();
   const gainSetting = useGainSetting();
 
   // NEW EFFECT STATE
   const newEffects = useNewEffects();
   const newEffectSettings = useNewEffectSettings();
+
+  useEventListener('keydown', pitchKeyPressDown);
+  useEventListener('keyup', pitchNormal);
+
+  function pitchKeyPressDown(e) {
+    var x = e.keyCode;
+    switch (x) {
+      case 49:
+        setPitchBend(-20);
+        break;
+      case 50:
+        setPitchBend(20);
+        break;
+    }
+    // console.log(x);
+  }
+
+  function pitchNormal(e) {
+    var x = e.keyCode;
+    switch (x) {
+      case 49:
+        setPitchBend(20);
+        break;
+      case 50:
+        setPitchBend(-20);
+        break;
+    }
+    // console.log(x);
+  }
+
+  useEffect(() => {
+    // console.log(pitchBend);
+    Object.values(activeOscillators).forEach((osc) => {
+      osc.frequency.value += pitchBend;
+
+      console.log(osc.frequency.value);
+    });
+  }, [pitchBend]);
 
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -58,7 +101,13 @@ export default function Synth() {
     canvas.width = 450;
     canvas.height = 450;
 
-    document.body.appendChild(canvas);
+    // document.addEventListener('keydown', pitchKeyPressDown);
+    // // document.addEventListener('keydown', pitchUp);
+    // document.addEventListener('keyup', pitchNormal);
+
+    const root = document.getElementById('root');
+    const logo = root.firstChild;
+    logo.insertAdjacentElement('afterEnd', canvas);
 
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
@@ -105,8 +154,8 @@ export default function Synth() {
       outputGain.connect(audioCtx.destination);
       scope = new Oscilloscope(outputGain);
       const context = canvas.getContext('2d');
-      context.strokeStyle = '#2BFDA2';
-      context.lineWidth = 5;
+      context.strokeStyle = '#00ff9f';
+      context.lineWidth = 3;
       // console.log(context);
 
       OScope = scope.animate(context);
@@ -183,6 +232,48 @@ export default function Synth() {
       delete activeOscillators[noteNumber];
     }
   };
+  // const [pitchBend, setPitchBend] = useState(0);
+  // document.addEventListener('keydown', pitchKeyPressDown);
+  // // document.addEventListener('keydown', pitchUp);
+  // document.addEventListener('keyup', pitchNormal);
+
+  // function pitchKeyPressDown(e) {
+  //   var x = e.keyCode;
+  //   if (x === 49) {
+  //     setPitchBend(-20);
+  //   } else if (x === 50) {
+  //     setPitchBend(20);
+  //   }
+
+  //   // console.log(x);
+  // }
+
+  // function pitchNormal(e) {
+  //   var x = e.keyCode;
+  //   if (x === 49) {
+  //     setPitchBend(20);
+  //   } else if (x === 50) {
+  //     setPitchBend(-20);
+  //   }
+
+  //   // console.log(x);
+  // }
+
+  // function pitchUp(e) {
+  //   var x = e.keyCode;
+  //   switch (x) {
+  //     case 50:
+  //       setPitchBend(20);
+  //       break;
+  //   }
+  //   // console.log(x);
+  // }
+
+  // if (event.keyCode === 49) {
+  //   setPitchBend(20);
+  // } else {
+  //   setPitchBend(0);
+  // }
 
   const frequencyFromNoteNumber = (note) => {
     return 440 * Math.pow(2, (note - 69) / 12);
@@ -193,13 +284,15 @@ export default function Synth() {
       case 0x90:
         if (event.data[2] !== 0) {
           // if velocity != 0, this is a note-on message
-          noteOn(event.data[1]);
+          activeNotes.push(event.data[1]);
+          const newNodes = [...activeNotes];
+          setNewActiveNotes(newNodes);
           return;
         }
         break;
       // if velocity == 0, fall thru: it's a note-off.  MIDI's weird, y'all.
       case 0x80:
-        noteOff(event.data[1]);
+        setNewActiveNotes(activeNotes.filter((note) => note !== event.data[1]));
         return;
     }
   };
@@ -239,15 +332,21 @@ export default function Synth() {
       <section className={styles.Container}>
         <section className={styles.OScope}>{OScope}</section>
 
-        <Piano
-          className="PianoRetroTheme"
-          noteRange={{ first: 45, last: 67 }}
-          playNote={noteOn}
-          stopNote={noteOff}
-          width={1000}
-          keyboardShortcuts={keyboardShortcuts}
-        />
-
+        <div style={{ minWidth: '0' }}>
+          <DimensionsProvider>
+            {({ containerWidth }) => (
+              <Piano
+                className="PianoRetroTheme"
+                noteRange={{ first: 45, last: 67 }}
+                activeNotes={newActiveNotes}
+                playNote={noteOn}
+                stopNote={noteOff}
+                width={containerWidth}
+                keyboardShortcuts={keyboardShortcuts}
+              />
+            )}
+          </DimensionsProvider>
+        </div>
         <Waveshapes />
         <Effects />
         <div className={styles.effectsDrawer}>{effectNodes}</div>
