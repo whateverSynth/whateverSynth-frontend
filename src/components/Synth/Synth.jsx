@@ -26,6 +26,7 @@ import Oscilloscope from 'oscilloscope';
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import DimensionsProvider from '../../hooks/DimensionsProvider';
 import '../../../public/rawStyles/piano.css';
+import useEventListener from '@use-it/event-listener';
 
 let audioCtx;
 let tuna;
@@ -43,6 +44,7 @@ let waveshape;
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
   const [newActiveNotes, setNewActiveNotes] = useState([]);
+  const [pitchBend, setPitchBend] = useState(0);
   waveshape = useWaveshape();
 
   const gainSetting = useGainSetting();
@@ -50,6 +52,44 @@ export default function Synth() {
   // NEW EFFECT STATE
   const newEffects = useNewEffects();
   const newEffectSettings = useNewEffectSettings();
+
+  useEventListener('keydown', pitchKeyPressDown);
+  useEventListener('keyup', pitchNormal);
+
+  function pitchKeyPressDown(e) {
+    var x = e.keyCode;
+    switch (x) {
+      case 49:
+        setPitchBend(-20);
+        break;
+      case 50:
+        setPitchBend(20);
+        break;
+    }
+    // console.log(x);
+  }
+
+  function pitchNormal(e) {
+    var x = e.keyCode;
+    switch (x) {
+      case 49:
+        setPitchBend(20);
+        break;
+      case 50:
+        setPitchBend(-20);
+        break;
+    }
+    // console.log(x);
+  }
+
+  useEffect(() => {
+    // console.log(pitchBend);
+    Object.values(activeOscillators).forEach((osc) => {
+      osc.frequency.value += pitchBend;
+
+      console.log(osc.frequency.value);
+    });
+  }, [pitchBend]);
 
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -59,6 +99,10 @@ export default function Synth() {
 
     canvas = document.createElement('canvas');
     canvas.height = 400;
+
+    // document.addEventListener('keydown', pitchKeyPressDown);
+    // // document.addEventListener('keydown', pitchUp);
+    // document.addEventListener('keyup', pitchNormal);
 
     const root = document.getElementById('root');
     const logo = root.firstChild;
@@ -187,45 +231,10 @@ export default function Synth() {
       delete activeOscillators[noteNumber];
     }
   };
-  const [pitchBend, setPitchBend] = useState(0);
-  document.addEventListener('keydown', pitchKeyPressDown);
-  // document.addEventListener('keydown', pitchUp);
-  document.addEventListener('keyup', pitchNormal);
-
-  useEffect(() => {
-    // console.log(pitchBend);
-    Object.values(activeOscillators).forEach((osc) => {
-      osc.frequency.value += pitchBend;
-
-      console.log(osc.frequency.value);
-    });
-  }, [pitchBend]);
-
-  function pitchKeyPressDown(e) {
-    var x = e.keyCode;
-    switch (x) {
-      case 49:
-        setPitchBend(-20);
-        break;
-      case 50:
-        setPitchBend(20);
-        break;
-    }
-    // console.log(x);
-  }
-
-  function pitchNormal(e) {
-    var x = e.keyCode;
-    switch (x) {
-      case 49:
-        setPitchBend(20);
-        break;
-      case 50:
-        setPitchBend(-20);
-        break;
-    }
-    // console.log(x);
-  }
+  // const [pitchBend, setPitchBend] = useState(0);
+  // document.addEventListener('keydown', pitchKeyPressDown);
+  // // document.addEventListener('keydown', pitchUp);
+  // document.addEventListener('keyup', pitchNormal);
 
   // function pitchKeyPressDown(e) {
   //   var x = e.keyCode;
