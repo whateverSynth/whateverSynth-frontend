@@ -146,6 +146,7 @@ export default function Synth() {
         tunaEffects[chainIndex].effect[setting[0]] = setting[1];
       });
     });
+    console.log(tunaEffects);
   }, [newEffectSettings]);
 
   useEffect(() => {

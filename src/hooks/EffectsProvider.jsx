@@ -135,7 +135,10 @@ export const EffectsProvider = ({ children }) => {
       };
       setNewEffectSettings([...oldEffects, effectToUpdate]);
     } else if (prop === 'impulse'){
-      console.log(target.value);
+      let effectImpulse = newEffects.find((effect) => effect.id === id);
+      console.log(effectImpulse);
+      // console.log(effectImpulse);
+      // console.log(target.value);
     } else {
       effectToUpdate.settings = {
         ...effectToUpdate.settings,
