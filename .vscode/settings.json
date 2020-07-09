@@ -15,5 +15,10 @@
     "use",
     "use bitcrusher settings",
     "wahwah"
-  ]
+  ],
+  "files.exclude": {
+    "**/.code-workspace": true,
+    "**/.vscode": true,
+    "**/coverage": true
+  }
 }

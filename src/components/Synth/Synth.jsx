@@ -24,7 +24,9 @@ import CompressorEffect from '../Effects/CompressorEffect/CompressorEffect';
 import PingPongDelayEffect from '../Effects/PingPongDelayEffect/PingPongDelayEffect';
 import Oscilloscope from 'oscilloscope';
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
-import 'react-piano/dist/styles.css';
+import DimensionsProvider from '../../hooks/DimensionsProvider';
+import Collapsible from 'react-collapsible';
+import '../../../public/rawStyles/piano.css';
 
 let audioCtx;
 let tuna;
@@ -50,6 +52,9 @@ export default function Synth() {
   const newEffects = useNewEffects();
   const newEffectSettings = useNewEffectSettings();
 
+
+  const handleKeyboardShortcutsVisibilityClick = () => setKeyboardShortcutsVisibility(visibility => !visibility);
+
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     tuna = new Tuna(audioCtx);
@@ -60,7 +65,14 @@ export default function Synth() {
     canvas.width = 450;
     canvas.height = 450;
 
-    document.body.appendChild(canvas);
+    const root = document.getElementById('root');
+    const header = root.firstChild;
+    const logo = header.firstChild;
+
+    const panel = header.lastChild;
+    const panelCanvas = panel.lastChild;
+    panelCanvas.appendChild(canvas);
+
 
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
@@ -160,7 +172,6 @@ export default function Synth() {
 
   //MIDI
   const noteOn = (noteNumber) => {
-
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       frequencyFromNoteNumber(noteNumber),
@@ -173,7 +184,6 @@ export default function Synth() {
   };
 
   const noteOff = (noteNumber) => {
-
     const position = activeNotes.indexOf(noteNumber);
     if (position !== -1) {
       activeNotes.splice(position, 1);
@@ -205,7 +215,7 @@ export default function Synth() {
         break;
       // if velocity == 0, fall thru: it's a note-off.  MIDI's weird, y'all.
       case 0x80:
-        setNewActiveNotes(activeNotes.filter(note => note !== event.data[1]));
+        setNewActiveNotes(activeNotes.filter((note) => note !== event.data[1]));
         return;
     }
   };
@@ -241,24 +251,42 @@ export default function Synth() {
 
   return (
     <>
-      <h1>whateverSynth</h1>
-      <section className={styles.Container}>
-        <section className={styles.OScope}>{OScope}</section>
+      <header>
+        <div className={styles.Menu}>
+          <h1>synthinator</h1>
+          <button className={styles.buttonMinimize} onClick={handleKeyboardShortcutsVisibilityClick}>?</button>
+        </div>
+        <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open="true">
+          <div className={`${styles.OScope}`}>{OScope}</div>
+        </Collapsible>
+      </header>
+      <div style={{ 'min-width' : '0' }}>
+        <Collapsible trigger="Piano" triggerWhenOpen="_" open="true">
+          <DimensionsProvider>
 
-        <Piano
-          className="PianoRetroTheme"
-          noteRange={{ first: 45, last: 67 }}
-          activeNotes={newActiveNotes}
-          playNote={noteOn}
-          stopNote={noteOff}
-          width={1000}
-          keyboardShortcuts={keyboardShortcuts}
-        />
+            {({ containerWidth }) => (
 
+              <Piano
+                className='PianoRetroTheme'
+                noteRange={{ first: 45, last: 67 }}
+                activeNotes={newActiveNotes}
+                playNote={noteOn}
+                stopNote={noteOff}
+                width={containerWidth}
+                keyboardShortcuts={keyboardShortcuts}
+              />
+            )}
+          </DimensionsProvider>
+        </Collapsible>
+      </div>
+      <Collapsible trigger="Instrument" triggerWhenOpen="_" open="true">
         <Waveshapes />
+      </Collapsible>
+
+      <Collapsible trigger="Effects" triggerWhenOpen="_" open="true">
         <Effects />
-        <div className={styles.effectsDrawer}>{effectNodes}</div>
-      </section>
+        <div className={`${styles.effectsDrawer}`}>{effectNodes}</div>
+      </Collapsible>
     </>
   );
 }
