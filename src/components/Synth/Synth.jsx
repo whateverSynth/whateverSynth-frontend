@@ -107,6 +107,17 @@ export default function Synth() {
   }, []);
 
   useEventListener('keydown', changeSettings);
+  // useEventListener('keyup', ifOctaveChange);
+
+  // function ifOctaveChange(e) {
+  //   // console.log(newActiveNotes);
+
+  //   // Object.keys(activeOscillators).forEach(osc => {
+  //   //   if(osc < firstNote || osc > lastNote) {
+  //   //     noteOff(osc);
+  //   //   }
+  //   // });
+  // }
 
   useEffect(() => {
     tunaEffects = newEffects.map((effect) => {
@@ -190,7 +201,7 @@ export default function Synth() {
   });
 
   //MIDI
-  const noteOn = (noteNumber) => {
+  const noteOn = (noteNumber) => {    
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       frequencyFromNoteNumber(noteNumber),
@@ -217,11 +228,17 @@ export default function Synth() {
     }
   };
 
-
   function changeSettings(e) {
     const x = e.keyCode;
-    if(x === 88 && octave < 5) setOctave(octave => octave + 1);
-    if(x === 90 && octave > -2) setOctave(octave => octave - 1);
+    console.log(e.keyCode);
+    if(x === 88 && octave < 5) {
+      setNewActiveNotes([]);
+      setOctave(octave => octave + 1);
+    }
+    if(x === 90 && octave > -2) {
+      setNewActiveNotes([]);
+      setOctave(octave => octave - 1);
+    }
   }
 
   const frequencyFromNoteNumber = (note) => {
