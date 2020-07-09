@@ -52,7 +52,7 @@ export default function Synth() {
   const newEffects = useNewEffects();
   const newEffectSettings = useNewEffectSettings();
 
-
+  const [keyboardShortcutsVisibility, setKeyboardShortcutsVisibility] = useState(false);
   const handleKeyboardShortcutsVisibilityClick = () => setKeyboardShortcutsVisibility(visibility => !visibility);
 
   useEffect(() => {
@@ -279,7 +279,7 @@ export default function Synth() {
             {({ containerWidth }) => (
 
               <Piano
-                className='PianoRetroTheme'
+                className={`${keyboardShortcutsVisibility ? '' : 'shortcutsHidden'}`}
                 noteRange={{ first: 45, last: 67 }}
                 activeNotes={newActiveNotes}
                 playNote={noteOn}
