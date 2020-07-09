@@ -76,8 +76,10 @@ export default function Synth() {
     const root = document.getElementById('root');
     const header = root.firstChild;
     const logo = header.firstChild;
-    const canvasContainer = header.lastChild;
-    canvasContainer.appendChild(canvas);
+
+    const panel = header.lastChild;
+    const panelCanvas = panel.lastChild;
+    panelCanvas.appendChild(canvas);
 
 
     inputGain.connect(outputGain);
@@ -262,8 +264,10 @@ export default function Synth() {
           <h1>synthinator</h1>
           <div className={styles.KeyboardShortcutsVisibilityToggle}> <button className={styles.buttonMinimize} onClick={handleKeyboardShortcutsVisibilityClick}>?</button></div>
         </div>
-        <div className={styles.CanvasPanel}><button className={styles.buttonMinimize} onClick={handleCanvasVisibilityClick}>_</button></div>
-        <section className={`${styles.OScope} ${!canvasVisibility && styles.hidden}`}>{OScope}</section>
+        <section className={styles.Panel}>
+          <div className={styles.Container}><button className={styles.buttonMinimize} onClick={handleCanvasVisibilityClick}>_</button></div>
+          <div className={`${styles.OScope} ${!canvasVisibility && styles.hidden}`}>{OScope}</div>
+        </section>
       </header>
       <section className={styles.Container} onMouseEnter={() => setPianoMinimizerVisibility(true)}
         onMouseLeave={() => setPianoMinimizerVisibility(false)}>
