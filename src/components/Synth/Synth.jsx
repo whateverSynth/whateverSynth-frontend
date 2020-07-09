@@ -27,6 +27,7 @@ import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import DimensionsProvider from '../../hooks/DimensionsProvider';
 import Collapsible from 'react-collapsible';
 import '../../../public/rawStyles/piano.css';
+import useEventListener from '@use-it/event-listener';
 
 let audioCtx;
 let tuna;
@@ -44,6 +45,7 @@ let waveshape;
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
   const [newActiveNotes, setNewActiveNotes] = useState([]);
+  const [octave, setOctave] = useState(0);
   waveshape = useWaveshape();
 
   const gainSetting = useGainSetting();
@@ -99,7 +101,12 @@ export default function Synth() {
     const onMIDIReject = () => {
       alert('The MIDI system failed to start.');
     };
+
+    // document.addEventListener('keydown', changeSettings);
+    
   }, []);
+
+  useEventListener('keydown', changeSettings);
 
   useEffect(() => {
     tunaEffects = newEffects.map((effect) => {
@@ -174,8 +181,8 @@ export default function Synth() {
     inputGain.gain.value = gainSetting; //defaults to 0.15
   }, [gainSetting]);
 
-  const firstNote = MidiNumbers.fromNote('c3');
-  const lastNote = MidiNumbers.fromNote('f5');
+  const firstNote = MidiNumbers.fromNote('c3') + (octave * 12);
+  const lastNote = MidiNumbers.fromNote('f5') + (octave * 12);
   const keyboardShortcuts = KeyboardShortcuts.create({
     firstNote: firstNote,
     lastNote: lastNote,
@@ -209,6 +216,13 @@ export default function Synth() {
       delete activeOscillators[noteNumber];
     }
   };
+
+
+  function changeSettings(e) {
+    const x = e.keyCode;
+    if(x === 88 && octave < 5) setOctave(octave => octave + 1);
+    if(x === 90 && octave > -2) setOctave(octave => octave - 1);
+  }
 
   const frequencyFromNoteNumber = (note) => {
     return 440 * Math.pow(2, (note - 69) / 12);
@@ -280,7 +294,7 @@ export default function Synth() {
 
               <Piano
                 className='PianoRetroTheme'
-                noteRange={{ first: 45, last: 67 }}
+                noteRange={{ first: firstNote - 3, last: lastNote - 10 }}
                 activeNotes={newActiveNotes}
                 playNote={noteOn}
                 stopNote={noteOff}
