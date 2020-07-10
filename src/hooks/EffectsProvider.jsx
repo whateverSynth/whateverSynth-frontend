@@ -134,10 +134,20 @@ export const EffectsProvider = ({ children }) => {
         [prop]: !effectToUpdate.settings.bypass,
       };
       setNewEffectSettings([...oldEffects, effectToUpdate]);
+    } else if (prop === 'impulse'){
+      // let effectImpulse = newEffects.find((effect) => effect.id === id);
+      // console.log(effectImpulse);
+      // console.log(effectImpulse);
+      // console.log(target.value);
+      effectToUpdate.settings = {
+        ...effectToUpdate.settings,
+        [prop]: isNaN(target.value) ? target.value : Number(target.value),
+      };
+      setNewEffectSettings([...oldEffects, effectToUpdate]);
     } else {
       effectToUpdate.settings = {
         ...effectToUpdate.settings,
-        [prop]: target.value,
+        [prop]: isNaN(target.value) ? target.value : Number(target.value),
       };
       setNewEffectSettings([...oldEffects, effectToUpdate]);
     }

@@ -27,6 +27,7 @@ import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import DimensionsProvider from '../../hooks/DimensionsProvider';
 import Collapsible from 'react-collapsible';
 import '../../../public/rawStyles/piano.css';
+import useEventListener from '@use-it/event-listener';
 
 let audioCtx;
 let tuna;
@@ -38,12 +39,13 @@ let OScope;
 let canvas;
 let midiAccess = null;
 let activeNotes = [];
-const activeOscillators = {};
 let waveshape;
+const activeOscillators = {};
 
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
   const [newActiveNotes, setNewActiveNotes] = useState([]);
+  const [octave, setOctave] = useState(0);
   waveshape = useWaveshape();
 
   const gainSetting = useGainSetting();
@@ -52,8 +54,12 @@ export default function Synth() {
   const newEffects = useNewEffects();
   const newEffectSettings = useNewEffectSettings();
 
-
-  const handleKeyboardShortcutsVisibilityClick = () => setKeyboardShortcutsVisibility(visibility => !visibility);
+  const [
+    keyboardShortcutsVisibility,
+    setKeyboardShortcutsVisibility,
+  ] = useState(false);
+  const handleKeyboardShortcutsVisibilityClick = () =>
+    setKeyboardShortcutsVisibility((visibility) => !visibility);
 
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -66,21 +72,16 @@ export default function Synth() {
 
     const root = document.getElementById('root');
     const header = root.firstChild;
-    const logo = header.firstChild;
+    // const logo = header.firstChild;
 
     const panel = header.lastChild;
     const panelCanvas = panel.lastChild;
     panelCanvas.appendChild(canvas);
 
-
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
 
-    if (navigator.requestMIDIAccess)
-      navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
-    else alert('No MIDI support present in your browser.');
-
-    function onMIDIInit(midi) {
+    const onMIDIInit = (midi) => {
       midiAccess = midi;
       let haveAtLeastOneDevice = false;
       const inputs = midiAccess.inputs.values();
@@ -94,12 +95,18 @@ export default function Synth() {
         haveAtLeastOneDevice = true;
       }
       if (!haveAtLeastOneDevice) return;
-    }
+    };
+
+    if (navigator.requestMIDIAccess)
+      navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
+    else alert('No MIDI support present in your browser.');
 
     const onMIDIReject = () => {
       alert('The MIDI system failed to start.');
     };
   }, []);
+
+  useEventListener('keydown', (e) => changeSettings(e.keyCode));
 
   useEffect(() => {
     tunaEffects = newEffects.map((effect) => {
@@ -152,6 +159,28 @@ export default function Synth() {
         (effect) => effect.id === effectSetting.id
       );
       Object.entries(effectSetting.settings).forEach((setting) => {
+        // REVERB IMPULSE CHANGE
+        if (
+          setting[0] === 'impulse' &&
+          tunaEffects[chainIndex].effect[setting[0]] !== setting[1]
+        ) {
+          const ajaxRequest = new XMLHttpRequest();
+          ajaxRequest.open('GET', setting[1], true);
+          ajaxRequest.responseType = 'arraybuffer';
+          ajaxRequest.onload = function () {
+            let audioData = ajaxRequest.response;
+            audioCtx.decodeAudioData(
+              audioData,
+              function (buffer) {
+                tunaEffects[chainIndex].effect.convolver.buffer = buffer;
+              },
+              function (e) {
+                'Error decoding audio data' + e.err;
+              }
+            );
+          };
+          ajaxRequest.send();
+        }
         tunaEffects[chainIndex].effect[setting[0]] = setting[1];
       });
     });
@@ -161,8 +190,8 @@ export default function Synth() {
     inputGain.gain.value = gainSetting; //defaults to 0.15
   }, [gainSetting]);
 
-  const firstNote = MidiNumbers.fromNote('c3');
-  const lastNote = MidiNumbers.fromNote('f5');
+  const firstNote = MidiNumbers.fromNote('c3') + octave * 12;
+  const lastNote = MidiNumbers.fromNote('f5') + octave * 12;
   const keyboardShortcuts = KeyboardShortcuts.create({
     firstNote: firstNote,
     lastNote: lastNote,
@@ -197,6 +226,18 @@ export default function Synth() {
     }
   };
 
+  function changeSettings(code) {
+    const x = code;
+    if (x === 88 && octave < 5) {
+      setNewActiveNotes([]);
+      setOctave((octave) => octave + 1);
+    }
+    if (x === 90 && octave > -2) {
+      setNewActiveNotes([]);
+      setOctave((octave) => octave - 1);
+    }
+  }
+
   const frequencyFromNoteNumber = (note) => {
     return 440 * Math.pow(2, (note - 69) / 12);
   };
@@ -219,6 +260,43 @@ export default function Synth() {
     }
   };
 
+  //PITCH DOWN
+  const pitchKeyPressDown = (e) => {
+    const x = e.keyCode;
+    switch (x) {
+      case 49:
+        Object.values(activeOscillators).forEach((osc) => {
+          osc.frequency.value += -20;
+        });
+        break;
+      case 50:
+        Object.values(activeOscillators).forEach((osc) => {
+          osc.frequency.value += 20;
+        });
+        break;
+    }
+  };
+
+  const pitchNormal = (e) => {
+    const x = e.keyCode;
+    switch (x) {
+      case 49:
+        Object.values(activeOscillators).forEach((osc) => {
+          osc.frequency.value += 20;
+        });
+        break;
+      case 50:
+        Object.values(activeOscillators).forEach((osc) => {
+          osc.frequency.value += -20;
+        });
+        break;
+    }
+  };
+
+  useEventListener('keydown', pitchKeyPressDown);
+  useEventListener('keyup', pitchNormal);
+
+  //EFFECTS NODES
   const effectNodes = localEffects.map((effect) => {
     if (effect.effect.name === 'Bitcrusher')
       return <BitcrusherEffect key={effect.id} id={effect.id} />;
@@ -252,22 +330,43 @@ export default function Synth() {
     <>
       <header>
         <div className={styles.Menu}>
-          <h1>synthinator</h1>
-          <button className={styles.buttonMinimize} onClick={handleKeyboardShortcutsVisibilityClick}>?</button>
+          <h1>whateverSynth</h1>
+          <button
+            className={styles.buttonMinimize}
+            onClick={handleKeyboardShortcutsVisibilityClick}
+            className={`${keyboardShortcutsVisibility ? 'VisibilityOn' : ''}`}
+          >
+            ?
+          </button>
         </div>
         <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open="true">
           <div className={`${styles.OScope}`}>{OScope}</div>
+          <div>
+            Octave:
+            <button
+              onClick={(e) => changeSettings(Number(e.target.value))}
+              value={90}
+            >
+              -
+            </button>
+            <button
+              onClick={(e) => changeSettings(Number(e.target.value))}
+              value={88}
+            >
+              +
+            </button>
+          </div>
         </Collapsible>
       </header>
-      <div style={{ 'min-width' : '0' }}>
+      <div style={{ minWidth: '0' }}>
         <Collapsible trigger="Piano" triggerWhenOpen="_" open="true">
           <DimensionsProvider>
-
             {({ containerWidth }) => (
-
               <Piano
-                className='PianoRetroTheme'
-                noteRange={{ first: 45, last: 67 }}
+                className={`${
+                  keyboardShortcutsVisibility ? '' : 'shortcutsHidden'
+                }`}
+                noteRange={{ first: firstNote - 3, last: lastNote - 10 }}
                 activeNotes={newActiveNotes}
                 playNote={noteOn}
                 stopNote={noteOff}
