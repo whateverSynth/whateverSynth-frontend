@@ -54,8 +54,12 @@ export default function Synth() {
   const newEffects = useNewEffects();
   const newEffectSettings = useNewEffectSettings();
 
-  const [keyboardShortcutsVisibility, setKeyboardShortcutsVisibility] = useState(false);
-  const handleKeyboardShortcutsVisibilityClick = () => setKeyboardShortcutsVisibility(visibility => !visibility);
+  const [
+    keyboardShortcutsVisibility,
+    setKeyboardShortcutsVisibility,
+  ] = useState(false);
+  const handleKeyboardShortcutsVisibilityClick = () =>
+    setKeyboardShortcutsVisibility((visibility) => !visibility);
 
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -68,12 +72,11 @@ export default function Synth() {
 
     const root = document.getElementById('root');
     const header = root.firstChild;
-    const logo = header.firstChild;
+    // const logo = header.firstChild;
 
     const panel = header.lastChild;
     const panelCanvas = panel.lastChild;
     panelCanvas.appendChild(canvas);
-
 
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
@@ -103,7 +106,6 @@ export default function Synth() {
     };
 
     // document.addEventListener('keydown', changeSettings);
-    
   }, []);
 
   useEventListener('keydown', (e) => changeSettings(e.keyCode));
@@ -160,15 +162,24 @@ export default function Synth() {
       );
       Object.entries(effectSetting.settings).forEach((setting) => {
         // REVERB IMPULSE CHANGE
-        if(setting[0] === 'impulse' && tunaEffects[chainIndex].effect[setting[0]] !== setting[1]) {
+        if (
+          setting[0] === 'impulse' &&
+          tunaEffects[chainIndex].effect[setting[0]] !== setting[1]
+        ) {
           const ajaxRequest = new XMLHttpRequest();
           ajaxRequest.open('GET', setting[1], true);
           ajaxRequest.responseType = 'arraybuffer';
-          ajaxRequest.onload = function() {
+          ajaxRequest.onload = function () {
             let audioData = ajaxRequest.response;
-            audioCtx.decodeAudioData(audioData, function(buffer) {
-              tunaEffects[chainIndex].effect.convolver.buffer = buffer;
-            }, function(e){'Error decoding audio data' + e.err;});
+            audioCtx.decodeAudioData(
+              audioData,
+              function (buffer) {
+                tunaEffects[chainIndex].effect.convolver.buffer = buffer;
+              },
+              function (e) {
+                'Error decoding audio data' + e.err;
+              }
+            );
           };
           ajaxRequest.send();
         }
@@ -181,8 +192,8 @@ export default function Synth() {
     inputGain.gain.value = gainSetting; //defaults to 0.15
   }, [gainSetting]);
 
-  const firstNote = MidiNumbers.fromNote('c3') + (octave * 12);
-  const lastNote = MidiNumbers.fromNote('f5') + (octave * 12);
+  const firstNote = MidiNumbers.fromNote('c3') + octave * 12;
+  const lastNote = MidiNumbers.fromNote('f5') + octave * 12;
   const keyboardShortcuts = KeyboardShortcuts.create({
     firstNote: firstNote,
     lastNote: lastNote,
@@ -190,7 +201,7 @@ export default function Synth() {
   });
 
   //MIDI
-  const noteOn = (noteNumber) => {    
+  const noteOn = (noteNumber) => {
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       frequencyFromNoteNumber(noteNumber),
@@ -219,13 +230,13 @@ export default function Synth() {
 
   function changeSettings(code) {
     const x = code;
-    if(x === 88 && octave < 5) {
+    if (x === 88 && octave < 5) {
       setNewActiveNotes([]);
-      setOctave(octave => octave + 1);
+      setOctave((octave) => octave + 1);
     }
-    if(x === 90 && octave > -2) {
+    if (x === 90 && octave > -2) {
       setNewActiveNotes([]);
-      setOctave(octave => octave - 1);
+      setOctave((octave) => octave - 1);
     }
   }
 
@@ -285,25 +296,41 @@ export default function Synth() {
       <header>
         <div className={styles.Menu}>
           <h1>synthinator</h1>
-          <button className={styles.buttonMinimize} onClick={handleKeyboardShortcutsVisibilityClick} className={`${keyboardShortcutsVisibility ? 'VisibilityOn' : ''}`}>?</button>
+          <button
+            className={styles.buttonMinimize}
+            onClick={handleKeyboardShortcutsVisibilityClick}
+            className={`${keyboardShortcutsVisibility ? 'VisibilityOn' : ''}`}
+          >
+            ?
+          </button>
         </div>
         <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open="true">
           <div className={`${styles.OScope}`}>{OScope}</div>
           <div>
-          Octave:
-            <button onClick={(e) => changeSettings(Number(e.target.value))} value={90}>-</button>
-            <button onClick={(e) => changeSettings(Number(e.target.value))} value={88}>+</button>
+            Octave:
+            <button
+              onClick={(e) => changeSettings(Number(e.target.value))}
+              value={90}
+            >
+              -
+            </button>
+            <button
+              onClick={(e) => changeSettings(Number(e.target.value))}
+              value={88}
+            >
+              +
+            </button>
           </div>
         </Collapsible>
       </header>
-      <div style={{ 'min-width' : '0' }}>
+      <div style={{ minWidth: '0' }}>
         <Collapsible trigger="Piano" triggerWhenOpen="_" open="true">
           <DimensionsProvider>
-
             {({ containerWidth }) => (
-
               <Piano
-                className={`${keyboardShortcutsVisibility ? '' : 'shortcutsHidden'}`}
+                className={`${
+                  keyboardShortcutsVisibility ? '' : 'shortcutsHidden'
+                }`}
                 noteRange={{ first: firstNote - 3, last: lastNote - 10 }}
                 activeNotes={newActiveNotes}
                 playNote={noteOn}
