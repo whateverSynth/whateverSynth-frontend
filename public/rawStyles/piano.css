@@ -9,7 +9,9 @@
   /* Used for flexbox layout of the child .ReactPiano__NoteLabelContainer elements */
   display: flex;
 }
-
+.VisibilityOn{
+  background-color: #2BFDA2;
+}
 /*
  * Styles of accidental notes (flat or sharp)
  */
@@ -87,7 +89,6 @@
  * Styles of "active" or pressed-down keys
  */
 
-
 .ReactPiano__Key--active.ReactPiano__Key--accidental {
   /* Slight height reduction for "pushed-down" effect */
   height: 65%;
@@ -152,12 +153,14 @@
 
 .ReactPiano__NoteLabel--accidental {
   color: #f8e8d5;
-  margin-bottom: 3px;
+  margin-bottom: 30%;
+  background-color: transparent;
 }
 
 .ReactPiano__NoteLabel--natural {
   color: #888;
-  margin-bottom: 3px;
+  margin-bottom: 8%;
+  background-color: transparent;
 }
 
 .ReactPiano__NoteLabel--natural.ReactPiano__NoteLabel--active {
@@ -182,4 +185,21 @@
   z-index: 4;
   top: -2rem;
   right: 1rem;
+}
+.ReactPiano__NoteLabelContainer {
+  background-color: transparent;
+}
+
+span span p {
+  display: inline;
+  line-height: 1.5rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.shortcutsHidden .ReactPiano__NoteLabelContainer {
+  display: none;
+  visibility: hidden;
 }

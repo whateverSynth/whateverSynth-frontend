@@ -54,7 +54,7 @@ export default function Synth() {
   const newEffects = useNewEffects();
   const newEffectSettings = useNewEffectSettings();
 
-
+  const [keyboardShortcutsVisibility, setKeyboardShortcutsVisibility] = useState(false);
   const handleKeyboardShortcutsVisibilityClick = () => setKeyboardShortcutsVisibility(visibility => !visibility);
 
   useEffect(() => {
@@ -285,7 +285,7 @@ export default function Synth() {
       <header>
         <div className={styles.Menu}>
           <h1>synthinator</h1>
-          <button className={styles.buttonMinimize} onClick={handleKeyboardShortcutsVisibilityClick}>?</button>
+          <button className={styles.buttonMinimize} onClick={handleKeyboardShortcutsVisibilityClick} className={`${keyboardShortcutsVisibility ? 'VisibilityOn' : ''}`}>?</button>
         </div>
         <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open="true">
           <div className={`${styles.OScope}`}>{OScope}</div>
@@ -303,7 +303,7 @@ export default function Synth() {
             {({ containerWidth }) => (
 
               <Piano
-                className='PianoRetroTheme'
+                className={`${keyboardShortcutsVisibility ? '' : 'shortcutsHidden'}`}
                 noteRange={{ first: firstNote - 3, last: lastNote - 10 }}
                 activeNotes={newActiveNotes}
                 playNote={noteOn}
