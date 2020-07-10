@@ -38,13 +38,12 @@ let OScope;
 let canvas;
 let midiAccess = null;
 let activeNotes = [];
-const activeOscillators = {};
 let waveshape;
+const activeOscillators = {};
 
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
   const [newActiveNotes, setNewActiveNotes] = useState([]);
-  const [pitchBend, setPitchBend] = useState(0);
   waveshape = useWaveshape();
 
   const gainSetting = useGainSetting();
@@ -52,44 +51,6 @@ export default function Synth() {
   // NEW EFFECT STATE
   const newEffects = useNewEffects();
   const newEffectSettings = useNewEffectSettings();
-
-  useEventListener('keydown', pitchKeyPressDown);
-  useEventListener('keyup', pitchNormal);
-
-  function pitchKeyPressDown(e) {
-    var x = e.keyCode;
-    switch (x) {
-      case 49:
-        setPitchBend(-20);
-        break;
-      case 50:
-        setPitchBend(20);
-        break;
-    }
-    // console.log(x);
-  }
-
-  function pitchNormal(e) {
-    var x = e.keyCode;
-    switch (x) {
-      case 49:
-        setPitchBend(20);
-        break;
-      case 50:
-        setPitchBend(-20);
-        break;
-    }
-    // console.log(x);
-  }
-
-  useEffect(() => {
-    // console.log(pitchBend);
-    Object.values(activeOscillators).forEach((osc) => {
-      osc.frequency.value += pitchBend;
-
-      console.log(osc.frequency.value);
-    });
-  }, [pitchBend]);
 
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -100,10 +61,6 @@ export default function Synth() {
     canvas = document.createElement('canvas');
     canvas.height = 400;
 
-    // document.addEventListener('keydown', pitchKeyPressDown);
-    // // document.addEventListener('keydown', pitchUp);
-    // document.addEventListener('keyup', pitchNormal);
-
     const root = document.getElementById('root');
     const logo = root.firstChild;
     logo.insertAdjacentElement('afterEnd', canvas);
@@ -111,11 +68,7 @@ export default function Synth() {
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
 
-    if (navigator.requestMIDIAccess)
-      navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
-    else alert('No MIDI support present in your browser.');
-
-    function onMIDIInit(midi) {
+    const onMIDIInit = (midi) => {
       midiAccess = midi;
       let haveAtLeastOneDevice = false;
       const inputs = midiAccess.inputs.values();
@@ -129,7 +82,11 @@ export default function Synth() {
         haveAtLeastOneDevice = true;
       }
       if (!haveAtLeastOneDevice) return;
-    }
+    };
+
+    if (navigator.requestMIDIAccess)
+      navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
+    else alert('No MIDI support present in your browser.');
 
     const onMIDIReject = () => {
       alert('The MIDI system failed to start.');
@@ -231,48 +188,6 @@ export default function Synth() {
       delete activeOscillators[noteNumber];
     }
   };
-  // const [pitchBend, setPitchBend] = useState(0);
-  // document.addEventListener('keydown', pitchKeyPressDown);
-  // // document.addEventListener('keydown', pitchUp);
-  // document.addEventListener('keyup', pitchNormal);
-
-  // function pitchKeyPressDown(e) {
-  //   var x = e.keyCode;
-  //   if (x === 49) {
-  //     setPitchBend(-20);
-  //   } else if (x === 50) {
-  //     setPitchBend(20);
-  //   }
-
-  //   // console.log(x);
-  // }
-
-  // function pitchNormal(e) {
-  //   var x = e.keyCode;
-  //   if (x === 49) {
-  //     setPitchBend(20);
-  //   } else if (x === 50) {
-  //     setPitchBend(-20);
-  //   }
-
-  //   // console.log(x);
-  // }
-
-  // function pitchUp(e) {
-  //   var x = e.keyCode;
-  //   switch (x) {
-  //     case 50:
-  //       setPitchBend(20);
-  //       break;
-  //   }
-  //   // console.log(x);
-  // }
-
-  // if (event.keyCode === 49) {
-  //   setPitchBend(20);
-  // } else {
-  //   setPitchBend(0);
-  // }
 
   const frequencyFromNoteNumber = (note) => {
     return 440 * Math.pow(2, (note - 69) / 12);
@@ -296,6 +211,43 @@ export default function Synth() {
     }
   };
 
+  //PITCH DOWN
+  const pitchKeyPressDown = (e) => {
+    const x = e.keyCode;
+    switch (x) {
+      case 49:
+        Object.values(activeOscillators).forEach((osc) => {
+          osc.frequency.value += -20;
+        });
+        break;
+      case 50:
+        Object.values(activeOscillators).forEach((osc) => {
+          osc.frequency.value += 20;
+        });
+        break;
+    }
+  };
+
+  const pitchNormal = (e) => {
+    const x = e.keyCode;
+    switch (x) {
+      case 49:
+        Object.values(activeOscillators).forEach((osc) => {
+          osc.frequency.value += 20;
+        });
+        break;
+      case 50:
+        Object.values(activeOscillators).forEach((osc) => {
+          osc.frequency.value += -20;
+        });
+        break;
+    }
+  };
+
+  useEventListener('keydown', pitchKeyPressDown);
+  useEventListener('keyup', pitchNormal);
+
+  //EFFECTS NODES
   const effectNodes = localEffects.map((effect) => {
     if (effect.effect.name === 'Bitcrusher')
       return <BitcrusherEffect key={effect.id} id={effect.id} />;
