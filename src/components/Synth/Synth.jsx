@@ -39,8 +39,8 @@ let OScope;
 let canvas;
 let midiAccess = null;
 let activeNotes = [];
-const activeOscillators = {};
 let waveshape;
+const activeOscillators = {};
 
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
@@ -81,11 +81,7 @@ export default function Synth() {
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
 
-    if (navigator.requestMIDIAccess)
-      navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
-    else alert('No MIDI support present in your browser.');
-
-    function onMIDIInit(midi) {
+    const onMIDIInit = (midi) => {
       midiAccess = midi;
       let haveAtLeastOneDevice = false;
       const inputs = midiAccess.inputs.values();
@@ -99,13 +95,15 @@ export default function Synth() {
         haveAtLeastOneDevice = true;
       }
       if (!haveAtLeastOneDevice) return;
-    }
+    };
+
+    if (navigator.requestMIDIAccess)
+      navigator.requestMIDIAccess().then(onMIDIInit, onMIDIReject);
+    else alert('No MIDI support present in your browser.');
 
     const onMIDIReject = () => {
       alert('The MIDI system failed to start.');
     };
-
-    // document.addEventListener('keydown', changeSettings);
   }, []);
 
   useEventListener('keydown', (e) => changeSettings(e.keyCode));
@@ -262,6 +260,43 @@ export default function Synth() {
     }
   };
 
+  //PITCH DOWN
+  const pitchKeyPressDown = (e) => {
+    const x = e.keyCode;
+    switch (x) {
+      case 49:
+        Object.values(activeOscillators).forEach((osc) => {
+          osc.frequency.value += -20;
+        });
+        break;
+      case 50:
+        Object.values(activeOscillators).forEach((osc) => {
+          osc.frequency.value += 20;
+        });
+        break;
+    }
+  };
+
+  const pitchNormal = (e) => {
+    const x = e.keyCode;
+    switch (x) {
+      case 49:
+        Object.values(activeOscillators).forEach((osc) => {
+          osc.frequency.value += 20;
+        });
+        break;
+      case 50:
+        Object.values(activeOscillators).forEach((osc) => {
+          osc.frequency.value += -20;
+        });
+        break;
+    }
+  };
+
+  useEventListener('keydown', pitchKeyPressDown);
+  useEventListener('keyup', pitchNormal);
+
+  //EFFECTS NODES
   const effectNodes = localEffects.map((effect) => {
     if (effect.effect.name === 'Bitcrusher')
       return <BitcrusherEffect key={effect.id} id={effect.id} />;
@@ -295,7 +330,7 @@ export default function Synth() {
     <>
       <header>
         <div className={styles.Menu}>
-          <h1>synthinator</h1>
+          <h1>whateverSynth</h1>
           <button
             className={styles.buttonMinimize}
             onClick={handleKeyboardShortcutsVisibilityClick}
