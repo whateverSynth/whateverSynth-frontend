@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import styles from './Synth.css';
 import DelayEffect from '../Effects/DelayEffect/DelayEffect';
 import Tuna from 'tunajs';
@@ -23,6 +23,7 @@ import DimensionsProvider from '../../hooks/DimensionsProvider';
 import Collapsible from 'react-collapsible';
 import '../../../public/rawStyles/piano.css';
 import useEventListener from '@use-it/event-listener';
+import { IoMdResize } from 'react-icons/io';
 
 let audioCtx, tuna, inputGain, outputGain, scope, OScope, canvas, waveshape;
 let midiAccess = null;
@@ -49,6 +50,17 @@ export default function Synth() {
   const handleKeyboardShortcutsVisibilityClick = () =>
     setKeyboardShortcutsVisibility((visibility) => !visibility);
 
+  const [canvasMaximized, setCanvasMaximized] = useState(true);
+  const handleCanvasMaximizeClick = () => setCanvasMaximized(toggle => !toggle);
+  useEffect(() => {
+  }, [canvasMaximized]);
+
+  const [pianoMaximized, setPianoMaximized] = useState(true);
+  const handlePianoMaximizeClick = () => setPianoMaximized(toggle => !toggle);
+  useEffect(() => {
+  }, [pianoMaximized]);
+
+
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     tuna = new Tuna(audioCtx);
@@ -56,15 +68,18 @@ export default function Synth() {
     outputGain = audioCtx.createGain();
 
     canvas = document.createElement('canvas');
-    canvas.height = 400;
-
+    canvas.width = `${canvasMaximized ?  '1000' : '1000'}`;
+    canvas.height = `${canvasMaximized ?  '200' : '1000'}`;
     const root = document.getElementById('root');
     const header = root.firstChild;
     // const logo = header.firstChild;
 
     const panel = header.lastChild;
     const panelCanvas = panel.lastChild;
-    panelCanvas.appendChild(canvas);
+    const collapsibleInner = panelCanvas.lastChild;
+    const resizableCanvas = collapsibleInner.lastChild;
+    resizableCanvas.appendChild(canvas);
+
 
     inputGain.connect(outputGain);
     outputGain.connect(audioCtx.destination);
@@ -327,45 +342,42 @@ export default function Synth() {
             ?
           </button>
         </div>
+
         <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open="true">
-          <div className={`${styles.OScope}`}>{OScope}</div>
-          <div>
-            Octave:
-            <button
-              onClick={(e) => changeSettings(Number(e.target.value))}
-              value={90}
-            >
-              -
-            </button>
-            <button
-              onClick={(e) => changeSettings(Number(e.target.value))}
-              value={88}
-            >
-              +
-            </button>
-          </div>
+          <button className={styles.buttonResize} onClick={handleCanvasMaximizeClick}><IoMdResize/></button>
+          <div className={`${canvasMaximized ? 'fullWidth' : 'miniWidth'}`}>{OScope}</div>
         </Collapsible>
       </header>
       <div style={{ minWidth: '0' }}>
         <Collapsible trigger="Piano" triggerWhenOpen="_" open="true">
+          <button onClick={handlePianoMaximizeClick}><IoMdResize/></button>
+
           <DimensionsProvider>
             {({ containerWidth }) => (
-              <Piano
-                className={`${
-                  keyboardShortcutsVisibility ? '' : 'shortcutsHidden'
-                }`}
-                noteRange={{ first: firstNote - 3, last: lastNote - 10 }}
-                activeNotes={newActiveNotes}
-                playNote={noteOn}
-                stopNote={noteOff}
-                width={containerWidth}
-                keyboardShortcuts={keyboardShortcuts}
-              />
+
+              <div className={`pianoContainer ${pianoMaximized ? 'fullWidth' : 'miniWidth'}`}>
+                <Piano
+                  className={`${keyboardShortcutsVisibility ? '' : 'shortcutsHidden'}`}
+                  noteRange={{ first: firstNote - 3, last: lastNote - 10 }}
+                  activeNotes={newActiveNotes}
+                  playNote={noteOn}
+                  stopNote={noteOff}
+                  width={containerWidth}
+                  keyboardShortcuts={keyboardShortcuts}
+                />
+              </div>
             )}
           </DimensionsProvider>
+
         </Collapsible>
       </div>
       <Collapsible trigger="Instrument" triggerWhenOpen="_" open="true">
+        <div className={styles.octave}>
+          Octave:
+          <button onClick={(e) => changeSettings(Number(e.target.value))} value={90}>↓</button>
+          C{octave + 2}
+          <button onClick={(e) => changeSettings(Number(e.target.value))} value={88}>↑</button>
+        </div>
         <Waveshapes />
       </Collapsible>
 

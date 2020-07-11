@@ -176,7 +176,7 @@
 }
 
 .Collapsible {
-  margin-top: 3rem;
+  margin-top: 2rem;
   position: relative;
 }
 
@@ -202,4 +202,34 @@ span span p {
 .shortcutsHidden .ReactPiano__NoteLabelContainer {
   display: none;
   visibility: hidden;
+}
+
+.miniWidth {
+  margin: 0;
+  padding: 0;
+}
+
+ .miniWidth canvas{
+  border: .3rem solid #bd00ff;
+  height: 30px;
+  width: auto;
+}
+
+ .fullWidth canvas{
+  max-width: 96%;
+  border: .8rem solid #bd00ff;
+}
+
+@media screen and (max-width: 600px){
+  .fullWidth canvas {
+    max-width: 92%;
+    border: .2rem solid #bd00ff;
+  }
+}
+
+.buttonHelp {
+  position: absolute;
+  z-index: 2;
+  right: 3rem;
+  top: 0;
 }

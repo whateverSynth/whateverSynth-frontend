@@ -24,9 +24,12 @@ html {
 .buttonResize {
   position: absolute;
   z-index: 2;
-  right: 1rem;
-}
-
+  top: -1.6rem;
+  background-color: transparent;
+  border: 0;
+  left: 0;
+  svg{color: #7F9528 !important;}
+  }
 
 
 .buttonMinimize {
@@ -66,20 +69,26 @@ html {
 canvas {
   background-color: hsl(197, 80%, 50%);
   border: .8rem solid #bd00ff;
-  width: 40vw;
   position: relative;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, 0%);
-  max-height: 9rem;
+  width: 97%;
   border-radius: .4em;
+  height: auto;
 }
+
+.miniWidth canvas {
+    background-color: hsl(197, 80%, 50%);
+    border: .2rem solid #bd00ff;
+    width: 85%;
+    border-radius: .4em;
+}
+
+
 
 h1 {
   color: #00ff9f;
   font-size: 1.4rem;
   position: relative;
-  top: 1;
+  top: 0rem;
   left: 0.5rem;
 }
 
@@ -96,4 +105,13 @@ h1 {
 .hidden {
   display: none;
   visibility: hidden;
+}
+
+.octave {
+  position: relative;
+  left: 2rem;
+}
+
+svg {
+  background-color: transparent;
 }
