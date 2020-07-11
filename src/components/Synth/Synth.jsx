@@ -297,7 +297,7 @@ export default function Synth() {
         </div>
 
         <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open="true">
-          <button onClick={handleCanvasMaximizeClick}>Zoom</button>
+          <button className={styles.zoomButton} onClick={handleCanvasMaximizeClick}>Zoom</button>
           <div>
           Octave:
             <button onClick={(e) => changeSettings(Number(e.target.value))} value={90}>-</button>

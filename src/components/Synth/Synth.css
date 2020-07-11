@@ -64,17 +64,22 @@ html {
     min-width: 5rem;
   }
 }
-
 canvas {
   background-color: hsl(197, 80%, 50%);
   border: .8rem solid #bd00ff;
   position: relative;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, 0%);
-  max-height: 9rem;
+  width: 97%;
   border-radius: .4em;
 }
+
+.miniWidth canvas {
+    background-color: hsl(197, 80%, 50%);
+    border: .2rem solid #bd00ff;
+    width: 85%;
+    border-radius: .4em;
+}
+
+
 
 h1 {
   color: #00ff9f;

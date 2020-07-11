@@ -203,12 +203,12 @@ span span p {
   display: none;
   visibility: hidden;
 }
-.miniWidth {
-  width: 25% !important;
-  overflow: hidden;
-  height: 25% !important;
-}
 
+.miniWidth {
+  width: 25%;
+  overflow: visible;
+  height: 25%;
+}
 .fullWidth {
   width: 100%;
 }
