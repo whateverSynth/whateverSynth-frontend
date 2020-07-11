@@ -28,6 +28,7 @@ import DimensionsProvider from '../../hooks/DimensionsProvider';
 import Collapsible from 'react-collapsible';
 import '../../../public/rawStyles/piano.css';
 import useEventListener from '@use-it/event-listener';
+import { IoMdResize } from 'react-icons/io';
 
 let audioCtx;
 let tuna;
@@ -297,18 +298,18 @@ export default function Synth() {
         </div>
 
         <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open="true">
-          <button className={styles.zoomButton} onClick={handleCanvasMaximizeClick}>Zoom</button>
-          <div>
-          Octave:
-            <button onClick={(e) => changeSettings(Number(e.target.value))} value={90}>-</button>
-            <button onClick={(e) => changeSettings(Number(e.target.value))} value={88}>+</button>
-          </div>
+          <button className={styles.buttonResize} onClick={handleCanvasMaximizeClick}><IoMdResize/></button>
           <div className={`${canvasMaximized ? 'fullWidth' : 'miniWidth'}`}>{OScope}</div>
         </Collapsible>
       </header>
       <div style={{ 'min-width' : '0' }}>
+        <div>
+          Octave:
+          <button onClick={(e) => changeSettings(Number(e.target.value))} value={90}>-</button>
+          <button onClick={(e) => changeSettings(Number(e.target.value))} value={88}>+</button>
+        </div>
         <Collapsible trigger="Piano" triggerWhenOpen="_" open="true">
-          <button onClick={handlePianoMaximizeClick}>Zoom</button>
+          <button onClick={handlePianoMaximizeClick}><IoMdResize/></button>
 
           <DimensionsProvider>
 

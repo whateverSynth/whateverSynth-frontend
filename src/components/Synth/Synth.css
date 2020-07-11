@@ -24,7 +24,9 @@ html {
 .buttonResize {
   position: absolute;
   z-index: 2;
-  right: 1rem;
+  top: 0;
+  background-color: transparent;
+  border: 0;
 }
 
 
@@ -34,8 +36,6 @@ html {
   z-index: 2;
   right: 0;
 }
-
-
 
 .Container {
   display: grid;
@@ -64,6 +64,7 @@ html {
     min-width: 5rem;
   }
 }
+
 canvas {
   background-color: hsl(197, 80%, 50%);
   border: .8rem solid #bd00ff;
@@ -85,7 +86,7 @@ h1 {
   color: #00ff9f;
   font-size: 1.4rem;
   position: relative;
-  top: 1;
+  top: 0rem;
   left: 0.5rem;
 }
 
@@ -105,9 +106,4 @@ h1 {
 }
 
 
-.fullWidth {
-  width: 98%;
-  height: auto;
-  margin: 0;
-  padding: 0;
-}
+
