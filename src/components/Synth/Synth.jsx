@@ -57,6 +57,13 @@ export default function Synth() {
   const [keyboardShortcutsVisibility, setKeyboardShortcutsVisibility] = useState(false);
   const handleKeyboardShortcutsVisibilityClick = () => setKeyboardShortcutsVisibility(visibility => !visibility);
 
+  const [canvasMaximized, setCanvasMaximized] = useState(false);
+  const handleCanvasMaximizeClick = () => setCanvasMaximized(toggle => !toggle);
+
+  const [pianoMaximized, setPianoMaximized] = useState(true);
+  const handlePianoMaximizeClick = () => setPianoMaximized(toggle => !toggle);
+  useEffect(() => {
+  }, [pianoMaximized]);
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     tuna = new Tuna(audioCtx);
@@ -64,15 +71,16 @@ export default function Synth() {
     outputGain = audioCtx.createGain();
 
     canvas = document.createElement('canvas');
-    canvas.height = 400;
-
+    canvas.width = `${canvasMaximized ?  200 : 1000}`;
     const root = document.getElementById('root');
     const header = root.firstChild;
     const logo = header.firstChild;
 
     const panel = header.lastChild;
     const panelCanvas = panel.lastChild;
-    panelCanvas.appendChild(canvas);
+    const collapsibleInner = panelCanvas.lastChild;
+    const resizableCanvas = collapsibleInner.lastChild;
+    resizableCanvas.appendChild(canvas);
 
 
     inputGain.connect(outputGain);
@@ -103,7 +111,7 @@ export default function Synth() {
     };
 
     // document.addEventListener('keydown', changeSettings);
-    
+
   }, []);
 
   useEventListener('keydown', (e) => changeSettings(e.keyCode));
@@ -190,7 +198,7 @@ export default function Synth() {
   });
 
   //MIDI
-  const noteOn = (noteNumber) => {    
+  const noteOn = (noteNumber) => {
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       frequencyFromNoteNumber(noteNumber),
@@ -285,34 +293,40 @@ export default function Synth() {
       <header>
         <div className={styles.Menu}>
           <h1>synthinator</h1>
-          <button className={styles.buttonMinimize} onClick={handleKeyboardShortcutsVisibilityClick} className={`${keyboardShortcutsVisibility ? 'VisibilityOn' : ''}`}>?</button>
+          <button className={`${keyboardShortcutsVisibility ? 'VisibilityOn' : ''}`}onClick={handleKeyboardShortcutsVisibilityClick} >?</button>
         </div>
+
         <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open="true">
-          <div className={`${styles.OScope}`}>{OScope}</div>
+          <button onClick={handleCanvasMaximizeClick}>Zoom</button>
           <div>
           Octave:
             <button onClick={(e) => changeSettings(Number(e.target.value))} value={90}>-</button>
             <button onClick={(e) => changeSettings(Number(e.target.value))} value={88}>+</button>
           </div>
+          <div className={`${canvasMaximized ? 'fullWidth' : 'miniWidth'}`}>{OScope}</div>
         </Collapsible>
       </header>
       <div style={{ 'min-width' : '0' }}>
         <Collapsible trigger="Piano" triggerWhenOpen="_" open="true">
+          <button onClick={handlePianoMaximizeClick}>Zoom</button>
+
           <DimensionsProvider>
 
             {({ containerWidth }) => (
-
-              <Piano
-                className={`${keyboardShortcutsVisibility ? '' : 'shortcutsHidden'}`}
-                noteRange={{ first: firstNote - 3, last: lastNote - 10 }}
-                activeNotes={newActiveNotes}
-                playNote={noteOn}
-                stopNote={noteOff}
-                width={containerWidth}
-                keyboardShortcuts={keyboardShortcuts}
-              />
+              <div className={`pianoContainer ${pianoMaximized ? 'fullWidth' : 'miniWidth'}`}>
+                <Piano
+                  className={`${keyboardShortcutsVisibility ? '' : 'shortcutsHidden'}`}
+                  noteRange={{ first: firstNote - 3, last: lastNote - 10 }}
+                  activeNotes={newActiveNotes}
+                  playNote={noteOn}
+                  stopNote={noteOff}
+                  width={containerWidth}
+                  keyboardShortcuts={keyboardShortcuts}
+                />
+              </div>
             )}
           </DimensionsProvider>
+
         </Collapsible>
       </div>
       <Collapsible trigger="Instrument" triggerWhenOpen="_" open="true">

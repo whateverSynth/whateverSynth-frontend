@@ -35,6 +35,8 @@ html {
   right: 0;
 }
 
+
+
 .Container {
   display: grid;
   justify-content: center;
@@ -66,7 +68,6 @@ html {
 canvas {
   background-color: hsl(197, 80%, 50%);
   border: .8rem solid #bd00ff;
-  width: 40vw;
   position: relative;
   top: 0;
   left: 50%;
@@ -96,4 +97,12 @@ h1 {
 .hidden {
   display: none;
   visibility: hidden;
+}
+
+
+.fullWidth {
+  width: 98%;
+  height: auto;
+  margin: 0;
+  padding: 0;
 }

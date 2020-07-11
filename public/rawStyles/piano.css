@@ -203,3 +203,19 @@ span span p {
   display: none;
   visibility: hidden;
 }
+.miniWidth {
+  width: 25% !important;
+  overflow: hidden;
+  height: 25% !important;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.buttonHelp {
+  position: absolute;
+  z-index: 2;
+  right: 3rem;
+  top: 0;
+}
