@@ -2,12 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Synth.css';
 import DelayEffect from '../Effects/DelayEffect/DelayEffect';
 import Tuna from 'tunajs';
-import {
-  useWaveshape,
-  useNewEffects,
-  useNewEffectSettings,
-  useGainSetting,
-} from '../../hooks/EffectsProvider';
+import { useWaveshape, useNewEffects, useNewEffectSettings, useGainSetting } from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
 import ChorusEffect from '../Effects/ChorusEffect/ChorusEffect';
 import Effects from '../Effects/Effects';
@@ -29,17 +24,10 @@ import Collapsible from 'react-collapsible';
 import '../../../public/rawStyles/piano.css';
 import useEventListener from '@use-it/event-listener';
 
-let audioCtx;
-let tuna;
-let inputGain;
-let outputGain;
-let tunaEffects = [];
-let scope;
-let OScope;
-let canvas;
+let audioCtx, tuna, inputGain, outputGain, scope, OScope, canvas, waveshape;
 let midiAccess = null;
+let tunaEffects = [];
 let activeNotes = [];
-let waveshape;
 const activeOscillators = {};
 
 export default function Synth() {
