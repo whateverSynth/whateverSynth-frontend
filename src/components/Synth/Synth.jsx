@@ -350,8 +350,6 @@ export default function Synth() {
       </header>
       <div style={{ minWidth: '0' }}>
         <Collapsible trigger="Piano" triggerWhenOpen="_" open="true">
-          <button onClick={handlePianoMaximizeClick}><IoMdResize/></button>
-
           <DimensionsProvider>
             {({ containerWidth }) => (
 
