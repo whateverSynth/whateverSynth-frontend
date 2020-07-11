@@ -24,11 +24,12 @@ html {
 .buttonResize {
   position: absolute;
   z-index: 2;
-  top: 0;
+  top: -1.6rem;
   background-color: transparent;
   border: 0;
-}
-
+  left: 0;
+  svg{color: #7F9528 !important;}
+  }
 
 
 .buttonMinimize {
@@ -71,6 +72,7 @@ canvas {
   position: relative;
   width: 97%;
   border-radius: .4em;
+  height: auto;
 }
 
 .miniWidth canvas {
@@ -105,5 +107,11 @@ h1 {
   visibility: hidden;
 }
 
+.octave {
+  position: relative;
+  left: 2rem;
+}
 
-
+svg {
+  background-color: transparent;
+}
