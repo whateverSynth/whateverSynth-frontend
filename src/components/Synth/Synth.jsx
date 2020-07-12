@@ -370,11 +370,12 @@ export default function Synth() {
         </Collapsible>
       </div>
       <Collapsible trigger="Instrument" triggerWhenOpen="_" open="true">
-        <div className={styles.octave}>
-          Octave:
-          <button onClick={(e) => changeSettings(Number(e.target.value))} value={90}>↓</button>
-          C{octave + 2}
-          <button onClick={(e) => changeSettings(Number(e.target.value))} value={88}>↑</button>
+        <div className={styles.Row}>
+          <button className={styles.arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={90}>&#9660;</button>
+          <div className={styles.octave}>
+          A{octave + 2}
+          </div>
+          <button className={styles.arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={88}>&#9650;</button>
         </div>
         <Waveshapes />
       </Collapsible>

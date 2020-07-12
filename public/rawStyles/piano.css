@@ -178,7 +178,9 @@
 .Collapsible {
   margin-top: 2rem;
   position: relative;
+  margin-left: 2rem;
 }
+
 
 .is-closed {
   position: absolute;
@@ -193,6 +195,11 @@
 span span p {
   display: inline;
   line-height: 1.4;
+}
+
+p{
+  line-height: 1.4;
+  display: inline;
 }
 
 
@@ -212,7 +219,7 @@ span span p {
 
  .miniWidth canvas{
   border: .3rem solid #bd00ff;
-  height: 30px;
+  height: 2.5rem;
   width: auto;
 }
 
