@@ -15,11 +15,22 @@ html {
 #root{
   display: inline-flex;
 }
+
 .Menu {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+
+  h1{
+    font-size: 0.8rem;
+  }
+
+  button{
+    border: 2px groove #20B9FC;
+    border-radius: 20%;
+    font-size: 1rem;
+  }
 }
 
 .buttonResize {
@@ -102,11 +113,9 @@ canvas {
     border-radius: .4em;
 }
 
-
-
 h1 {
   color: #00ff9f;
-  font-size: 1.4rem;
+  font-size: 1rem;
   position: relative;
   top: 0rem;
   left: 0.5rem;
