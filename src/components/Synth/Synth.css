@@ -84,16 +84,20 @@ html {
   align-items: center;
   margin: 0 auto;
 
-  .arrow {
+  .Arrow {
     border: 1px solid hsl(198, 70%, 46%);
     background-color: hsl(198, 70%, 36%);
     padding: 0.2rem 0.1rem;
   }
-  .octave {
+  .Octave {
     position: relative;
     background-color: hsl(231, 97%, 32%);
     padding: 0.1rem .4rem;
     color: #2BFDA2;
+  }
+  .Panel {
+    display: flex;
+    margin: 1rem 0 0.5rem;
   }
 }
 
@@ -131,10 +135,6 @@ h1 {
   flex-wrap: wrap;
 }
 
-.hidden {
-  display: none;
-  visibility: hidden;
-}
 
 
 

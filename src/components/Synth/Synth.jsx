@@ -338,7 +338,7 @@ export default function Synth() {
             className={styles.buttonMinimize}
             onClick={handleKeyboardShortcutsVisibilityClick}
             className={`${keyboardShortcutsVisibility ? 'VisibilityOn' : ''}`}
-          >
+          ><div><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>/</div></div>
             ?
           </button>
         </div>
@@ -371,11 +371,17 @@ export default function Synth() {
       </div>
       <Collapsible trigger="Instrument" triggerWhenOpen="_" open="true">
         <div className={styles.Row}>
-          <button className={styles.arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={90}>&#9660;</button>
-          <div className={styles.octave}>
-          A{octave + 2}
+          <div className={styles.Panel}>
+
+            <div className={styles.Panel}>
+            Octave:
+              <div className={styles.Octave}>
+                <button className={styles.Arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={90}><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>Z</div>&#9660;</button>
+             C{octave}
+                <button className={styles.Arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={88}><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>X</div>&#9650;</button>
+              </div>
+            </div>
           </div>
-          <button className={styles.arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={88}>&#9650;</button>
         </div>
         <Waveshapes />
       </Collapsible>

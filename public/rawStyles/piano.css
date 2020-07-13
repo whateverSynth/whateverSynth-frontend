@@ -205,6 +205,16 @@ p{
 
 .hidden {
   display: none;
+  visibility: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0.9rem;
+  padding: 0.75rem 0.2rem;
+  background-color: rgba(0,0,0,0);
+  font-size: 0.6rem;
+  color: white;
 }
 
 .shortcutsHidden .ReactPiano__NoteLabelContainer {
