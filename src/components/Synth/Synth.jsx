@@ -24,13 +24,20 @@ import Collapsible from 'react-collapsible';
 import '../../../public/rawStyles/piano.css';
 import useEventListener from '@use-it/event-listener';
 import { IoMdResize } from 'react-icons/io';
-
+import styled from 'styled-components';
+import { DownArrow, UpArrow } from '@styled-icons/boxicons-solid';
 let audioCtx, tuna, inputGain, outputGain, scope, OScope, canvas, waveshape;
 let midiAccess = null;
 let tunaEffects = [];
 let activeNotes = [];
 const activeOscillators = {};
 
+const BlueDown = styled(DownArrow)`
+color: #2BFDA2;
+`;
+const BlueUp = styled(UpArrow)`
+color: #2BFDA2;
+`;
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
   const [newActiveNotes, setNewActiveNotes] = useState([]);
@@ -201,6 +208,8 @@ export default function Synth() {
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
 
+
+
   //MIDI
   const noteOn = (noteNumber) => {
     const osc = audioCtx.createOscillator();
@@ -299,6 +308,7 @@ export default function Synth() {
   useEventListener('keydown', pitchKeyPressDown);
   useEventListener('keyup', pitchNormal);
 
+
   //EFFECTS NODES
   const effectNodes = localEffects.map((effect) => {
     if (effect.effect.name === 'Bitcrusher')
@@ -343,13 +353,13 @@ export default function Synth() {
           </button>
         </div>
 
-        <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open="true">
+        <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open={true} >
           <button className={styles.buttonResize} onClick={handleCanvasMaximizeClick}><IoMdResize/></button>
           <div className={`${canvasMaximized ? 'fullWidth' : 'miniWidth'}`}>{OScope}</div>
         </Collapsible>
       </header>
       <div style={{ minWidth: '0' }}>
-        <Collapsible trigger="Piano" triggerWhenOpen="_" open="true">
+        <Collapsible trigger="Piano" triggerWhenOpen="_" open={true}>
           <DimensionsProvider>
             {({ containerWidth }) => (
 
@@ -369,24 +379,24 @@ export default function Synth() {
 
         </Collapsible>
       </div>
-      <Collapsible trigger="Instrument" triggerWhenOpen="_" open="true">
+      <Collapsible trigger="Instrument" triggerWhenOpen="_" open={true}>
         <div className={styles.Row}>
           <div className={styles.Panel}>
 
             <div className={styles.Panel}>
             Octave:
-              <div className={styles.Octave}>
-                <button className={styles.Arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={90}><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>Z</div>&#9660;</button>
-             C{octave}
-                <button className={styles.Arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={88}><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>X</div>&#9650;</button>
-              </div>
+
+              <button className={styles.Arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={90}><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>Z</div>&#8595;</button>
+              <div className={styles.Octave}>C{octave}</div>
+              <button className={styles.Arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={88}><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>X</div>&#8593;</button>
+
             </div>
           </div>
         </div>
         <Waveshapes />
       </Collapsible>
 
-      <Collapsible trigger="Effects" triggerWhenOpen="_" open="true">
+      <Collapsible trigger="Effects" triggerWhenOpen="_" open={true}>
         <Effects />
         <div className={`${styles.effectsDrawer}`}>{effectNodes}</div>
       </Collapsible>
