@@ -358,6 +358,24 @@ export default function Synth() {
           <div className={`${canvasMaximized ? 'fullWidth' : 'miniWidth'}`}>{OScope}</div>
         </Collapsible>
       </header>
+
+      <Collapsible trigger="Instrument" triggerWhenOpen="_" open={true}>
+        <div className={styles.Row}>
+          <div className={styles.Panel}>
+
+            <div className={styles.Panel}>
+              <label>Octave:</label>
+              <button className={styles.Arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={90}><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>Z</div>&#8595;</button>
+
+              <div className={styles.Octave}>C{octave}</div>
+              <button className={styles.Arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={88}><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>X</div>&#8593;</button>
+
+            </div>
+          </div>
+        </div>
+        <Waveshapes />
+      </Collapsible>
+      
       <div style={{ minWidth: '0' }}>
         <Collapsible trigger="Piano" triggerWhenOpen="_" open={true}>
           <DimensionsProvider>
@@ -379,22 +397,7 @@ export default function Synth() {
 
         </Collapsible>
       </div>
-      <Collapsible trigger="Instrument" triggerWhenOpen="_" open={true}>
-        <div className={styles.Row}>
-          <div className={styles.Panel}>
 
-            <div className={styles.Panel}>
-            Octave:
-
-              <button className={styles.Arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={90}><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>Z</div>&#8595;</button>
-              <div className={styles.Octave}>C{octave}</div>
-              <button className={styles.Arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={88}><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>X</div>&#8593;</button>
-
-            </div>
-          </div>
-        </div>
-        <Waveshapes />
-      </Collapsible>
 
       <Collapsible trigger="Effects" triggerWhenOpen="_" open={true}>
         <Effects />
