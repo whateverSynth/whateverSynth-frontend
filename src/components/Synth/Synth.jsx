@@ -375,7 +375,7 @@ export default function Synth() {
         </div>
         <Waveshapes />
       </Collapsible>
-      
+
       <div style={{ minWidth: '0' }}>
         <Collapsible trigger="Piano" triggerWhenOpen="_" open={true}>
           <DimensionsProvider>

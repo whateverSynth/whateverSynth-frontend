@@ -103,6 +103,11 @@ html {
   .Panel {
     display: flex;
     margin: 1rem 0 0.5rem;
+    align-items: flex-end;
+
+    label {
+      vertical-align: baseline;
+    }
   }
 }
 
