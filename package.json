@@ -43,6 +43,7 @@
     "soundfont-player": "^0.12.0",
     "styled-components": "5.1.1",
     "styled-icons": "10.6.0",
+    "tone": "^13.8.25",
     "tunajs": "^1.0.11"
   },
   "devDependencies": {

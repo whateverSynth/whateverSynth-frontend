@@ -25,11 +25,14 @@ import useEventListener from '@use-it/event-listener';
 import { IoMdResize } from 'react-icons/io';
 import styled from 'styled-components';
 import { DownArrow, UpArrow } from '@styled-icons/boxicons-solid';
+import * as Tone from 'tone';
+
 let audioCtx, tuna, inputGain, outputGain, panner, scope, OScope, canvas, waveshape;
 let midiAccess = null;
 let tunaEffects = [];
 let activeNotes = [];
 const activeOscillators = {};
+const activeEnvelopes = {};
 
 const BlueDown = styled(DownArrow)`
 color: #2BFDA2;
@@ -42,6 +45,8 @@ export default function Synth() {
   const [newActiveNotes, setNewActiveNotes] = useState([]);
   const [octave, setOctave] = useState(0);
   waveshape = useWaveshape();
+
+
 
   const gainSetting = useGainSetting();
   const pannerSetting = usePannerSetting();
@@ -70,11 +75,27 @@ export default function Synth() {
 
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    Tone.setContext(audioCtx);
     tuna = new Tuna(audioCtx);
     inputGain = audioCtx.createGain();
     outputGain = audioCtx.createGain();
     panner = new tuna.Panner(pannerSetting);
 
+    // ampEnv = new Tone.Envelope({
+    //   'attack' : 0.5,
+    //   'decay' : 0.5,
+    //   'sustain' : 1,
+    //   'release' : 0.8,
+    // });
+    // ampEnv.connect(outputGain.gain);
+
+    // ampEnv = new Tone.AmplitudeEnvelope({
+    //   'attack': 0.5,
+    //   'decay': 0.5,
+    //   'sustain': 1.0,
+    //   'release': 0.8
+    // }).chain(inputGain);
+    
     canvas = document.createElement('canvas');
     canvas.width = `${canvasMaximized ?  '1000' : '1000'}`;
     canvas.height = `${canvasMaximized ?  '200' : '1000'}`;
@@ -218,6 +239,20 @@ export default function Synth() {
 
   //MIDI
   const noteOn = (noteNumber) => {
+    // console.log(activeEnvelopes);
+    delete activeEnvelopes[noteNumber];
+    delete activeOscillators[noteNumber];
+    
+    const ampEnv = new Tone.AmplitudeEnvelope({
+      'attack': 0.1,
+      'decay': 0.5,
+      'sustain': 1.0,
+      'release': 0.8,
+    }).chain(inputGain);
+    activeEnvelopes[noteNumber] = ampEnv;
+    activeEnvelopes[noteNumber].triggerAttack(audioCtx.currentTime, 1);
+
+
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       frequencyFromNoteNumber(noteNumber),
@@ -225,22 +260,34 @@ export default function Synth() {
     );
     osc.type = waveshape;
     activeOscillators[noteNumber] = osc;
-    activeOscillators[noteNumber].connect(inputGain);
-    activeOscillators[noteNumber].start();
+    activeOscillators[noteNumber].connect(activeEnvelopes[noteNumber].output.input);
+    activeOscillators[noteNumber].start(0);
   };
 
   const noteOff = (noteNumber) => {
+    // ENVELOPE
+    activeEnvelopes[noteNumber].triggerRelease(audioCtx.currentTime);
+    // let time = activeEnvelopes[noteNumber].getValueAtTime();
+    
     const position = activeNotes.indexOf(noteNumber);
     if (position !== -1) {
       activeNotes.splice(position, 1);
     }
+
+    // while(time > 0) {
+    //   time = activeEnvelopes[noteNumber].getValueAtTime();
+    //   console.log(activeEnvelopes[noteNumber]);
+    // }
+
     if (activeNotes.length === 0) {
       // shut off the envelope
-      activeOscillators[noteNumber]?.stop();
-      delete activeOscillators[noteNumber];
+      // activeOscillators[noteNumber]?.stop();
+      // delete activeOscillators[noteNumber];
+      // delete activeEnvelopes[noteNumber];
     } else {
-      activeOscillators[noteNumber]?.stop();
-      delete activeOscillators[noteNumber];
+      // activeOscillators[noteNumber]?.stop();
+      // delete activeOscillators[noteNumber];
+      // delete activeEnvelopes[noteNumber];
     }
   };
 
