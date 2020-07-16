@@ -244,14 +244,13 @@ export default function Synth() {
     delete activeOscillators[noteNumber];
     
     const ampEnv = new Tone.AmplitudeEnvelope({
-      'attack': 0.1,
+      'attack': 3,
       'decay': 0.5,
       'sustain': 1.0,
       'release': 0.8,
     }).chain(inputGain);
     activeEnvelopes[noteNumber] = ampEnv;
     activeEnvelopes[noteNumber].triggerAttack(audioCtx.currentTime, 1);
-
 
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
@@ -266,7 +265,7 @@ export default function Synth() {
 
   const noteOff = (noteNumber) => {
     // ENVELOPE
-    activeEnvelopes[noteNumber].triggerRelease(audioCtx.currentTime);
+    activeEnvelopes[noteNumber].triggerRelease();
     // let time = activeEnvelopes[noteNumber].getValueAtTime();
     
     const position = activeNotes.indexOf(noteNumber);
