@@ -1,33 +1,20 @@
 import React from 'react';
 import {
-  useHandleEffectChange,
-  useHandleRemoveEffect,
-  useNewEffectSettings
+  usePannerSetting,
+  useHandlePannerSetting
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
-import { defaultPannerSettings } from '../../../utils/data';
 
-const PannerEffect = ({ id }) => {
-  const handleEffectChange = useHandleEffectChange();
-  const handleRemoveEffect = useHandleRemoveEffect();
-  const newEffectSettings = useNewEffectSettings();
-  let panner = newEffectSettings.find(setting => setting.id === id);
-  if(!panner) panner = { settings: defaultPannerSettings };
+const PannerEffect = () => {
+  const pannerSetting = usePannerSetting();
+  const handlePannerSetting = useHandlePannerSetting();
 
   return (
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
-          <input
-            type="checkbox"
-            value={panner?.settings.bypass}
-            onChange={(e) => handleEffectChange(e, id)}
-            name="bypass"
-            id="pannerBypass"
-          ></input>
           <h2>panner</h2>
-          <button className={styles.buttonClose} onClick={() => handleRemoveEffect(id)}>x</button>
         </header>
 
         <section>
@@ -36,10 +23,10 @@ const PannerEffect = ({ id }) => {
             type="range"
             min="-1"
             max="1"
-            value={panner?.settings.pan}
+            value={pannerSetting.pan}
             step="0.05"
             id="pannerPanRange"
-            onChange={(e) => handleEffectChange(e, id)}
+            onChange={handlePannerSetting}
             name="pan"
           ></input>
           <label>R</label>

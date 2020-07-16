@@ -22,9 +22,9 @@ const EffectsContext = createContext();
 export const EffectsProvider = ({ children }) => {
   const [waveshape, setWaveshape] = useState('sine');
   const [gainSetting, setGainSetting] = useState(0.15);
+  const [pannerSetting, setPannerSetting] = useState(defaultPannerSettings);
 
   const [newEffects, setNewEffects] = useState([]);
-
   const [newEffectSettings, setNewEffectSettings] = useState([]);
 
   const handleWaveshape = ({ target }) => {
@@ -33,6 +33,10 @@ export const EffectsProvider = ({ children }) => {
 
   const handleGainSetting = ({ target }) => {
     setGainSetting(target.value);
+  };
+
+  const handlePannerSetting = ({ target }) => {
+    setPannerSetting({ ...pannerSetting, pan: Number(target.value) });
   };
 
   const handleAddEffect = (newEffect) => {
@@ -75,11 +79,6 @@ export const EffectsProvider = ({ children }) => {
       setNewEffectSettings([
         ...newEffectSettings,
         { id: id, settings: defaultOverdriveSettings },
-      ]);
-    if (newEffect === 'Panner')
-      setNewEffectSettings([
-        ...newEffectSettings,
-        { id: id, settings: defaultPannerSettings },
       ]);
     if (newEffect === 'Phaser')
       setNewEffectSettings([
@@ -135,10 +134,6 @@ export const EffectsProvider = ({ children }) => {
       };
       setNewEffectSettings([...oldEffects, effectToUpdate]);
     } else if (prop === 'impulse'){
-      // let effectImpulse = newEffects.find((effect) => effect.id === id);
-      // console.log(effectImpulse);
-      // console.log(effectImpulse);
-      // console.log(target.value);
       effectToUpdate.settings = {
         ...effectToUpdate.settings,
         [prop]: isNaN(target.value) ? target.value : Number(target.value),
@@ -231,8 +226,10 @@ export const EffectsProvider = ({ children }) => {
       value={{
         waveshape,
         gainSetting,
+        pannerSetting,
         handleWaveshape,
         handleGainSetting,
+        handlePannerSetting,
         handleAddEffect,
         handleRemoveEffect,
         handleEffectChange,
@@ -262,6 +259,11 @@ export const useGainSetting = () => {
   return gainSetting;
 };
 
+export const usePannerSetting = () => {
+  const { pannerSetting } = useContext(EffectsContext);
+  return pannerSetting;
+};
+
 //handlers
 export const useHandleWaveshape = () => {
   const { handleWaveshape } = useContext(EffectsContext);
@@ -271,6 +273,11 @@ export const useHandleWaveshape = () => {
 export const useHandleGainSetting = () => {
   const { handleGainSetting } = useContext(EffectsContext);
   return handleGainSetting;
+};
+
+export const useHandlePannerSetting = () => {
+  const { handlePannerSetting } = useContext(EffectsContext);
+  return handlePannerSetting;
 };
 
 export const useHandleAddEffect = () => {
