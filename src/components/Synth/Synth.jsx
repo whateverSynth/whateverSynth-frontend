@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import styles from './Synth.css';
 import DelayEffect from '../Effects/DelayEffect/DelayEffect';
 import Tuna from 'tunajs';
-import { useWaveshape, useNewEffects, useNewEffectSettings, useGainSetting } from '../../hooks/EffectsProvider';
+import { useWaveshape, useNewEffects, useNewEffectSettings, useGainSetting, useHandleAddEffect, usePannerSetting } from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
 import ChorusEffect from '../Effects/ChorusEffect/ChorusEffect';
 import Effects from '../Effects/Effects';
@@ -10,7 +10,6 @@ import BitcrusherEffect from '../Effects/BitcrusherEffect/BitcrusherEffect';
 import FilterEffect from '../Effects/FilterEffect/FilterEffect';
 import MoogFilterEffect from '../Effects/MoogFilterEffect/MoogFilterEffect';
 import OverdriveEffect from '../Effects/OverdriveEffect/OverdriveEffect';
-import PannerEffect from '../Effects/PannerEffect/PannerEffect';
 import PhaserEffect from '../Effects/PhaserEffect/PhaserEffect';
 import ReverbEffect from '../Effects/ReverbEffect/ReverbEffect';
 import TremoloEffect from '../Effects/TremoloEffect/TremoloEffect';
@@ -26,7 +25,7 @@ import useEventListener from '@use-it/event-listener';
 import { IoMdResize } from 'react-icons/io';
 import styled from 'styled-components';
 import { DownArrow, UpArrow } from '@styled-icons/boxicons-solid';
-let audioCtx, tuna, inputGain, outputGain, scope, OScope, canvas, waveshape;
+let audioCtx, tuna, inputGain, outputGain, panner, scope, OScope, canvas, waveshape;
 let midiAccess = null;
 let tunaEffects = [];
 let activeNotes = [];
@@ -45,6 +44,7 @@ export default function Synth() {
   waveshape = useWaveshape();
 
   const gainSetting = useGainSetting();
+  const pannerSetting = usePannerSetting();
 
   // NEW EFFECT STATE
   const newEffects = useNewEffects();
@@ -73,6 +73,7 @@ export default function Synth() {
     tuna = new Tuna(audioCtx);
     inputGain = audioCtx.createGain();
     outputGain = audioCtx.createGain();
+    panner = new tuna.Panner(pannerSetting);
 
     canvas = document.createElement('canvas');
     canvas.width = `${canvasMaximized ?  '1000' : '1000'}`;
@@ -87,8 +88,8 @@ export default function Synth() {
     const resizableCanvas = collapsibleInner.lastChild;
     resizableCanvas.appendChild(canvas);
 
-
-    inputGain.connect(outputGain);
+    inputGain.connect(panner);
+    panner.connect(outputGain);
     outputGain.connect(audioCtx.destination);
 
     const onMIDIInit = (midi) => {
@@ -131,7 +132,8 @@ export default function Synth() {
 
     // MAKE CHAIN BY ITERATING OVER EFFECTS
     if (tunaEffects.length === 0) {
-      inputGain.connect(outputGain);
+      inputGain.connect(panner);
+      panner.connect(outputGain);
       outputGain.connect(audioCtx.destination);
       scope = new Oscilloscope(outputGain);
       const context = canvas.getContext('2d');
@@ -145,7 +147,8 @@ export default function Synth() {
         const realEffect = effect.effect;
         if (tunaEffects.length === 1) {
           inputGain.connect(realEffect);
-          realEffect.connect(outputGain);
+          realEffect.connect(panner);
+          panner.connect(outputGain);
           outputGain.connect(audioCtx.destination);
           return;
         } else if (i === 0) {
@@ -154,7 +157,8 @@ export default function Synth() {
           tunaEffects[i - 1].effect.connect(realEffect);
         } else if (i === tunaEffects.length - 1) {
           tunaEffects[i - 1].effect.connect(realEffect);
-          realEffect.connect(outputGain);
+          realEffect.connect(panner);
+          panner.connect(outputGain);
           outputGain.connect(audioCtx.destination);
         }
       });
@@ -200,6 +204,10 @@ export default function Synth() {
     inputGain.gain.value = gainSetting; //defaults to 0.15
   }, [gainSetting]);
 
+  useEffect(() => {
+    panner.pan.value = pannerSetting.pan;
+  }, [pannerSetting]);
+
   const firstNote = MidiNumbers.fromNote('c3') + octave * 12;
   const lastNote = MidiNumbers.fromNote('f5') + octave * 12;
   const keyboardShortcuts = KeyboardShortcuts.create({
@@ -207,8 +215,6 @@ export default function Synth() {
     lastNote: lastNote,
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
-
-
 
   //MIDI
   const noteOn = (noteNumber) => {
@@ -325,8 +331,6 @@ export default function Synth() {
       return <MoogFilterEffect key={effect.id} id={effect.id} />;
     if (effect.effect.name === 'Overdrive')
       return <OverdriveEffect key={effect.id} id={effect.id} />;
-    if (effect.effect.name === 'Panner')
-      return <PannerEffect key={effect.id} id={effect.id} />;
     if (effect.effect.name === 'Phaser')
       return <PhaserEffect key={effect.id} id={effect.id} />;
     if (effect.effect.name === 'PingPongDelay')
