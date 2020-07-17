@@ -10,6 +10,7 @@ import Square from '../../../public/assets/square.svg';
 import Triangle from '../../../public/assets/triangle.svg';
 import Sawtooth from '../../../public/assets/sawtooth.svg';
 import PannerEffect from '../Effects/PannerEffect/PannerEffect';
+import Envelope from '../Envelope/Envelope';
 
 const Waveshapes = () => {
   const gainSetting = useGainSetting();
@@ -19,6 +20,7 @@ const Waveshapes = () => {
   return (
     <section className={styles.Controls}>
       <PannerEffect />
+      <Envelope />
       <section className={styles.Volume}>
         <input
           type="range"

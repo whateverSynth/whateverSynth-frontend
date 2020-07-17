@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import styles from './Synth.css';
 import DelayEffect from '../Effects/DelayEffect/DelayEffect';
 import Tuna from 'tunajs';
-import { useWaveshape, useNewEffects, useNewEffectSettings, useGainSetting, useHandleAddEffect, usePannerSetting } from '../../hooks/EffectsProvider';
+import { useWaveshape, useNewEffects, useNewEffectSettings, useGainSetting, useHandleAddEffect, usePannerSetting, useEnvelopeSetting } from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
 import ChorusEffect from '../Effects/ChorusEffect/ChorusEffect';
 import Effects from '../Effects/Effects';
@@ -46,10 +46,9 @@ export default function Synth() {
   const [octave, setOctave] = useState(0);
   waveshape = useWaveshape();
 
-
-
   const gainSetting = useGainSetting();
   const pannerSetting = usePannerSetting();
+  const envelopeSetting = useEnvelopeSetting();
 
   // NEW EFFECT STATE
   const newEffects = useNewEffects();
@@ -239,54 +238,48 @@ export default function Synth() {
 
   //MIDI
   const noteOn = (noteNumber) => {
-    // console.log(activeEnvelopes);
     delete activeEnvelopes[noteNumber];
     delete activeOscillators[noteNumber];
-    
-    const ampEnv = new Tone.AmplitudeEnvelope({
-      'attack': 3,
-      'decay': 0.5,
-      'sustain': 1.0,
-      'release': 0.8,
-    }).chain(inputGain);
+    let attackStart;
+
+    const ampEnv = new Tone.AmplitudeEnvelope(envelopeSetting).chain(inputGain);
     activeEnvelopes[noteNumber] = ampEnv;
-    activeEnvelopes[noteNumber].triggerAttack(audioCtx.currentTime, 1);
+    activeEnvelopes[noteNumber].attack > 0 ? attackStart = audioCtx.currentTime : attackStart = 0;
+    activeEnvelopes[noteNumber].triggerAttack(attackStart, 1);
 
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       frequencyFromNoteNumber(noteNumber),
       audioCtx.currentTime
     );
+
     osc.type = waveshape;
     activeOscillators[noteNumber] = osc;
     activeOscillators[noteNumber].connect(activeEnvelopes[noteNumber].output.input);
-    activeOscillators[noteNumber].start(0);
+    activeOscillators[noteNumber].start();
+    
   };
 
   const noteOff = (noteNumber) => {
-    // ENVELOPE
-    activeEnvelopes[noteNumber].triggerRelease();
-    // let time = activeEnvelopes[noteNumber].getValueAtTime();
-    
     const position = activeNotes.indexOf(noteNumber);
     if (position !== -1) {
       activeNotes.splice(position, 1);
     }
 
-    // while(time > 0) {
-    //   time = activeEnvelopes[noteNumber].getValueAtTime();
-    //   console.log(activeEnvelopes[noteNumber]);
-    // }
-
-    if (activeNotes.length === 0) {
-      // shut off the envelope
-      // activeOscillators[noteNumber]?.stop();
-      // delete activeOscillators[noteNumber];
-      // delete activeEnvelopes[noteNumber];
+    // ENVELOPE
+    if(activeEnvelopes[noteNumber].release > 0) {
+      activeEnvelopes[noteNumber].triggerRelease(audioCtx.currentTime);
     } else {
-      // activeOscillators[noteNumber]?.stop();
-      // delete activeOscillators[noteNumber];
-      // delete activeEnvelopes[noteNumber];
+      if (activeNotes.length === 0) {
+        // shut off the envelope
+        activeOscillators[noteNumber]?.stop();
+        delete activeOscillators[noteNumber];
+        delete activeEnvelopes[noteNumber];
+      } else {
+        activeOscillators[noteNumber]?.stop();
+        delete activeOscillators[noteNumber];
+        delete activeEnvelopes[noteNumber];
+      }
     }
   };
 
