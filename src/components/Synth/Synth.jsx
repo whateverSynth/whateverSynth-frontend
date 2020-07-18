@@ -26,6 +26,7 @@ import { IoMdResize } from 'react-icons/io';
 import styled from 'styled-components';
 import { DownArrow, UpArrow } from '@styled-icons/boxicons-solid';
 import * as Tone from 'tone';
+import { withResizeDetector } from 'react-resize-detector';
 
 let audioCtx, tuna, inputGain, outputGain, panner, scope, OScope, canvas, waveshape;
 let midiAccess = null;
@@ -94,7 +95,7 @@ export default function Synth() {
     //   'sustain': 1.0,
     //   'release': 0.8
     // }).chain(inputGain);
-    
+
     canvas = document.createElement('canvas');
     canvas.width = `${canvasMaximized ?  '1000' : '1000'}`;
     canvas.height = `${canvasMaximized ?  '200' : '1000'}`;
@@ -257,7 +258,7 @@ export default function Synth() {
     activeOscillators[noteNumber] = osc;
     activeOscillators[noteNumber].connect(activeEnvelopes[noteNumber].output.input);
     activeOscillators[noteNumber].start();
-    
+
   };
 
   const noteOff = (noteNumber) => {
@@ -382,6 +383,34 @@ export default function Synth() {
       return <WahWahEffect key={effect.id} id={effect.id} />;
   });
 
+  const containerStyles = {
+    height: '100px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  };
+
+  const AdaptivePiano = ({ width, height }) => {
+    const [color, setColor] = useState('red');
+
+    useEffect(() => {
+      setColor(width > 500 ? 'coral' : 'aqua');
+    }, [width]);
+
+    return (
+      <Piano
+        className={`${keyboardShortcutsVisibility ? '' : 'shortcutsHidden'}`}
+        noteRange={{ first: firstNote - 3, last: lastNote - 10 }}
+        activeNotes={newActiveNotes}
+        playNote={noteOn}
+        stopNote={noteOff}
+        width={width}
+        keyboardShortcuts={keyboardShortcuts}
+      />);
+  };
+
+  const AdaptivePianoWithDetector = withResizeDetector(AdaptivePiano);
+
   return (
     <>
       <header>
@@ -407,15 +436,7 @@ export default function Synth() {
             {({ containerWidth }) => (
 
               <div className={`pianoContainer ${pianoMaximized ? 'fullWidth' : 'miniWidth'}`}>
-                <Piano
-                  className={`${keyboardShortcutsVisibility ? '' : 'shortcutsHidden'}`}
-                  noteRange={{ first: firstNote - 3, last: lastNote - 10 }}
-                  activeNotes={newActiveNotes}
-                  playNote={noteOn}
-                  stopNote={noteOff}
-                  width={containerWidth}
-                  keyboardShortcuts={keyboardShortcuts}
-                />
+                <AdaptivePianoWithDetector />
               </div>
             )}
           </DimensionsProvider>
@@ -438,7 +459,6 @@ export default function Synth() {
         </div>
         <Waveshapes />
       </Collapsible>
-
       <Collapsible trigger="Effects" triggerWhenOpen="_" open={true}>
         <Effects />
         <div className={`${styles.effectsDrawer}`}>{effectNodes}</div>
