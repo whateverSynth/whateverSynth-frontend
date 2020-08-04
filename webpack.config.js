@@ -2,7 +2,8 @@ const HtmlPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const CopyPlugin = require('copy-webpack-plugin');
-const path = require('path');
+
+
 // eslint-disable-next-line
 module.exports = {
   entry: './src/index.js',

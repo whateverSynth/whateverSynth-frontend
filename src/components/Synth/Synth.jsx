@@ -35,12 +35,7 @@ let activeNotes = [];
 const activeOscillators = {};
 const activeEnvelopes = {};
 
-const BlueDown = styled(DownArrow)`
-color: #2BFDA2;
-`;
-const BlueUp = styled(UpArrow)`
-color: #2BFDA2;
-`;
+
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
   const [newActiveNotes, setNewActiveNotes] = useState([]);
@@ -383,18 +378,31 @@ export default function Synth() {
       return <WahWahEffect key={effect.id} id={effect.id} />;
   });
 
-  const containerStyles = {
-    height: '100px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  };
-
-  const AdaptivePiano = ({ width, height }) => {
-    const [color, setColor] = useState('red');
+  const AdaptiveScope = ({ width, height }) => {
 
     useEffect(() => {
-      setColor(width > 500 ? 'coral' : 'aqua');
+
+    }, [width]);
+
+    return (
+      <Piano
+        className={`${keyboardShortcutsVisibility ? '' : 'shortcutsHidden'}`}
+        noteRange={{ first: firstNote - 3, last: lastNote - 10 }}
+        activeNotes={newActiveNotes}
+        playNote={noteOn}
+        stopNote={noteOff}
+        width={width}
+        keyboardShortcuts={keyboardShortcuts}
+      />);
+  };
+
+  const AdaptiveScopeWithDetector = withResizeDetector(AdaptiveScope);
+
+
+  const AdaptivePiano = ({ width, height }) => {
+
+    useEffect(() => {
+
     }, [width]);
 
     return (
