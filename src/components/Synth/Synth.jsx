@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import styles from './Synth.css';
 import DelayEffect from '../Effects/DelayEffect/DelayEffect';
 import Tuna from 'tunajs';
-import { useWaveshape, useNewEffects, useNewEffectSettings, useGainSetting, useHandleAddEffect, usePannerSetting } from '../../hooks/EffectsProvider';
+import { useWaveshape, useNewEffects, useNewEffectSettings, useGainSetting, useHandleAddEffect, usePannerSetting, useEnvelopeSetting } from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
 import ChorusEffect from '../Effects/ChorusEffect/ChorusEffect';
 import Effects from '../Effects/Effects';
@@ -25,11 +25,14 @@ import useEventListener from '@use-it/event-listener';
 import { IoMdResize } from 'react-icons/io';
 import styled from 'styled-components';
 import { DownArrow, UpArrow } from '@styled-icons/boxicons-solid';
+import * as Tone from 'tone';
+
 let audioCtx, tuna, inputGain, outputGain, panner, scope, OScope, canvas, waveshape;
 let midiAccess = null;
 let tunaEffects = [];
 let activeNotes = [];
 const activeOscillators = {};
+const activeEnvelopes = {};
 
 const BlueDown = styled(DownArrow)`
 color: #2BFDA2;
@@ -45,6 +48,7 @@ export default function Synth() {
 
   const gainSetting = useGainSetting();
   const pannerSetting = usePannerSetting();
+  const envelopeSetting = useEnvelopeSetting();
 
   // NEW EFFECT STATE
   const newEffects = useNewEffects();
@@ -70,11 +74,27 @@ export default function Synth() {
 
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    Tone.setContext(audioCtx);
     tuna = new Tuna(audioCtx);
     inputGain = audioCtx.createGain();
     outputGain = audioCtx.createGain();
     panner = new tuna.Panner(pannerSetting);
 
+    // ampEnv = new Tone.Envelope({
+    //   'attack' : 0.5,
+    //   'decay' : 0.5,
+    //   'sustain' : 1,
+    //   'release' : 0.8,
+    // });
+    // ampEnv.connect(outputGain.gain);
+
+    // ampEnv = new Tone.AmplitudeEnvelope({
+    //   'attack': 0.5,
+    //   'decay': 0.5,
+    //   'sustain': 1.0,
+    //   'release': 0.8
+    // }).chain(inputGain);
+    
     canvas = document.createElement('canvas');
     canvas.width = `${canvasMaximized ?  '1000' : '1000'}`;
     canvas.height = `${canvasMaximized ?  '200' : '1000'}`;
@@ -218,15 +238,26 @@ export default function Synth() {
 
   //MIDI
   const noteOn = (noteNumber) => {
+    delete activeEnvelopes[noteNumber];
+    delete activeOscillators[noteNumber];
+    let attackStart;
+
+    const ampEnv = new Tone.AmplitudeEnvelope(envelopeSetting).chain(inputGain);
+    activeEnvelopes[noteNumber] = ampEnv;
+    activeEnvelopes[noteNumber].attack > 0 ? attackStart = audioCtx.currentTime : attackStart = 0;
+    activeEnvelopes[noteNumber].triggerAttack(attackStart, 1);
+
     const osc = audioCtx.createOscillator();
     osc.frequency.setValueAtTime(
       frequencyFromNoteNumber(noteNumber),
       audioCtx.currentTime
     );
+
     osc.type = waveshape;
     activeOscillators[noteNumber] = osc;
-    activeOscillators[noteNumber].connect(inputGain);
+    activeOscillators[noteNumber].connect(activeEnvelopes[noteNumber].output.input);
     activeOscillators[noteNumber].start();
+    
   };
 
   const noteOff = (noteNumber) => {
@@ -234,13 +265,21 @@ export default function Synth() {
     if (position !== -1) {
       activeNotes.splice(position, 1);
     }
-    if (activeNotes.length === 0) {
-      // shut off the envelope
-      activeOscillators[noteNumber]?.stop();
-      delete activeOscillators[noteNumber];
+
+    // ENVELOPE
+    if(activeEnvelopes[noteNumber].release > 0) {
+      activeEnvelopes[noteNumber].triggerRelease(audioCtx.currentTime);
     } else {
-      activeOscillators[noteNumber]?.stop();
-      delete activeOscillators[noteNumber];
+      if (activeNotes.length === 0) {
+        // shut off the envelope
+        activeOscillators[noteNumber]?.stop();
+        delete activeOscillators[noteNumber];
+        delete activeEnvelopes[noteNumber];
+      } else {
+        activeOscillators[noteNumber]?.stop();
+        delete activeOscillators[noteNumber];
+        delete activeEnvelopes[noteNumber];
+      }
     }
   };
 

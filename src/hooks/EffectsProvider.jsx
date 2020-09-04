@@ -15,6 +15,7 @@ import {
   defaultReverbSettings,
   defaultTremoloSettings,
   defaultWahWahSettings,
+  defaultEnvelopeSettings
 } from '../utils/data';
 
 const EffectsContext = createContext();
@@ -23,6 +24,7 @@ export const EffectsProvider = ({ children }) => {
   const [waveshape, setWaveshape] = useState('sine');
   const [gainSetting, setGainSetting] = useState(0.15);
   const [pannerSetting, setPannerSetting] = useState(defaultPannerSettings);
+  const [envelopeSetting, setEnvelopeSetting] = useState(defaultEnvelopeSettings);
 
   const [newEffects, setNewEffects] = useState([]);
   const [newEffectSettings, setNewEffectSettings] = useState([]);
@@ -37,6 +39,11 @@ export const EffectsProvider = ({ children }) => {
 
   const handlePannerSetting = ({ target }) => {
     setPannerSetting({ ...pannerSetting, pan: Number(target.value) });
+  };
+
+  const handleEnvelopeSetting = ({ target }) => {
+    const prop = target.name;
+    setEnvelopeSetting({ ...envelopeSetting, [prop]: Number(target.value) });
   };
 
   const handleAddEffect = (newEffect) => {
@@ -227,9 +234,11 @@ export const EffectsProvider = ({ children }) => {
         waveshape,
         gainSetting,
         pannerSetting,
+        envelopeSetting,
         handleWaveshape,
         handleGainSetting,
         handlePannerSetting,
+        handleEnvelopeSetting,
         handleAddEffect,
         handleRemoveEffect,
         handleEffectChange,
@@ -264,6 +273,11 @@ export const usePannerSetting = () => {
   return pannerSetting;
 };
 
+export const useEnvelopeSetting = () => {
+  const { envelopeSetting } = useContext(EffectsContext);
+  return envelopeSetting;
+};
+
 //handlers
 export const useHandleWaveshape = () => {
   const { handleWaveshape } = useContext(EffectsContext);
@@ -278,6 +292,11 @@ export const useHandleGainSetting = () => {
 export const useHandlePannerSetting = () => {
   const { handlePannerSetting } = useContext(EffectsContext);
   return handlePannerSetting;
+};
+
+export const useHandleEnvelopeSetting = () => {
+  const { handleEnvelopeSetting } = useContext(EffectsContext);
+  return handleEnvelopeSetting;
 };
 
 export const useHandleAddEffect = () => {
