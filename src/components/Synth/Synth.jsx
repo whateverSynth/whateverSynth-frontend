@@ -96,8 +96,10 @@ export default function Synth() {
     // }).chain(inputGain);
 
     canvas = document.createElement('canvas');
-    canvas.width = `${canvasMaximized ?  '1000' : '1000'}`;
-    canvas.height = `${canvasMaximized ?  '200' : '1000'}`;
+
+    canvas.width = `${canvasMaximized ? '1000' : '1000'}`;
+    canvas.height = `${canvasMaximized ? '200' : '1000'}`;
+
     const root = document.getElementById('root');
     const header = root.firstChild;
     // const logo = header.firstChild;
