@@ -15,6 +15,7 @@ import {
   defaultReverbSettings,
   defaultTremoloSettings,
   defaultWahWahSettings,
+  defaultEnvelopeSettings
 } from '../utils/data';
 
 const EffectsContext = createContext();
@@ -22,9 +23,10 @@ const EffectsContext = createContext();
 export const EffectsProvider = ({ children }) => {
   const [waveshape, setWaveshape] = useState('sine');
   const [gainSetting, setGainSetting] = useState(0.15);
+  const [pannerSetting, setPannerSetting] = useState(defaultPannerSettings);
+  const [envelopeSetting, setEnvelopeSetting] = useState(defaultEnvelopeSettings);
 
   const [newEffects, setNewEffects] = useState([]);
-
   const [newEffectSettings, setNewEffectSettings] = useState([]);
 
   const handleWaveshape = ({ target }) => {
@@ -33,6 +35,15 @@ export const EffectsProvider = ({ children }) => {
 
   const handleGainSetting = ({ target }) => {
     setGainSetting(target.value);
+  };
+
+  const handlePannerSetting = ({ target }) => {
+    setPannerSetting({ ...pannerSetting, pan: Number(target.value) });
+  };
+
+  const handleEnvelopeSetting = ({ target }) => {
+    const prop = target.name;
+    setEnvelopeSetting({ ...envelopeSetting, [prop]: Number(target.value) });
   };
 
   const handleAddEffect = (newEffect) => {
@@ -75,11 +86,6 @@ export const EffectsProvider = ({ children }) => {
       setNewEffectSettings([
         ...newEffectSettings,
         { id: id, settings: defaultOverdriveSettings },
-      ]);
-    if (newEffect === 'Panner')
-      setNewEffectSettings([
-        ...newEffectSettings,
-        { id: id, settings: defaultPannerSettings },
       ]);
     if (newEffect === 'Phaser')
       setNewEffectSettings([
@@ -134,10 +140,16 @@ export const EffectsProvider = ({ children }) => {
         [prop]: !effectToUpdate.settings.bypass,
       };
       setNewEffectSettings([...oldEffects, effectToUpdate]);
+    } else if (prop === 'impulse'){
+      effectToUpdate.settings = {
+        ...effectToUpdate.settings,
+        [prop]: isNaN(target.value) ? target.value : Number(target.value),
+      };
+      setNewEffectSettings([...oldEffects, effectToUpdate]);
     } else {
       effectToUpdate.settings = {
         ...effectToUpdate.settings,
-        [prop]: target.value,
+        [prop]: isNaN(target.value) ? target.value : Number(target.value),
       };
       setNewEffectSettings([...oldEffects, effectToUpdate]);
     }
@@ -221,8 +233,12 @@ export const EffectsProvider = ({ children }) => {
       value={{
         waveshape,
         gainSetting,
+        pannerSetting,
+        envelopeSetting,
         handleWaveshape,
         handleGainSetting,
+        handlePannerSetting,
+        handleEnvelopeSetting,
         handleAddEffect,
         handleRemoveEffect,
         handleEffectChange,
@@ -252,6 +268,16 @@ export const useGainSetting = () => {
   return gainSetting;
 };
 
+export const usePannerSetting = () => {
+  const { pannerSetting } = useContext(EffectsContext);
+  return pannerSetting;
+};
+
+export const useEnvelopeSetting = () => {
+  const { envelopeSetting } = useContext(EffectsContext);
+  return envelopeSetting;
+};
+
 //handlers
 export const useHandleWaveshape = () => {
   const { handleWaveshape } = useContext(EffectsContext);
@@ -261,6 +287,16 @@ export const useHandleWaveshape = () => {
 export const useHandleGainSetting = () => {
   const { handleGainSetting } = useContext(EffectsContext);
   return handleGainSetting;
+};
+
+export const useHandlePannerSetting = () => {
+  const { handlePannerSetting } = useContext(EffectsContext);
+  return handlePannerSetting;
+};
+
+export const useHandleEnvelopeSetting = () => {
+  const { handleEnvelopeSetting } = useContext(EffectsContext);
+  return handleEnvelopeSetting;
 };
 
 export const useHandleAddEffect = () => {

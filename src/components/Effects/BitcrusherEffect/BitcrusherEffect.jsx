@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import styles from '../Effects.css';
 import { defaultBitcrusherSettings } from '../../../utils/data';
 import Editable from '../../global/Editable';
-import { Knob } from 'react-rotary-knob';
 
 const BitcrusherEffect = ({ id }) => {
   const handleEffectChange = useHandleEffectChange();
@@ -47,21 +46,6 @@ const BitcrusherEffect = ({ id }) => {
             onChange={(e) => handleEffectChange(e, id)}
             name="bits"
           ></input>
-
-          <Knob
-            value={bitcrusher?.settings.bits}
-            step="1"
-            min={0}
-            max={16}
-            onChange={(e) => handleEffectChange(e, id)}
-            name="bits"
-            unlockDistance={0}
-            preciseMode={false}
-            width={180}
-            height={180}
-            rotateDegrees={185}
-            clampMax={330}
-          />
 
           <label>
             bits:

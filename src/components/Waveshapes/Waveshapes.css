@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 1rem auto;
-  width: 90vw;
+  margin: 0 auto;
+  width: auto;
   input[type='range'] {
     -webkit-appearance: none;
     background-color: #00ff9f;
@@ -12,6 +12,7 @@
     border-width: 2px 2px 2px 2px;
     width: 15rem;
   }
+
   .Volume {
     display: flex;
     flex-direction: column;
@@ -19,7 +20,7 @@
 }
 
 .Gain {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .Radio {

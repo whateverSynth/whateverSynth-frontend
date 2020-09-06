@@ -21,7 +21,6 @@ export default function Effects() {
         <option value="Filter">filter</option>
         <option value="MoogFilter">moog filter</option>
         <option value="Overdrive">overdrive</option>
-        <option value="Panner">panner</option>
         <option value="Phaser">phaser</option>
         <option value="PingPongDelay">ping pong delay</option>
         <option value="Convolver">reverb</option>

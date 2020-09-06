@@ -9,23 +9,40 @@ html {
   color: #d600ff;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+  box-sizing: border-box;
 }
 
 #root{
   display: inline-flex;
 }
+
 .Menu {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+
+  h1{
+    font-size: 0.8rem;
+  }
+
+  button{
+    border: 2px groove #20B9FC;
+    border-radius: 20%;
+    font-size: 1rem;
+  }
 }
 
 .buttonResize {
   position: absolute;
   z-index: 2;
-  right: 1rem;
-}
+  top: -1.6rem;
+  background-color: transparent;
+  border: 0;
+  left: 0;
+  svg{color: #7F9528 !important;}
+  }
+
 
 .buttonMinimize {
   position: absolute;
@@ -61,23 +78,60 @@ html {
   }
 }
 
+.Row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 auto;
+
+  label {
+    text-shadow: 1px 1px black;
+  }
+  button {
+    border: 1px solid hsl(198, 70%, 46%);
+    background-color: hsl(198, 70%, 36%);
+    padding: 0.2rem 0.3rem 0.2rem 0.4rem;
+    font-size: 1.2rem;
+  }
+  .Octave {
+    position: relative;
+    background-color: hsl(231, 97%, 32%);
+    padding: 0.4rem .6rem;
+    color: #2BFDA2;
+    font-size: 1rem;
+  }
+  .Panel {
+    display: flex;
+    margin: 1rem 0 0.5rem;
+    align-items: flex-end;
+
+    label {
+      vertical-align: baseline;
+    }
+  }
+}
+
 canvas {
   background-color: hsl(197, 80%, 50%);
   border: .8rem solid #bd00ff;
-  width: 40vw;
   position: relative;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, 0%);
-  max-height: 9rem;
+  width: 97%;
   border-radius: .4em;
+  height: auto;
+}
+
+.miniWidth canvas {
+    background-color: hsl(197, 80%, 50%);
+    border: .2rem solid #bd00ff;
+    width: 85%;
+    border-radius: .4em;
 }
 
 h1 {
   color: #00ff9f;
-  font-size: 1.4rem;
+  font-size: 1rem;
   position: relative;
-  top: 1;
+  top: 0rem;
   left: 0.5rem;
 }
 
@@ -91,7 +145,9 @@ h1 {
   flex-wrap: wrap;
 }
 
-.hidden {
-  display: none;
-  visibility: hidden;
+
+
+
+svg {
+  background-color: transparent;
 }

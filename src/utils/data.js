@@ -103,3 +103,10 @@ export const defaultWahWahSettings = {
   sensitivity: 0.5, //-1 to 1
   bypass: false,
 };
+
+export const defaultEnvelopeSettings = {
+  'attack': 2.5,
+  'decay': 0.5,
+  'sustain': 1.0,
+  'release': 0.8
+};
