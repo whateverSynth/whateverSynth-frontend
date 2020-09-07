@@ -2,7 +2,15 @@ import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import styles from './Synth.css';
 import DelayEffect from '../Effects/DelayEffect/DelayEffect';
 import Tuna from 'tunajs';
-import { useWaveshape, useNewEffects, useNewEffectSettings, useGainSetting, useHandleAddEffect, usePannerSetting, useEnvelopeSetting } from '../../hooks/EffectsProvider';
+import {
+  useWaveshape,
+  useNewEffects,
+  useNewEffectSettings,
+  useGainSetting,
+  useHandleAddEffect,
+  usePannerSetting,
+  useEnvelopeSetting,
+} from '../../hooks/EffectsProvider';
 import Waveshapes from '../Waveshapes/Waveshapes';
 import ChorusEffect from '../Effects/ChorusEffect/ChorusEffect';
 import Effects from '../Effects/Effects';
@@ -27,7 +35,15 @@ import styled from 'styled-components';
 import { DownArrow, UpArrow } from '@styled-icons/boxicons-solid';
 import * as Tone from 'tone';
 
-let audioCtx, tuna, inputGain, outputGain, panner, scope, OScope, canvas, waveshape;
+let audioCtx,
+  tuna,
+  inputGain,
+  outputGain,
+  panner,
+  scope,
+  OScope,
+  canvas,
+  waveshape;
 let midiAccess = null;
 let tunaEffects = [];
 let activeNotes = [];
@@ -35,10 +51,10 @@ const activeOscillators = {};
 const activeEnvelopes = {};
 
 const BlueDown = styled(DownArrow)`
-color: #2BFDA2;
+  color: #2bfda2;
 `;
 const BlueUp = styled(UpArrow)`
-color: #2BFDA2;
+  color: #2bfda2;
 `;
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
@@ -62,15 +78,13 @@ export default function Synth() {
     setKeyboardShortcutsVisibility((visibility) => !visibility);
 
   const [canvasMaximized, setCanvasMaximized] = useState(true);
-  const handleCanvasMaximizeClick = () => setCanvasMaximized(toggle => !toggle);
-  useEffect(() => {
-  }, [canvasMaximized]);
+  const handleCanvasMaximizeClick = () =>
+    setCanvasMaximized((toggle) => !toggle);
+  useEffect(() => {}, [canvasMaximized]);
 
   const [pianoMaximized, setPianoMaximized] = useState(true);
-  const handlePianoMaximizeClick = () => setPianoMaximized(toggle => !toggle);
-  useEffect(() => {
-  }, [pianoMaximized]);
-
+  const handlePianoMaximizeClick = () => setPianoMaximized((toggle) => !toggle);
+  useEffect(() => {}, [pianoMaximized]);
 
   useEffect(() => {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -94,10 +108,10 @@ export default function Synth() {
     //   'sustain': 1.0,
     //   'release': 0.8
     // }).chain(inputGain);
-    
+
     canvas = document.createElement('canvas');
-    canvas.width = `${canvasMaximized ?  '1000' : '1000'}`;
-    canvas.height = `${canvasMaximized ?  '200' : '1000'}`;
+    canvas.width = `${canvasMaximized ? '1000' : '1000'}`;
+    canvas.height = `${canvasMaximized ? '200' : '1000'}`;
     const root = document.getElementById('root');
     const header = root.firstChild;
     // const logo = header.firstChild;
@@ -244,7 +258,9 @@ export default function Synth() {
 
     const ampEnv = new Tone.AmplitudeEnvelope(envelopeSetting).chain(inputGain);
     activeEnvelopes[noteNumber] = ampEnv;
-    activeEnvelopes[noteNumber].attack > 0 ? attackStart = audioCtx.currentTime : attackStart = 0;
+    activeEnvelopes[noteNumber].attack > 0
+      ? (attackStart = audioCtx.currentTime)
+      : (attackStart = 0);
     activeEnvelopes[noteNumber].triggerAttack(attackStart, 1);
 
     const osc = audioCtx.createOscillator();
@@ -255,9 +271,10 @@ export default function Synth() {
 
     osc.type = waveshape;
     activeOscillators[noteNumber] = osc;
-    activeOscillators[noteNumber].connect(activeEnvelopes[noteNumber].output.input);
+    activeOscillators[noteNumber].connect(
+      activeEnvelopes[noteNumber].output.input
+    );
     activeOscillators[noteNumber].start();
-    
   };
 
   const noteOff = (noteNumber) => {
@@ -267,7 +284,7 @@ export default function Synth() {
     }
 
     // ENVELOPE
-    if(activeEnvelopes[noteNumber].release > 0) {
+    if (activeEnvelopes[noteNumber].release > 0) {
       activeEnvelopes[noteNumber].triggerRelease(audioCtx.currentTime);
     } else {
       if (activeNotes.length === 0) {
@@ -353,7 +370,6 @@ export default function Synth() {
   useEventListener('keydown', pitchKeyPressDown);
   useEventListener('keyup', pitchNormal);
 
-
   //EFFECTS NODES
   const effectNodes = localEffects.map((effect) => {
     if (effect.effect.name === 'Bitcrusher')
@@ -391,42 +407,46 @@ export default function Synth() {
             className={styles.buttonMinimize}
             onClick={handleKeyboardShortcutsVisibilityClick}
             className={`${keyboardShortcutsVisibility ? 'VisibilityOn' : ''}`}
-          ><div><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>/</div></div>
+          >
+            <div>
+              <div
+                className={`${
+                  keyboardShortcutsVisibility ? 'overlay' : 'hidden'
+                }`}
+              >
+                /
+              </div>
+            </div>
             ?
           </button>
         </div>
 
-        <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open={true} >
-          <button className={styles.buttonResize} onClick={handleCanvasMaximizeClick}><IoMdResize/></button>
-          <div className={`${canvasMaximized ? 'fullWidth' : 'miniWidth'}`}>{OScope}</div>
+        <Collapsible trigger="Oscilloscope" triggerWhenOpen="_" open={true}>
+          <button
+            className={styles.buttonResize}
+            onClick={handleCanvasMaximizeClick}
+          >
+            <IoMdResize />
+          </button>
+          <div className={`${canvasMaximized ? 'fullWidth' : 'miniWidth'}`}>
+            {OScope}
+          </div>
         </Collapsible>
       </header>
-
-      <Collapsible trigger="Instrument" triggerWhenOpen="_" open={true}>
-        <div className={styles.Row}>
-          <div className={styles.Panel}>
-
-            <div className={styles.Panel}>
-              <label>Octave:</label>
-              <button className={styles.Arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={90}><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>Z</div>&#8595;</button>
-
-              <div className={styles.Octave}>C{octave}</div>
-              <button className={styles.Arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={88}><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>X</div>&#8593;</button>
-
-            </div>
-          </div>
-        </div>
-        <Waveshapes />
-      </Collapsible>
 
       <div style={{ minWidth: '0' }}>
         <Collapsible trigger="Piano" triggerWhenOpen="_" open={true}>
           <DimensionsProvider>
             {({ containerWidth }) => (
-
-              <div className={`pianoContainer ${pianoMaximized ? 'fullWidth' : 'miniWidth'}`}>
+              <div
+                className={`pianoContainer ${
+                  pianoMaximized ? 'fullWidth' : 'miniWidth'
+                }`}
+              >
                 <Piano
-                  className={`${keyboardShortcutsVisibility ? '' : 'shortcutsHidden'}`}
+                  className={`${
+                    keyboardShortcutsVisibility ? '' : 'shortcutsHidden'
+                  }`}
                   noteRange={{ first: firstNote - 3, last: lastNote - 10 }}
                   activeNotes={newActiveNotes}
                   playNote={noteOn}
@@ -437,15 +457,53 @@ export default function Synth() {
               </div>
             )}
           </DimensionsProvider>
-
         </Collapsible>
       </div>
-
-
       <Collapsible trigger="Effects" triggerWhenOpen="_" open={true}>
         <Effects />
         <div className={`${styles.effectsDrawer}`}>{effectNodes}</div>
       </Collapsible>
+
+      <Collapsible trigger="Instrument" triggerWhenOpen="_" open={true}>
+        <div className={styles.Row}>
+          <div className={styles.Panel}>
+            <div className={styles.Panel}>
+              <label>Octave:</label>
+              <button
+                className={styles.Arrow}
+                onClick={(e) => changeSettings(Number(e.target.value))}
+                value={90}
+              >
+                <div
+                  className={`${
+                    keyboardShortcutsVisibility ? 'overlay' : 'hidden'
+                  }`}
+                >
+                  Z
+                </div>
+                &#8595;
+              </button>
+
+              <div className={styles.Octave}>C{octave}</div>
+              <button
+                className={styles.Arrow}
+                onClick={(e) => changeSettings(Number(e.target.value))}
+                value={88}
+              >
+                <div
+                  className={`${
+                    keyboardShortcutsVisibility ? 'overlay' : 'hidden'
+                  }`}
+                >
+                  X
+                </div>
+                &#8593;
+              </button>
+            </div>
+          </div>
+        </div>
+      </Collapsible>
+      <Waveshapes />
     </>
   );
 }
