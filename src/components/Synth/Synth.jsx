@@ -26,6 +26,23 @@ import { IoMdResize } from 'react-icons/io';
 import styled from 'styled-components';
 import { DownArrow, UpArrow } from '@styled-icons/boxicons-solid';
 import * as Tone from 'tone';
+import {
+  Button,
+  Toggle,
+  Dial,
+  Number,
+  Position,
+  Slider,
+  Envelope,
+  Multislider,
+  RadioButton,
+  Select,
+  Sequencer,
+  TextButton,
+  Tilt,
+  Pan,
+  Pan2D
+} from 'react-nexusui';
 
 let audioCtx, tuna, inputGain, outputGain, panner, scope, OScope, canvas, waveshape;
 let midiAccess = null;
@@ -34,12 +51,6 @@ let activeNotes = [];
 const activeOscillators = {};
 const activeEnvelopes = {};
 
-const BlueDown = styled(DownArrow)`
-color: #2BFDA2;
-`;
-const BlueUp = styled(UpArrow)`
-color: #2BFDA2;
-`;
 export default function Synth() {
   const [localEffects, setLocalEffects] = useState([]);
   const [newActiveNotes, setNewActiveNotes] = useState([]);
@@ -80,20 +91,6 @@ export default function Synth() {
     outputGain = audioCtx.createGain();
     panner = new tuna.Panner(pannerSetting);
 
-    // ampEnv = new Tone.Envelope({
-    //   'attack' : 0.5,
-    //   'decay' : 0.5,
-    //   'sustain' : 1,
-    //   'release' : 0.8,
-    // });
-    // ampEnv.connect(outputGain.gain);
-
-    // ampEnv = new Tone.AmplitudeEnvelope({
-    //   'attack': 0.5,
-    //   'decay': 0.5,
-    //   'sustain': 1.0,
-    //   'release': 0.8
-    // }).chain(inputGain);
 
     canvas = document.createElement('canvas');
 
@@ -439,10 +436,12 @@ export default function Synth() {
               </div>
             )}
           </DimensionsProvider>
-
         </Collapsible>
       </div>
 
+      <Collapsible trigger="Controls" triggerWhenOpen="_" open={true}>
+        <Envelope points={[{ x: 0.1, y: 0.4 }]} />
+      </Collapsible>
 
       <Collapsible trigger="Effects" triggerWhenOpen="_" open={true}>
         <Effects />
