@@ -23,26 +23,7 @@ import Collapsible from 'react-collapsible';
 import '../../../public/rawStyles/piano.css';
 import useEventListener from '@use-it/event-listener';
 import { IoMdResize } from 'react-icons/io';
-import styled from 'styled-components';
-import { DownArrow, UpArrow } from '@styled-icons/boxicons-solid';
 import * as Tone from 'tone';
-import {
-  Button,
-  Toggle,
-  Dial,
-  Number,
-  Position,
-  Slider,
-  Envelope,
-  Multislider,
-  RadioButton,
-  Select,
-  Sequencer,
-  TextButton,
-  Tilt,
-  Pan,
-  Pan2D
-} from 'react-nexusui';
 
 let audioCtx, tuna, inputGain, outputGain, panner, scope, OScope, canvas, waveshape;
 let midiAccess = null;
@@ -402,20 +383,19 @@ export default function Synth() {
       </header>
 
       <Collapsible trigger="Instrument" triggerWhenOpen="_" open={true}>
+      <Waveshapes />
         <div className={styles.Row}>
           <div className={styles.Panel}>
-
             <div className={styles.Panel}>
               <label>Octave:</label>
               <button className={styles.Arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={90}><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>Z</div>&#8595;</button>
-
               <div className={styles.Octave}>C{octave}</div>
               <button className={styles.Arrow} onClick={(e) => changeSettings(Number(e.target.value))} value={88}><div className={`${keyboardShortcutsVisibility ? 'overlay' : 'hidden'}`}>X</div>&#8593;</button>
-
             </div>
           </div>
+
         </div>
-        <Waveshapes />
+
       </Collapsible>
 
       <div style={{ minWidth: '0' }}>
@@ -438,10 +418,6 @@ export default function Synth() {
           </DimensionsProvider>
         </Collapsible>
       </div>
-
-      <Collapsible trigger="Controls" triggerWhenOpen="_" open={true}>
-        <Envelope points={[{ x: 0.1, y: 0.4 }]} />
-      </Collapsible>
 
       <Collapsible trigger="Effects" triggerWhenOpen="_" open={true}>
         <Effects />

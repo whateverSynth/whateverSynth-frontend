@@ -4,12 +4,34 @@ import {
   useHandleEnvelopeSetting,
 } from '../../hooks/EffectsProvider';
 
+import {
+  Envelope as NexusEnvelope
+} from 'react-nexusui';
+
 const Envelope = () => {
   const envelopeSettings = useEnvelopeSetting();
   const handleEnvelopeSettings = useHandleEnvelopeSetting();
 
   return (
     <>
+      <NexusEnvelope noNewPoints= {true} points={[
+        {
+          x: 0.1,
+          y: 0.4
+        },
+        {
+          x: 0.35,
+          y: 0.6
+        },
+        {
+          x: 0.65,
+          y: 0.2
+        },
+        {
+          x: 0.9,
+          y: 0.4
+        },
+      ]} />
       <section>
         <h1>Envelope</h1>
         <section>
