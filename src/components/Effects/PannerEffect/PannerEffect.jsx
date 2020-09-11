@@ -1,15 +1,19 @@
 import React from 'react';
 import {
   usePannerSetting,
-  useHandlePannerSetting
+  useHandlePannerSetting,
+  useADSRSetting,
+  useHandleADSRSetting
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
-import { Pan } from 'react-nexusui';
+import { Pan as PanFader } from 'react-nexusui';
 
 const PannerEffect = () => {
   const pannerSetting = usePannerSetting();
   const handlePannerSetting = useHandlePannerSetting();
+
+  const handleADSRSetting = useHandleADSRSetting();
 
   return (
     <div className={styles.effectContainer}>
@@ -17,10 +21,10 @@ const PannerEffect = () => {
         <header>
           <h2>panner</h2>
         </header>
-
+        <PanFader step={0.05} onChange={handleADSRSetting} />
         <section>
           <label>L</label>
-          <Pan step={0.05} onChange={handlePannerSetting}/>
+
           <input
             type="range"
             min="-1"

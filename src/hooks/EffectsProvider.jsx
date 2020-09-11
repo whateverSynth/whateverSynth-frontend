@@ -37,10 +37,12 @@ export const EffectsProvider = ({ children }) => {
     setGainSetting(target.value);
   };
 
-  const handleAdsrGainSettings = ({ target }) => {
+  const handleADSRSetting = ({ target }) => {
     console.log(target);
     // setAdsrGainSettings(target.value);
   };
+
+
 
   const handlePannerSetting = ({ target }) => {
     setPannerSetting({ ...pannerSetting, pan: Number(target.value) });
@@ -283,6 +285,11 @@ export const useEnvelopeSetting = () => {
   return envelopeSetting;
 };
 
+export const useADSRSetting = () => {
+  const { envelopeSetting } = useContext(EffectsContext);
+  return envelopeSetting;
+};
+
 //handlers
 export const useHandleWaveshape = () => {
   const { handleWaveshape } = useContext(EffectsContext);
@@ -333,6 +340,11 @@ export const useHandleCompressor = () => {
 export const useHandleWahWah = () => {
   const { handleWahWah } = useContext(EffectsContext);
   return handleWahWah;
+};
+
+export const useHandleADSRSetting = () => {
+  const { handleADSRSetting } = useContext(EffectsContext);
+  return handleADSRSetting;
 };
 
 // new effects

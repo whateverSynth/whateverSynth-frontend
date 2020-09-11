@@ -383,8 +383,9 @@ export default function Synth() {
       </header>
       <main>
         <Collapsible trigger="Instrument" triggerWhenOpen="_" open={true}>
-          <Waveshapes />
+
           <div className={styles.Row}>
+          <Waveshapes />
             <div className={styles.Panel}>
               <div className={styles.Panel}>
                 <label>Octave:</label>
