@@ -149,5 +149,5 @@ h1 {
 
 
 svg {
-  background-color: transparent;
+  background-color: transparent !important;
 }

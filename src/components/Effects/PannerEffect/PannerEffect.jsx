@@ -5,6 +5,7 @@ import {
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
+import { Pan } from 'react-nexusui';
 
 const PannerEffect = () => {
   const pannerSetting = usePannerSetting();
@@ -19,6 +20,7 @@ const PannerEffect = () => {
 
         <section>
           <label>L</label>
+          <Pan step={0.05} onChange={handlePannerSetting}/>
           <input
             type="range"
             min="-1"
@@ -27,9 +29,9 @@ const PannerEffect = () => {
             step="0.05"
             id="pannerPanRange"
             onChange={handlePannerSetting}
-            name="pan"
-          ></input>
+            name="pan"></input>
           <label>R</label>
+
         </section>
       </main>
     </div>

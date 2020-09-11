@@ -5,7 +5,10 @@ import {
 } from '../../hooks/EffectsProvider';
 
 import {
-  Envelope as NexusEnvelope
+  Dial,
+  Envelope as NexusEnvelope,
+  Multislider,
+  Pan
 } from 'react-nexusui';
 
 const Envelope = () => {
@@ -14,27 +17,34 @@ const Envelope = () => {
 
   return (
     <>
-      <NexusEnvelope noNewPoints= {true} points={[
-        {
-          x: 0.1,
-          y: 0.4
-        },
-        {
-          x: 0.35,
-          y: 0.6
-        },
-        {
-          x: 0.65,
-          y: 0.2
-        },
-        {
-          x: 0.9,
-          y: 0.4
-        },
-      ]} />
+
       <section>
         <h1>Envelope</h1>
         <section>
+          
+          <NexusEnvelope noNewPoints= {true} size={[320, 75]} points={[
+            {
+              x: 0,
+              y: 0
+            },
+            {
+              x: 0.25,
+              y: 1
+            },
+            {
+              x: 0.55,
+              y: 0.5
+            },
+            {
+              x: 0.75,
+              y: 0.5
+            },
+            {
+              x: 1,
+              y: 0
+            },
+          ]} /><h1>ADSR</h1>
+          <Multislider size={[400, 200]} numberOfSliders={4} min={0} max={1} step={0} candycane={3} values={[(envelopeSettings.attack / 10), (envelopeSettings.decay / 5), envelopeSettings.sustain, (envelopeSettings.release / 10)]} smoothing={0} mode="bar"/>
           <input
             type="range"
             min="0"
