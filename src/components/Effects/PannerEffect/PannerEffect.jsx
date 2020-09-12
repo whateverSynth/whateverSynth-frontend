@@ -1,9 +1,7 @@
 import React from 'react';
 import {
   usePannerSetting,
-  useHandlePannerSetting,
-  useADSRSetting,
-  useHandleADSRSetting
+  useHandlePannerSetting
 } from '../../../hooks/EffectsProvider';
 import PropTypes from 'prop-types';
 import styles from '../Effects.css';
@@ -13,15 +11,13 @@ const PannerEffect = () => {
   const pannerSetting = usePannerSetting();
   const handlePannerSetting = useHandlePannerSetting();
 
-  const handleADSRSetting = useHandleADSRSetting();
-
   return (
     <div className={styles.effectContainer}>
       <main className={styles.Effects}>
         <header>
           <h2>panner</h2>
         </header>
-        <PanFader step={0.05} onChange={handleADSRSetting} />
+        <PanFader step={0.05} />
         <section>
           <label>L</label>
 

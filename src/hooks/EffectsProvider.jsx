@@ -37,15 +37,18 @@ export const EffectsProvider = ({ children }) => {
     setGainSetting(target.value);
   };
 
-  const handleADSRSetting = ({ target }) => {
-    console.log(target);
-    // setAdsrGainSettings(target.value);
-  };
+  // const handleADSRSetting = ({ target }) => {
+  //   console.log(target);
+  //   // setAdsrGainSettings(target.value);
+  // };
 
 
 
   const handlePannerSetting = ({ target }) => {
     setPannerSetting({ ...pannerSetting, pan: Number(target.value) });
+  };
+  const handlePanFaderSetting = ({ target }) => {
+    setPanFaderSetting({ ...pannerSetting, pan: Number(target.value) });
   };
 
   const handleEnvelopeSetting = ({ target }) => {

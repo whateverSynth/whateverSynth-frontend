@@ -1,0 +1,6 @@
+.Envelope {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  flex-wrap: wrap;
+}

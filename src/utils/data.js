@@ -60,6 +60,10 @@ export const defaultPannerSettings = {
   bypass: false,
 };
 
+export const defaultPanFaderSettings = {
+  pan: 0, // -1 (left) to 1 (right)
+};
+
 export const defaultPhaserSettings = {
   rate: 1.2, //0.01 to 8 is a decent range, but higher values are possible
   depth: 0.3, //0 to 1
