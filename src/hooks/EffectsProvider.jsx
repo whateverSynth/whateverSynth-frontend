@@ -47,8 +47,10 @@ export const EffectsProvider = ({ children }) => {
   const handlePannerSetting = ({ target }) => {
     setPannerSetting({ ...pannerSetting, pan: Number(target.value) });
   };
+
   const handlePanFaderSetting = ({ target }) => {
-    setPanFaderSetting({ ...pannerSetting, pan: Number(target.value) });
+    console.log(target);
+    // setPanFaderSetting({ ...pannerSetting, pan: Number(target.value) });
   };
 
   const handleEnvelopeSetting = ({ target }) => {

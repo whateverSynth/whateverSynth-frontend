@@ -17,7 +17,7 @@ const PannerEffect = () => {
         <header>
           <h2>panner</h2>
         </header>
-        <PanFader step={0.05} />
+        <PanFader step={0.05} onChange={console.log}/>
         <section>
           <label>L</label>
 

@@ -14,21 +14,14 @@ const Envelope = () => {
 
   return (
     <>
-      <h1>Envelope</h1>
+      <h2>Envelope</h2>
       <section className={styles.Envelope}>
-        <label>A<Dial value={envelopeSettings.attack} min="0" max="10" step="0.05" id="attackTimeRange" name="attack" size={[60, 60]}/></label>
-        <label>D<Dial value={envelopeSettings.decay} min="0" max="5" step="0.05"
-          id="decayTimeRange" size={[60, 60]}/></label>
-        <label>S<Dial value={envelopeSettings.sustain} size={[60, 60]} min="0"
-          max="1"
-          step="0.05"
-          id="sustainLevelRange"/></label>
-        <label>R<Dial value={envelopeSettings.release}
-          min="0"
-          max="10"
-          step="0.05"
-          id="releaseTimeRange" size={[60, 60]}/>
-        </label>
+        <div className={styles.column}><label>A</label><Dial value={envelopeSettings.attack} min="0" max="10" step="0.05" id="attackTimeRange" name="attack" size={[60, 60]}/>{envelopeSettings.attack}</div>
+        <div className={styles.column}><label>D</label><Dial value={envelopeSettings.decay} min="0" max="5" step="0.05" id="decayTimeRange" size={[60, 60]}/>{envelopeSettings.decay}</div>
+        <div className={styles.column}><label>S</label><Dial value={envelopeSettings.sustain} size={[60, 60]} min="0" max="1" step="0.05" id="sustainLevelRange"/>{envelopeSettings.sustain}</div>
+        <div className={styles.column}><label>R</label><Dial value={envelopeSettings.release} min="0" max="10" step="0.05" id="releaseTimeRange" size={[60, 60]}/>
+          {envelopeSettings.release}
+        </div>
         <input
           type="range"
           min="0"
@@ -39,7 +32,7 @@ const Envelope = () => {
           onChange={(e) => handleEnvelopeSettings(e)}
           name="attack"
         ></input>
-        <label>attack: {envelopeSettings.attack}</label>
+
 
         <input
           type="range"
@@ -63,7 +56,7 @@ const Envelope = () => {
           onChange={(e) => handleEnvelopeSettings(e)}
           name="sustain"
         ></input>
-        <label>sustain: {envelopeSettings.sustain}</label>
+
 
         <input
           type="range"
