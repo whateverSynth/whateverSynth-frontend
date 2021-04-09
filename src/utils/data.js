@@ -105,7 +105,7 @@ export const defaultWahWahSettings = {
 };
 
 export const defaultEnvelopeSettings = {
-  'attack': 2.5,
+  'attack': 0.15,
   'decay': 0.5,
   'sustain': 1.0,
   'release': 0.8
